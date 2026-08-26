@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+generator zod {
+  provider                  = "zod-prisma-types"
+  output                    = "../generated/zod"
+  createRelationValuesTypes = "true"
+  useMultipleFiles          = "true"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum USER_ROLE {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+model User {
+  id                String    @id @default(uuid())
+  fullName          String    @map("full_name")
+  email             String    @unique
+  password          String
+  role              USER_ROLE @default(STUDENT)
+  phone             String?
+  avatar            String?
+  locale            String    @default("en")
+  emailVerified     Boolean   @default(false) @map("email_verified")
+  passwordChangedAt DateTime? @map("password_changed_at")
+  active            Boolean   @default(true)
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+
+  @@index([email])
+  @@map("users")
+}

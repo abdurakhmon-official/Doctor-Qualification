@@ -1,0 +1,37 @@
+# Docker build context = monorepo root. Applies to both apps/api/Dockerfile
+# and apps/web/Dockerfile since they both build from this root context.
+
+**/node_modules
+**/.pnpm-store
+
+**/dist
+**/.next
+**/generated
+**/.turbo
+**/*.tsbuildinfo
+
+**/.env
+**/.env.local
+!**/.env.sample
+
+.git
+.gitignore
+.github
+
+**/*.log
+**/coverage
+**/storage
+
+.vscode
+.idea
+.claude
+
+**/__tests__
+**/*.spec.ts
+
+**/README.md
+**/CODING_STANDARDS.md
+**/DYNAMIC_ADMIN_STANDARDS.md
+**/AGENTS.md
+**/CLAUDE.md
+**/LICENSE

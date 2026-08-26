@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "brand": "App",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "admin": "Admin panel",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "home": {
+    "title": "Build your next project faster",
+    "subtitle": "A Ts.ED + Next.js starter with auth, an admin panel, i18n and RTL support, and a reusable UI kit already wired up.",
+    "getStarted": "Get started",
+    "signIn": "Sign in"
+  },
+  "footer": {
+    "copyright": "© {year} App"
+  },
+  "auth": {
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "password": "Password"
+    },
+    "signIn": {
+      "title": "Sign in",
+      "subtitle": "Welcome back — enter your details to continue.",
+      "submit": "Sign in",
+      "loading": "Signing in…"
+    },
+    "signUp": {
+      "title": "Create an account",
+      "subtitle": "Start learning today — it's free to join.",
+      "submit": "Sign up",
+      "loading": "Creating account…"
+    }
+  },
+  "admin": {
+    "nav": {
+      "users": "Users"
+    },
+    "users": {
+      "title": "Users",
+      "search": "Search by name or email",
+      "allRoles": "All roles",
+      "role": {
+        "ADMIN": "Admin",
+        "TEACHER": "Teacher",
+        "STUDENT": "Student"
+      },
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "empty": "No users found"
+    }
+  },
+  "serverMessages": {
+    "AUTH_EMAIL_TAKEN": "This email is already registered",
+    "AUTH_INVALID_CREDENTIALS": "Invalid email or password",
+    "AUTH_ACCOUNT_INACTIVE": "This account is inactive",
+    "AUTH_USER_NOT_FOUND": "User not found",
+    "AUTH_UNAUTHORIZED": "Unauthorized",
+    "AUTH_SIGNED_UP": "Registered successfully",
+    "AUTH_SIGNED_OUT": "Signed out",
+    "VALIDATION_PASSWORD_SHORT": "Password is too short",
+    "VALIDATION_PASSWORD_LONG": "Password is too long",
+    "VALIDATION_PASSWORD_PERSONAL": "Password must not contain your name or email",
+    "VALIDATION_FAILED": "Validation failed",
+    "RATE_LIMITED": "Too many requests, please slow down",
+    "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "This file type is not allowed for this folder",
+    "ADMIN_CANNOT_MODIFY_SELF": "You cannot change your own account's role or active status"
+  }
+}

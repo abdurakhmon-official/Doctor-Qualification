@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "brand": "اپلیکیشن",
+    "signIn": "ورود",
+    "signUp": "ثبت‌نام",
+    "signOut": "خروج",
+    "admin": "پنل مدیریت",
+    "openMenu": "باز کردن منو",
+    "closeMenu": "بستن منو"
+  },
+  "home": {
+    "title": "پروژه بعدی خود را سریع‌تر بسازید",
+    "subtitle": "یک قالب آماده Ts.ED + Next.js با احراز هویت، پنل مدیریت، پشتیبانی چندزبانه و RTL، و یک مجموعه رابط کاربری آماده استفاده.",
+    "getStarted": "شروع کنید",
+    "signIn": "ورود"
+  },
+  "footer": {
+    "copyright": "© {year} اپلیکیشن"
+  },
+  "auth": {
+    "fields": {
+      "fullName": "نام کامل",
+      "email": "ایمیل",
+      "password": "رمز عبور"
+    },
+    "signIn": {
+      "title": "ورود",
+      "subtitle": "خوش آمدید — برای ادامه معلومات خود را وارد کنید.",
+      "submit": "ورود",
+      "loading": "در حال ورود…"
+    },
+    "signUp": {
+      "title": "ایجاد حساب",
+      "subtitle": "همین امروز یادگیری را آغاز کنید — ثبت‌نام رایگان است.",
+      "submit": "ثبت‌نام",
+      "loading": "در حال ایجاد حساب…"
+    }
+  },
+  "admin": {
+    "nav": {
+      "users": "کاربران"
+    },
+    "users": {
+      "title": "کاربران",
+      "search": "جستجو بر اساس نام یا ایمیل",
+      "allRoles": "همه نقش‌ها",
+      "role": {
+        "ADMIN": "مدیر",
+        "TEACHER": "استاد",
+        "STUDENT": "شاگرد"
+      },
+      "active": "فعال",
+      "inactive": "غیرفعال",
+      "activate": "فعال‌سازی",
+      "deactivate": "غیرفعال‌سازی",
+      "empty": "کاربری یافت نشد"
+    }
+  },
+  "serverMessages": {
+    "AUTH_EMAIL_TAKEN": "این ایمیل قبلاً ثبت‌نام شده است",
+    "AUTH_INVALID_CREDENTIALS": "ایمیل یا رمز عبور نادرست است",
+    "AUTH_ACCOUNT_INACTIVE": "این حساب فعال نیست",
+    "AUTH_USER_NOT_FOUND": "کاربر یافت نشد",
+    "AUTH_UNAUTHORIZED": "اجازه دسترسی ندارید",
+    "AUTH_SIGNED_UP": "ثبت‌نام با موفقیت انجام شد",
+    "AUTH_SIGNED_OUT": "از سیستم خارج شدید",
+    "VALIDATION_PASSWORD_SHORT": "رمز عبور بسیار کوتاه است",
+    "VALIDATION_PASSWORD_LONG": "رمز عبور بسیار طولانی است",
+    "VALIDATION_PASSWORD_PERSONAL": "رمز عبور نباید نام یا ایمیل شما را شامل شود",
+    "VALIDATION_FAILED": "اعتبارسنجی ناموفق بود",
+    "RATE_LIMITED": "درخواست‌های زیاد ارسال شد، کمی صبر کنید",
+    "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "این نوع فایل برای این پوشه مجاز نیست",
+    "ADMIN_CANNOT_MODIFY_SELF": "نمی‌توانید نقش یا وضعیت فعال بودن حساب خودتان را تغییر دهید"
+  }
+}
