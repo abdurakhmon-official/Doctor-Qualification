@@ -52,7 +52,11 @@
       "uploading": "Yuklanmoqda…"
     },
     "save": "Saqlash",
-    "saving": "Saqlanmoqda…"
+    "saving": "Saqlanmoqda…",
+    "results": {
+      "title": "Mening natijalarim",
+      "empty": "Hozircha imtihon natijalari yo'q"
+    }
   },
   "exams": {
     "title": "Imtihonlar",

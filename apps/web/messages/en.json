@@ -52,7 +52,11 @@
       "uploading": "Uploading…"
     },
     "save": "Save",
-    "saving": "Saving…"
+    "saving": "Saving…",
+    "results": {
+      "title": "My results",
+      "empty": "No exam results yet"
+    }
   },
   "exams": {
     "title": "Exams",

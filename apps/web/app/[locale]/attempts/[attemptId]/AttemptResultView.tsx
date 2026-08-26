@@ -7,18 +7,10 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Link } from '@/i18n/navigation';
 import { pickLocalized } from '@/lib/localized';
-import { cn } from '@/lib/utils';
+import { cn, LEVEL_BADGE_VARIANT } from '@/lib/utils';
 
 const CIRCLE_RADIUS = 54;
 const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
-
-const LEVEL_BADGE_VARIANT = {
-  BEGINNER: 'default',
-  INTERMEDIATE: 'warning',
-  GOOD: 'default',
-  HIGH: 'success',
-  EXPERT: 'success',
-} as const;
 
 export function AttemptResultView({ attempt }: { attempt: AttemptSubmitted }) {
   const t = useTranslations('attempts.result');

@@ -14,6 +14,7 @@ import { assetUrl, cn } from '@/lib/utils';
 import { useSession } from '@/hooks/use-auth';
 import { useUpdateProfile } from '@/hooks/use-user';
 import { useUpload } from '@/hooks/use-upload';
+import { MyResultsSection } from './MyResultsSection';
 
 export function ProfileView() {
   const t = useTranslations('profile');
@@ -107,6 +108,8 @@ export function ProfileView() {
           </form>
         </CardContent>
       </Card>
+
+      <MyResultsSection />
     </div>
   );
 }
