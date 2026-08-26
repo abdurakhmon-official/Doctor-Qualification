@@ -54,7 +54,22 @@
   },
   "admin": {
     "nav": {
-      "users": "Users"
+      "users": "Users",
+      "specialties": "Specialties"
+    },
+    "specialties": {
+      "title": "Specialties",
+      "add": "Add",
+      "edit": "Edit",
+      "empty": "No specialties found",
+      "name": "Name",
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving…"
     },
     "users": {
       "title": "Users",

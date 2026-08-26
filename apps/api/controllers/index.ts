@@ -5,4 +5,5 @@
 export * from "./auth.controller";
 export * from "./aws.controller";
 export * from "./health.controller";
+export * from "./specialty.controller";
 export * from "./user.controller";

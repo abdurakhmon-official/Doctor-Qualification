@@ -4,4 +4,5 @@
 
 export * from "./auth.input";
 export * from "./basic.search";
+export * from "./specialty.input";
 export * from "./user.input";

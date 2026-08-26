@@ -54,7 +54,22 @@
   },
   "admin": {
     "nav": {
-      "users": "Foydalanuvchilar"
+      "users": "Foydalanuvchilar",
+      "specialties": "Mutaxassisliklar"
+    },
+    "specialties": {
+      "title": "Mutaxassisliklar",
+      "add": "Qo'shish",
+      "edit": "Tahrirlash",
+      "empty": "Mutaxassisliklar topilmadi",
+      "name": "Nomi",
+      "active": "Faol",
+      "inactive": "Nofaol",
+      "activate": "Faollashtirish",
+      "deactivate": "Faolsizlantirish",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…"
     },
     "users": {
       "title": "Foydalanuvchilar",

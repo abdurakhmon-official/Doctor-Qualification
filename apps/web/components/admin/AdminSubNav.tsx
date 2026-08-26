@@ -9,7 +9,10 @@ export function AdminSubNav() {
   const pathname = usePathname();
 
   // add more tabs here as the admin panel grows
-  const tabs = [{ href: '/admin/users', label: t('users') }] as const;
+  const tabs = [
+    { href: '/admin/users', label: t('users') },
+    { href: '/admin/specialties', label: t('specialties') },
+  ] as const;
 
   return (
     <nav className="flex flex-wrap gap-1 border-b border-border pb-3">

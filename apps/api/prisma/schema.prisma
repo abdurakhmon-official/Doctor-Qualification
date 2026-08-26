@@ -63,7 +63,6 @@ model User {
   @@map("users")
 }
 
-/// LocalizedText: { uz, ru, en } — see packages/contracts/common/localized-text.ts
 model Specialty {
   id        String   @id @default(uuid())
   name      Json
@@ -175,7 +174,6 @@ model Certificate {
   @@map("certificates")
 }
 
-/// Yagona qator (singleton) — matn shabloni CertificateTemplateService.getOrCreateRow() orqali seed qilinadi.
 model CertificateTemplate {
   id        String   @id @default(uuid())
   text      String

@@ -7,4 +7,6 @@ export const queryKeys = {
   /* base keys — used as a param-less prefix with invalidateQueries (cancels all pages/filters at once) */
   adminUsersBase: ['admin-users'] as const,
   adminUsers: (query: Record<string, unknown> = {}) => [...queryKeys.adminUsersBase, query] as const,
+  specialties: ['specialties'] as const,
+  adminSpecialties: ['admin-specialties'] as const,
 };
