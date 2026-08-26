@@ -4,6 +4,7 @@
     "signIn": "Sign in",
     "signUp": "Sign up",
     "signOut": "Sign out",
+    "profile": "Profile",
     "admin": "Admin panel",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -35,6 +36,21 @@
       "submit": "Sign up",
       "loading": "Creating account…"
     }
+  },
+  "profile": {
+    "title": "My profile",
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone number"
+    },
+    "emailNote": "Email address cannot be changed",
+    "avatar": {
+      "change": "Change photo",
+      "uploading": "Uploading…"
+    },
+    "save": "Save",
+    "saving": "Saving…"
   },
   "admin": {
     "nav": {
@@ -69,6 +85,7 @@
     "VALIDATION_FAILED": "Validation failed",
     "RATE_LIMITED": "Too many requests, please slow down",
     "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "This file type is not allowed for this folder",
-    "ADMIN_CANNOT_MODIFY_SELF": "You cannot change your own account's role or active status"
+    "ADMIN_CANNOT_MODIFY_SELF": "You cannot change your own account's role or active status",
+    "PROFILE_UPDATED": "Profile updated successfully"
   }
 }

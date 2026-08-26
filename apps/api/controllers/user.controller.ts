@@ -1,9 +1,9 @@
 import { Controller, Inject } from '@tsed/di';
 import { BodyParams, PathParams, QueryParams } from '@tsed/platform-params';
 import { Get, Put } from '@tsed/schema';
-import { SetActiveInputSchema, UpdateRoleInputSchema } from '@/inputs/user.input';
-import type { SetActiveInput, UpdateRoleInput } from '@/inputs/user.input';
-import { AdminOnly, Authorized } from '@/middlewares/auth.middleware';
+import { SetActiveInputSchema, UpdateProfileInputSchema, UpdateRoleInputSchema } from '@/inputs/user.input';
+import type { SetActiveInput, UpdateProfileInput, UpdateRoleInput } from '@/inputs/user.input';
+import { AdminOnly, Authenticate, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { UserService } from '@/services/user.service';
 
@@ -16,6 +16,13 @@ export class UserController {
   @Authorized(AdminOnly())
   async list(@QueryParams() query: Record<string, unknown>) {
     return this.userService.list(query);
+  }
+
+  @Put('/me')
+  @Authorized(Authenticate())
+  async updateProfile(@BodyParams() body: UpdateProfileInput) {
+    const data = UpdateProfileInputSchema.parse(body);
+    return this.userService.updateProfile(data);
   }
 
   @Put('/:id/role')

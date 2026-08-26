@@ -1,2 +1,2 @@
-export { UpdateRoleInputSchema, SetActiveInputSchema } from '@repo/contracts';
-export type { UpdateRoleInput, SetActiveInput } from '@repo/contracts';
+export { UpdateRoleInputSchema, SetActiveInputSchema, UpdateProfileInputSchema } from '@repo/contracts';
+export type { UpdateRoleInput, SetActiveInput, UpdateProfileInput } from '@repo/contracts';

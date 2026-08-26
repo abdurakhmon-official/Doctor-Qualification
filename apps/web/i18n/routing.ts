@@ -18,6 +18,7 @@ export const routing = defineRouting({
     '/sign-up': '/sign-up',
     '/admin': '/admin',
     '/admin/users': '/admin/users',
+    '/profile': '/profile',
   },
 });
 

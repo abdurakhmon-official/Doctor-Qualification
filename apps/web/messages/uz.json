@@ -4,6 +4,7 @@
     "signIn": "Kirish",
     "signUp": "Ro'yxatdan o'tish",
     "signOut": "Chiqish",
+    "profile": "Profil",
     "admin": "Admin panel",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish"
@@ -35,6 +36,21 @@
       "submit": "Ro'yxatdan o'tish",
       "loading": "Hisob yaratilmoqda…"
     }
+  },
+  "profile": {
+    "title": "Mening profilim",
+    "fields": {
+      "fullName": "F.I.Sh.",
+      "email": "Email",
+      "phone": "Telefon raqami"
+    },
+    "emailNote": "Email manzilini o'zgartirib bo'lmaydi",
+    "avatar": {
+      "change": "Rasmni o'zgartirish",
+      "uploading": "Yuklanmoqda…"
+    },
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda…"
   },
   "admin": {
     "nav": {
@@ -69,6 +85,7 @@
     "VALIDATION_FAILED": "Tekshiruvdan o'tmadi",
     "RATE_LIMITED": "Juda ko'p so'rov yuborildi, biroz kuting",
     "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "Bu fayl turiga ushbu papkada ruxsat berilmagan",
-    "ADMIN_CANNOT_MODIFY_SELF": "O'z hisobingizning rolini yoki faolligini o'zgartira olmaysiz"
+    "ADMIN_CANNOT_MODIFY_SELF": "O'z hisobingizning rolini yoki faolligini o'zgartira olmaysiz",
+    "PROFILE_UPDATED": "Profil muvaffaqiyatli yangilandi"
   }
 }

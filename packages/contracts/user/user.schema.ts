@@ -19,12 +19,19 @@ export const SetActiveInputSchema = z.object({
   active: z.boolean(),
 });
 
+export const UpdateProfileInputSchema = z.object({
+  fullName: z.string().min(1),
+  phone: z.string().min(1).nullable().optional(),
+  avatar: z.string().min(1).nullable().optional(),
+});
+
 // types
 
 export type UserRole = z.infer<typeof UserRoleSchema>;
 export type AdminUserQuery = z.infer<typeof AdminUserQuerySchema>;
 export type UpdateRoleInput = z.infer<typeof UpdateRoleInputSchema>;
 export type SetActiveInput = z.infer<typeof SetActiveInputSchema>;
+export type UpdateProfileInput = z.infer<typeof UpdateProfileInputSchema>;
 
 // interfaces
 

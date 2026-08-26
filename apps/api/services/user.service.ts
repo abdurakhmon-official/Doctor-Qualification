@@ -4,7 +4,8 @@ import type { Request } from 'express';
 import { AdminUserQuerySchema } from '@repo/contracts';
 import prisma from '@/modules/db';
 import { badRequest, notFound, requireUserId } from '@/utils/errors.utils';
-import type { SetActiveInput, UpdateRoleInput } from '@/inputs/user.input';
+import { USER_PUBLIC_SELECT } from '@/utils/constants';
+import type { SetActiveInput, UpdateProfileInput, UpdateRoleInput } from '@/inputs/user.input';
 import { USER_ROLE } from '../generated/prisma';
 
 @Injectable()
@@ -29,6 +30,21 @@ export class UserService {
 
   private get currentUserId(): string {
     return requireUserId(this.user);
+  }
+
+  async updateProfile(input: UpdateProfileInput) {
+    const user = await prisma.user.update({
+      where: { id: this.currentUserId },
+      data: { fullName: input.fullName, phone: input.phone, avatar: input.avatar },
+      select: USER_PUBLIC_SELECT,
+    });
+
+    return {
+      success: true,
+      _code: 'PROFILE_UPDATED',
+      _message: 'Profile updated',
+      data: { ...user, isAdmin: user.role === USER_ROLE.ADMIN },
+    };
   }
 
   async getById(userId: string) {

@@ -33,6 +33,11 @@ export function Header() {
 
           {isAuthenticated ? (
             <>
+              <Link href="/profile">
+                <Button variant="ghost" size="sm">
+                  {t('profile')}
+                </Button>
+              </Link>
               {user?.role === 'ADMIN' && (
                 <Link href="/admin">
                   <Button variant="ghost" size="sm">
@@ -78,6 +83,11 @@ export function Header() {
           <nav className="flex flex-col gap-1">
             {isAuthenticated ? (
               <>
+                <Link href="/profile" onClick={closeMenu}>
+                  <Button variant="ghost" size="sm" className="w-full justify-start">
+                    {t('profile')}
+                  </Button>
+                </Link>
                 {user?.role === 'ADMIN' && (
                   <Link href="/admin" onClick={closeMenu}>
                     <Button variant="ghost" size="sm" className="w-full justify-start">
