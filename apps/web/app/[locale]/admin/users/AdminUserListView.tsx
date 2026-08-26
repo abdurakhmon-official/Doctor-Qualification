@@ -11,7 +11,7 @@ import { Select } from '@/components/ui/Select';
 import { useAdminUsers, useSetUserActive, useUpdateUserRole } from '@/hooks/use-user';
 import { useSession } from '@/hooks/use-auth';
 
-const ROLES: UserRole[] = ['ADMIN', 'TEACHER', 'STUDENT'];
+const ROLES: UserRole[] = ['ADMIN', 'USER'];
 
 export function AdminUserListView() {
   const t = useTranslations('admin.users');

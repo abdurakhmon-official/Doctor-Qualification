@@ -1,4 +1,4 @@
-name: tsed-next-starter
+name: doctor-qualification
 
 services:
   postgres:

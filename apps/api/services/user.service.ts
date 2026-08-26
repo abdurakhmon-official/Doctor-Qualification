@@ -45,8 +45,7 @@ export class UserService {
 
     return {
       total: grouped.reduce((sum, group) => sum + group._count, 0),
-      students: countOf('STUDENT'),
-      teachers: countOf('TEACHER'),
+      users: countOf('USER'),
       admins: countOf('ADMIN'),
     };
   }

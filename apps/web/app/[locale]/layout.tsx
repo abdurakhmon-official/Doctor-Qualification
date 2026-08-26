@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono, Vazirmatn } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -18,17 +18,13 @@ import '@/app/globals.css';
  * ildiz layoutdan oldin kelishi kerak, aks holda `next-intl` ishlamaydi.
  */
 
-const sans = Inter({ subsets: ['latin'], variable: '--font-sans-latin' });
-const vazirmatn = Vazirmatn({ subsets: ['arabic', 'latin'], variable: '--font-sans-fa' });
+const sans = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-sans-active' });
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
-
-/* fa/ps arab yozuvi bilan yoziladi — RTL yo'nalish shu ikkisi uchun kerak, en LTR qoladi. */
-const RTL_LOCALES = new Set(['fa', 'ps']);
 
 export const metadata: Metadata = {
   title: {
-    default: 'App',
-    template: '%s · App',
+    default: 'Doctor Qualification',
+    template: '%s · Doctor Qualification',
   },
 };
 
@@ -43,15 +39,8 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
 
   setRequestLocale(locale);
 
-  const dir = RTL_LOCALES.has(locale) ? 'rtl' : 'ltr';
-
   return (
-    <html
-      lang={locale}
-      dir={dir}
-      className={cn('h-full antialiased', sans.variable, vazirmatn.variable, mono.variable)}
-      suppressHydrationWarning
-    >
+    <html lang={locale} className={cn('h-full antialiased', sans.variable, mono.variable)} suppressHydrationWarning>
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
         <NextIntlClientProvider>
           <Providers>

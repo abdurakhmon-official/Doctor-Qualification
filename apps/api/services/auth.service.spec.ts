@@ -33,7 +33,7 @@ afterAll(async () => {
   await prisma.$disconnect();
 });
 
-/** AuthService.signup bilan bir xil bosqichlar (parol xesh, STUDENT rol). */
+/** AuthService.signup bilan bir xil bosqichlar (parol xesh, USER rol). */
 const signup = async (input: { fullName: string; email: string; password: string }) => {
   const email = input.email.toLowerCase();
   const existing = await prisma.user.findUnique({ where: { email } });
@@ -44,17 +44,17 @@ const signup = async (input: { fullName: string; email: string; password: string
       fullName: input.fullName,
       email,
       password: await argon2.hash(input.password),
-      locale: 'en',
-      role: USER_ROLE.STUDENT,
+      locale: 'uz',
+      role: USER_ROLE.USER,
     },
   });
 };
 
 describe('Auth — signup', () => {
-  it('creates a user with STUDENT role and a hashed (not plaintext) password', async () => {
+  it('creates a user with USER role and a hashed (not plaintext) password', async () => {
     const user = await signup({ fullName: 'Test Student', email: 'student@example.com', password: 'SecurePass123' });
 
-    expect(user.role).toBe(USER_ROLE.STUDENT);
+    expect(user.role).toBe(USER_ROLE.USER);
     expect(user.password).not.toBe('SecurePass123');
     expect(await argon2.verify(user.password, 'SecurePass123')).toBe(true);
   });
@@ -95,6 +95,6 @@ describe('Auth — access token', () => {
     const payload = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload;
 
     expect(payload.sub).toBe(user.id);
-    expect(payload.role).toBe(USER_ROLE.STUDENT);
+    expect(payload.role).toBe(USER_ROLE.USER);
   });
 });

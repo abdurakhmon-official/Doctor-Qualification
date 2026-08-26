@@ -3,8 +3,8 @@ import { z } from 'zod';
 // schemas
 
 export const LocalizedTextSchema = z.object({
-  fa: z.string().min(1),
-  ps: z.string().min(1),
+  uz: z.string().min(1),
+  ru: z.string().min(1),
   en: z.string().min(1),
 });
 

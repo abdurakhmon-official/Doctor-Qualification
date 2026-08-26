@@ -6,7 +6,7 @@ import { usePathname, useRouter } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 
-const LABELS: Record<string, string> = { fa: 'دری', ps: 'پښتو', en: 'EN' };
+const LABELS: Record<string, string> = { uz: "UZ", ru: 'RU', en: 'EN' };
 
 export function LanguageSwitcher() {
   const locale = useLocale();

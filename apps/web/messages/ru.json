@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "brand": "Doctor Qualification",
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "signOut": "Выйти",
+    "admin": "Админ-панель",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню"
+  },
+  "home": {
+    "title": "Платформа оценки знаний и квалификации врачей",
+    "subtitle": "Пройдите онлайн-экзамен по специальности, узнайте свой уровень квалификации и получите подтверждаемый цифровой сертификат.",
+    "getStarted": "Начать",
+    "signIn": "Войти"
+  },
+  "footer": {
+    "copyright": "© {year} Doctor Qualification"
+  },
+  "auth": {
+    "fields": {
+      "fullName": "Ф.И.О.",
+      "email": "Email",
+      "password": "Пароль"
+    },
+    "signIn": {
+      "title": "Войти",
+      "subtitle": "С возвращением — введите данные, чтобы продолжить.",
+      "submit": "Войти",
+      "loading": "Вход…"
+    },
+    "signUp": {
+      "title": "Создать аккаунт",
+      "subtitle": "Создайте аккаунт и начните сдавать экзамены — регистрация бесплатна.",
+      "submit": "Зарегистрироваться",
+      "loading": "Создание аккаунта…"
+    }
+  },
+  "admin": {
+    "nav": {
+      "users": "Пользователи"
+    },
+    "users": {
+      "title": "Пользователи",
+      "search": "Поиск по имени или email",
+      "allRoles": "Все роли",
+      "role": {
+        "ADMIN": "Админ",
+        "USER": "Врач"
+      },
+      "active": "Активен",
+      "inactive": "Неактивен",
+      "activate": "Активировать",
+      "deactivate": "Деактивировать",
+      "empty": "Пользователи не найдены"
+    }
+  },
+  "serverMessages": {
+    "AUTH_EMAIL_TAKEN": "Этот email уже зарегистрирован",
+    "AUTH_INVALID_CREDENTIALS": "Неверный email или пароль",
+    "AUTH_ACCOUNT_INACTIVE": "Этот аккаунт неактивен",
+    "AUTH_USER_NOT_FOUND": "Пользователь не найден",
+    "AUTH_UNAUTHORIZED": "Нет доступа",
+    "AUTH_SIGNED_UP": "Регистрация прошла успешно",
+    "AUTH_SIGNED_OUT": "Вы вышли из системы",
+    "VALIDATION_PASSWORD_SHORT": "Пароль слишком короткий",
+    "VALIDATION_PASSWORD_LONG": "Пароль слишком длинный",
+    "VALIDATION_PASSWORD_PERSONAL": "Пароль не должен содержать ваше имя или email",
+    "VALIDATION_FAILED": "Проверка не пройдена",
+    "RATE_LIMITED": "Слишком много запросов, подождите немного",
+    "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "Этот тип файла не разрешён для данной папки",
+    "ADMIN_CANNOT_MODIFY_SELF": "Вы не можете изменить роль или активность своей учётной записи"
+  }
+}

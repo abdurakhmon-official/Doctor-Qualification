@@ -42,7 +42,7 @@ export interface UserOutput {
   id: string;
   fullName: string;
   email: string;
-  role: 'ADMIN' | 'TEACHER' | 'STUDENT';
+  role: 'ADMIN' | 'USER';
   phone: string | null;
   avatar: string | null;
   locale: string;

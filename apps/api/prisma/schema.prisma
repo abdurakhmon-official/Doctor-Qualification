@@ -17,8 +17,27 @@ datasource db {
 
 enum USER_ROLE {
   ADMIN
-  TEACHER
-  STUDENT
+  USER
+}
+
+enum EXAM_STATUS {
+  DRAFT
+  PUBLISHED
+}
+
+enum QUESTION_DIFFICULTY {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum QUALIFICATION_LEVEL {
+  BEGINNER
+  INTERMEDIATE
+  GOOD
+  HIGH
+  EXPERT
 }
 
 model User {
@@ -26,10 +45,10 @@ model User {
   fullName          String    @map("full_name")
   email             String    @unique
   password          String
-  role              USER_ROLE @default(STUDENT)
+  role              USER_ROLE @default(USER)
   phone             String?
   avatar            String?
-  locale            String    @default("en")
+  locale            String    @default("uz")
   emailVerified     Boolean   @default(false) @map("email_verified")
   passwordChangedAt DateTime? @map("password_changed_at")
   active            Boolean   @default(true)
@@ -37,6 +56,130 @@ model User {
   updatedAt         DateTime  @updatedAt @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
 
+  examAttempts ExamAttempt[]
+  certificates Certificate[]
+
   @@index([email])
   @@map("users")
+}
+
+/// LocalizedText: { uz, ru, en } — see packages/contracts/common/localized-text.ts
+model Specialty {
+  id        String   @id @default(uuid())
+  name      Json
+  imageKey  String?  @map("image_key")
+  isActive  Boolean  @default(true) @map("is_active")
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  exams Exam[]
+
+  @@map("specialties")
+}
+
+model Exam {
+  id                  String      @id @default(uuid())
+  specialtyId         String      @map("specialty_id")
+  title               Json
+  description         Json?
+  durationMinutes     Int         @map("duration_minutes")
+  minCertificateScore Int         @default(0) @map("min_certificate_score")
+  status              EXAM_STATUS @default(DRAFT)
+  createdAt           DateTime    @default(now()) @map("created_at")
+  updatedAt           DateTime    @updatedAt @map("updated_at")
+
+  specialty    Specialty     @relation(fields: [specialtyId], references: [id], onDelete: Restrict)
+  questions    Question[]
+  attempts     ExamAttempt[]
+  certificates Certificate[]
+
+  @@index([specialtyId])
+  @@index([status])
+  @@map("exams")
+}
+
+model Question {
+  id           String               @id @default(uuid())
+  examId       String               @map("exam_id")
+  text         Json
+  options      Json
+  correctIndex Int                  @map("correct_index")
+  difficulty   QUESTION_DIFFICULTY
+  imageKey     String?              @map("image_key")
+  order        Int                  @default(0)
+  createdAt    DateTime             @default(now()) @map("created_at")
+  updatedAt    DateTime             @updatedAt @map("updated_at")
+
+  exam Exam @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@index([examId, order])
+  @@map("questions")
+}
+
+model ExamAttempt {
+  id                  String                @id @default(uuid())
+  examId              String                @map("exam_id")
+  userId              String                @map("user_id")
+  minCertificateScore Int                   @map("min_certificate_score")
+  questionCount       Int                   @map("question_count")
+  answers             Json?
+  score               Int?
+  correctCount        Int?                  @map("correct_count")
+  level               QUALIFICATION_LEVEL?
+  timeSpentSeconds    Int?                  @map("time_spent_seconds")
+  startedAt           DateTime              @default(now()) @map("started_at")
+  submittedAt         DateTime?             @map("submitted_at")
+
+  exam        Exam         @relation(fields: [examId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  certificate Certificate?
+
+  @@index([examId, userId])
+  @@index([userId])
+  @@map("exam_attempts")
+}
+
+model RatingSettings {
+  id                  String   @id @default(uuid())
+  avgScoreWeight      Float    @default(0.4) @map("avg_score_weight")
+  bestScoreWeight     Float    @default(0.2) @map("best_score_weight")
+  consistencyWeight   Float    @default(0.2) @map("consistency_weight")
+  attemptCountWeight  Float    @default(0.2) @map("attempt_count_weight")
+  minAttemptsRequired Int      @default(1) @map("min_attempts_required")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("rating_settings")
+}
+
+model Certificate {
+  id            String               @id @default(uuid())
+  certificateId String               @unique @map("certificate_id")
+  userId        String               @map("user_id")
+  examId        String               @map("exam_id")
+  attemptId     String               @unique @map("attempt_id")
+  userFullName  String               @map("user_full_name")
+  specialtyName Json                 @map("specialty_name")
+  score         Int
+  level         QUALIFICATION_LEVEL
+  issuedAt      DateTime             @default(now()) @map("issued_at")
+  expiresAt     DateTime             @map("expires_at")
+  revoked       Boolean              @default(false)
+  revokedAt     DateTime?            @map("revoked_at")
+
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam    Exam        @relation(fields: [examId], references: [id], onDelete: Cascade)
+  attempt ExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("certificates")
+}
+
+/// Yagona qator (singleton) — matn shabloni CertificateTemplateService.getOrCreateRow() orqali seed qilinadi.
+model CertificateTemplate {
+  id        String   @id @default(uuid())
+  text      String
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("certificate_templates")
 }

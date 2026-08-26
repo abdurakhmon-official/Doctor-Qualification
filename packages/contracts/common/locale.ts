@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-export const LOCALES = ['fa', 'ps', 'en'] as const;
-export const DEFAULT_LOCALE: Locale = 'fa';
+export const LOCALES = ['uz', 'ru', 'en'] as const;
+export const DEFAULT_LOCALE: Locale = 'uz';
 
 // schemas
 

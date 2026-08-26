@@ -1,10 +1,10 @@
 import type { Locale } from '@repo/contracts';
 import { en } from './en.messages';
-import { fa } from './fa.messages';
-import { ps } from './ps.messages';
+import { uz } from './uz.messages';
+import { ru } from './ru.messages';
 import type { MessageCode } from './message-codes';
 
-const CATALOGS: Record<Locale, Record<MessageCode, string>> = { en, fa, ps };
+const CATALOGS: Record<Locale, Record<MessageCode, string>> = { en, uz, ru };
 
 export const translate = (code: string, locale: Locale): string | null => {
   const catalog = CATALOGS[locale];

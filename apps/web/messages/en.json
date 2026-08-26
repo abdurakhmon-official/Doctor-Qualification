@@ -1,6 +1,6 @@
 {
   "nav": {
-    "brand": "App",
+    "brand": "Doctor Qualification",
     "signIn": "Sign in",
     "signUp": "Sign up",
     "signOut": "Sign out",
@@ -9,13 +9,13 @@
     "closeMenu": "Close menu"
   },
   "home": {
-    "title": "Build your next project faster",
-    "subtitle": "A Ts.ED + Next.js starter with auth, an admin panel, i18n and RTL support, and a reusable UI kit already wired up.",
+    "title": "Assess and confirm doctors' qualification",
+    "subtitle": "Take an online exam by specialty, find out your qualification level, and get a verifiable digital certificate.",
     "getStarted": "Get started",
     "signIn": "Sign in"
   },
   "footer": {
-    "copyright": "© {year} App"
+    "copyright": "© {year} Doctor Qualification"
   },
   "auth": {
     "fields": {
@@ -31,7 +31,7 @@
     },
     "signUp": {
       "title": "Create an account",
-      "subtitle": "Start learning today — it's free to join.",
+      "subtitle": "Create your account and start taking qualification exams — it's free to join.",
       "submit": "Sign up",
       "loading": "Creating account…"
     }
@@ -46,8 +46,7 @@
       "allRoles": "All roles",
       "role": {
         "ADMIN": "Admin",
-        "TEACHER": "Teacher",
-        "STUDENT": "Student"
+        "USER": "Doctor"
       },
       "active": "Active",
       "inactive": "Inactive",

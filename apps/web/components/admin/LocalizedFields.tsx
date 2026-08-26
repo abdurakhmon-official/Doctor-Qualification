@@ -4,8 +4,8 @@ import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 
 const LOCALES = [
-  { code: 'fa', label: 'فارسی', dir: 'rtl' },
-  { code: 'ps', label: 'پښتو', dir: 'rtl' },
+  { code: 'uz', label: "O'zbek", dir: 'ltr' },
+  { code: 'ru', label: 'Русский', dir: 'ltr' },
   { code: 'en', label: 'EN', dir: 'ltr' },
 ] as const;
 

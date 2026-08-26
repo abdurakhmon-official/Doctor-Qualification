@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 // schemas
 
-export const UserRoleSchema = z.enum(['ADMIN', 'TEACHER', 'STUDENT']);
+export const UserRoleSchema = z.enum(['ADMIN', 'USER']);
 
 export const AdminUserQuerySchema = z.object({
   role: UserRoleSchema.optional(),

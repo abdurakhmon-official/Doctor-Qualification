@@ -101,7 +101,7 @@ export type { RoleRequirements };
 
 export const AdminOnly = (): RoleRequirements => Authenticate(USER_ROLE.ADMIN);
 
-export const TeacherOnly = (): RoleRequirements => Authenticate(USER_ROLE.TEACHER);
+export const UserOnly = (): RoleRequirements => Authenticate(USER_ROLE.USER);
 
 export const Authorized = (options: RoleRequirements = { role: null }): MethodDecorator => {
   return useDecorators(

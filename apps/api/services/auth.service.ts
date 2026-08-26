@@ -39,7 +39,7 @@ export class AuthService {
         email,
         password: await hashPassword(input.password),
         locale: input.locale,
-        role: USER_ROLE.STUDENT,
+        role: USER_ROLE.USER,
       },
       select: USER_PUBLIC_SELECT,
     });
