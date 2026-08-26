@@ -5,6 +5,7 @@
     "signUp": "Регистрация",
     "signOut": "Выйти",
     "profile": "Профиль",
+    "exams": "Экзамены",
     "admin": "Админ-панель",
     "openMenu": "Открыть меню",
     "closeMenu": "Закрыть меню"
@@ -52,6 +53,48 @@
     },
     "save": "Сохранить",
     "saving": "Сохранение…"
+  },
+  "exams": {
+    "title": "Экзамены",
+    "allSpecialties": "Все специальности",
+    "empty": "Экзаменов пока нет",
+    "questionCount": "{count} вопросов",
+    "duration": "{minutes} мин",
+    "start": "Начать",
+    "info": {
+      "questions": "Вопросы",
+      "duration": "Длительность",
+      "minCertificateScore": "Для сертификата"
+    }
+  },
+  "attempts": {
+    "take": {
+      "previous": "Назад",
+      "next": "Далее",
+      "finish": "Завершить",
+      "submitting": "Отправка…",
+      "confirmFinishTitle": "Завершить экзамен",
+      "confirmFinish": "Вы уверены, что хотите завершить экзамен? После завершения ответы изменить нельзя.",
+      "confirmFinishAnswered": "Отвечено {answered} / {total} вопросов.",
+      "confirmFinishCancel": "Отмена"
+    },
+    "result": {
+      "level": {
+        "BEGINNER": "Начальный",
+        "INTERMEDIATE": "Средний",
+        "GOOD": "Хороший",
+        "HIGH": "Высокий",
+        "EXPERT": "Экспертный"
+      },
+      "certificateIssued": "Поздравляем! Сертификат выдан",
+      "certificateNotIssued": "Для сертификата нужно набрать минимум {minScore}%",
+      "totalQuestions": "Всего вопросов",
+      "correct": "Правильно",
+      "incorrect": "Неправильно",
+      "timeSpent": "Затраченное время",
+      "backToExams": "Вернуться к экзаменам",
+      "viewHistory": "Мои результаты"
+    }
   },
   "admin": {
     "nav": {

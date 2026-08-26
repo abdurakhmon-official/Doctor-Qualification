@@ -4,7 +4,7 @@ import { routing } from '@/i18n/routing';
 
 const intl = createIntlMiddleware(routing);
 
-const PROTECTED = ['/admin', '/profile'];
+const PROTECTED = ['/admin', '/profile', '/exams', '/attempts'];
 
 const GUEST_ONLY = ['/sign-in', '/sign-up'];
 

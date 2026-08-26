@@ -5,6 +5,7 @@
     "signUp": "Ro'yxatdan o'tish",
     "signOut": "Chiqish",
     "profile": "Profil",
+    "exams": "Imtihonlar",
     "admin": "Admin panel",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish"
@@ -52,6 +53,48 @@
     },
     "save": "Saqlash",
     "saving": "Saqlanmoqda…"
+  },
+  "exams": {
+    "title": "Imtihonlar",
+    "allSpecialties": "Barcha mutaxassisliklar",
+    "empty": "Hozircha imtihonlar yo'q",
+    "questionCount": "{count} ta savol",
+    "duration": "{minutes} daqiqa",
+    "start": "Boshlash",
+    "info": {
+      "questions": "Savollar",
+      "duration": "Davomiyligi",
+      "minCertificateScore": "Sertifikat uchun"
+    }
+  },
+  "attempts": {
+    "take": {
+      "previous": "Oldingi",
+      "next": "Keyingi",
+      "finish": "Yakunlash",
+      "submitting": "Yuborilmoqda…",
+      "confirmFinishTitle": "Imtihonni yakunlash",
+      "confirmFinish": "Imtihonni yakunlashni tasdiqlaysizmi? Yakunlangandan so'ng javoblarni o'zgartirib bo'lmaydi.",
+      "confirmFinishAnswered": "{answered} / {total} savolga javob berdingiz.",
+      "confirmFinishCancel": "Bekor qilish"
+    },
+    "result": {
+      "level": {
+        "BEGINNER": "Boshlang'ich",
+        "INTERMEDIATE": "O'rta",
+        "GOOD": "Yaxshi",
+        "HIGH": "Yuqori",
+        "EXPERT": "Ekspert"
+      },
+      "certificateIssued": "Tabriklaymiz! Sertifikat berildi",
+      "certificateNotIssued": "Sertifikat olish uchun kamida {minScore}% ball kerak",
+      "totalQuestions": "Jami savollar",
+      "correct": "To'g'ri",
+      "incorrect": "Noto'g'ri",
+      "timeSpent": "Sarflangan vaqt",
+      "backToExams": "Imtihonlarga qaytish",
+      "viewHistory": "Natijalarim"
+    }
   },
   "admin": {
     "nav": {

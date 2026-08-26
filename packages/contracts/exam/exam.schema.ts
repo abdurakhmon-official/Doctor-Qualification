@@ -38,12 +38,13 @@ export type AdminExamQuery = z.infer<typeof AdminExamQuerySchema>;
 export interface ExamOutput {
   id: string;
   specialtyId: string;
+  specialtyName: LocalizedText;
   title: LocalizedText;
   description: LocalizedText | null;
   durationMinutes: number;
   minCertificateScore: number;
   status: ExamStatus;
-  questionCount?: number;
+  questionCount: number;
 }
 
 export interface AdminExamListItem {

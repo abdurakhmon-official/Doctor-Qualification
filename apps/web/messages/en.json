@@ -5,6 +5,7 @@
     "signUp": "Sign up",
     "signOut": "Sign out",
     "profile": "Profile",
+    "exams": "Exams",
     "admin": "Admin panel",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -52,6 +53,48 @@
     },
     "save": "Save",
     "saving": "Saving…"
+  },
+  "exams": {
+    "title": "Exams",
+    "allSpecialties": "All specialties",
+    "empty": "No exams yet",
+    "questionCount": "{count} questions",
+    "duration": "{minutes} min",
+    "start": "Start",
+    "info": {
+      "questions": "Questions",
+      "duration": "Duration",
+      "minCertificateScore": "For certificate"
+    }
+  },
+  "attempts": {
+    "take": {
+      "previous": "Previous",
+      "next": "Next",
+      "finish": "Finish",
+      "submitting": "Submitting…",
+      "confirmFinishTitle": "Finish exam",
+      "confirmFinish": "Are you sure you want to finish the exam? Answers cannot be changed after submitting.",
+      "confirmFinishAnswered": "Answered {answered} / {total} questions.",
+      "confirmFinishCancel": "Cancel"
+    },
+    "result": {
+      "level": {
+        "BEGINNER": "Beginner",
+        "INTERMEDIATE": "Intermediate",
+        "GOOD": "Good",
+        "HIGH": "High",
+        "EXPERT": "Expert"
+      },
+      "certificateIssued": "Congratulations! Certificate issued",
+      "certificateNotIssued": "A minimum score of {minScore}% is required for a certificate",
+      "totalQuestions": "Total questions",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "timeSpent": "Time spent",
+      "backToExams": "Back to exams",
+      "viewHistory": "My results"
+    }
   },
   "admin": {
     "nav": {

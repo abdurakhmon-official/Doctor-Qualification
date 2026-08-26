@@ -33,6 +33,11 @@ export function Header() {
 
           {isAuthenticated ? (
             <>
+              <Link href="/exams">
+                <Button variant="ghost" size="sm">
+                  {t('exams')}
+                </Button>
+              </Link>
               <Link href="/profile">
                 <Button variant="ghost" size="sm">
                   {t('profile')}
@@ -83,6 +88,11 @@ export function Header() {
           <nav className="flex flex-col gap-1">
             {isAuthenticated ? (
               <>
+                <Link href="/exams" onClick={closeMenu}>
+                  <Button variant="ghost" size="sm" className="w-full justify-start">
+                    {t('exams')}
+                  </Button>
+                </Link>
                 <Link href="/profile" onClick={closeMenu}>
                   <Button variant="ghost" size="sm" className="w-full justify-start">
                     {t('profile')}

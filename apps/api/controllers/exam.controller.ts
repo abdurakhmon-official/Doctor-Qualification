@@ -5,9 +5,10 @@ import { CreateExamInputSchema, UpdateExamInputSchema } from '@/inputs/exam.inpu
 import type { CreateExamInput, UpdateExamInput } from '@/inputs/exam.input';
 import { CreateQuestionInputSchema } from '@/inputs/question.input';
 import type { CreateQuestionInput } from '@/inputs/question.input';
-import { AdminOnly, Authorized } from '@/middlewares/auth.middleware';
+import { AdminOnly, Authenticate, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { ExamService } from '@/services/exam.service';
+import { ExamAttemptService } from '@/services/exam-attempt.service';
 import { QuestionService } from '@/services/question.service';
 
 @Controller('/exams')
@@ -16,12 +17,21 @@ export class ExamController {
   private examService!: ExamService;
 
   @Inject()
+  private examAttemptService!: ExamAttemptService;
+
+  @Inject()
   private questionService!: QuestionService;
 
   @Get('/')
   @Authorized(AdminOnly())
   async list(@QueryParams() query: Record<string, unknown>) {
     return this.examService.adminList(query);
+  }
+
+  @Get('/published')
+  @Authorized(Authenticate())
+  async listPublished(@QueryParams('specialtyId') specialtyId?: string) {
+    return this.examAttemptService.listPublished(specialtyId);
   }
 
   @Get('/:examId')
