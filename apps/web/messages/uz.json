@@ -22,7 +22,8 @@
     "fields": {
       "fullName": "F.I.Sh.",
       "email": "Email",
-      "password": "Parol"
+      "password": "Parol",
+      "selectPlaceholder": "Tanlang"
     },
     "signIn": {
       "title": "Kirish",
@@ -55,7 +56,57 @@
   "admin": {
     "nav": {
       "users": "Foydalanuvchilar",
-      "specialties": "Mutaxassisliklar"
+      "specialties": "Mutaxassisliklar",
+      "exams": "Imtihonlar"
+    },
+    "exams": {
+      "title": "Imtihonlar",
+      "add": "Qo'shish",
+      "create": "Yaratish",
+      "edit": "Tahrirlash",
+      "delete": "O'chirish",
+      "empty": "Imtihonlar topilmadi",
+      "backToList": "Imtihonlar ro'yxatiga qaytish",
+      "fields": {
+        "title": "Nomi",
+        "specialty": "Mutaxassislik",
+        "description": "Tavsif",
+        "durationMinutes": "Davomiyligi (daqiqa)",
+        "minCertificateScore": "Sertifikat uchun minimal ball (%)"
+      },
+      "status": {
+        "DRAFT": "Qoralama",
+        "PUBLISHED": "E'lon qilingan"
+      },
+      "publish": "E'lon qilish",
+      "unpublish": "Qoralamaga qaytarish",
+      "save": "Saqlash",
+      "allSpecialties": "Barcha mutaxassisliklar",
+      "allStatuses": "Barcha holatlar",
+      "questionCount": "{count} ta savol",
+      "duration": "{minutes} daqiqa",
+      "questions": {
+        "title": "Savollar",
+        "add": "Savol qo'shish",
+        "empty": "Savollar yo'q",
+        "edit": "Tahrirlash",
+        "delete": "O'chirish",
+        "save": "Saqlash",
+        "cancel": "Bekor qilish",
+        "text": "Savol matni",
+        "optionA": "A varianti",
+        "optionB": "B varianti",
+        "optionC": "C varianti",
+        "optionD": "D varianti",
+        "correctAnswer": "To'g'ri javob",
+        "difficulty": "Daraja",
+        "difficultyLevel": {
+          "BEGINNER": "Boshlang'ich",
+          "INTERMEDIATE": "O'rta",
+          "ADVANCED": "Yuqori",
+          "EXPERT": "Ekspert"
+        }
+      }
     },
     "specialties": {
       "title": "Mutaxassisliklar",

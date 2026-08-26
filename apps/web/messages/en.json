@@ -22,7 +22,8 @@
     "fields": {
       "fullName": "Full name",
       "email": "Email",
-      "password": "Password"
+      "password": "Password",
+      "selectPlaceholder": "Select"
     },
     "signIn": {
       "title": "Sign in",
@@ -55,7 +56,57 @@
   "admin": {
     "nav": {
       "users": "Users",
-      "specialties": "Specialties"
+      "specialties": "Specialties",
+      "exams": "Exams"
+    },
+    "exams": {
+      "title": "Exams",
+      "add": "Add",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete",
+      "empty": "No exams found",
+      "backToList": "Back to exams list",
+      "fields": {
+        "title": "Title",
+        "specialty": "Specialty",
+        "description": "Description",
+        "durationMinutes": "Duration (minutes)",
+        "minCertificateScore": "Minimum score for certificate (%)"
+      },
+      "status": {
+        "DRAFT": "Draft",
+        "PUBLISHED": "Published"
+      },
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "save": "Save",
+      "allSpecialties": "All specialties",
+      "allStatuses": "All statuses",
+      "questionCount": "{count} questions",
+      "duration": "{minutes} min",
+      "questions": {
+        "title": "Questions",
+        "add": "Add question",
+        "empty": "No questions yet",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "text": "Question text",
+        "optionA": "Option A",
+        "optionB": "Option B",
+        "optionC": "Option C",
+        "optionD": "Option D",
+        "correctAnswer": "Correct answer",
+        "difficulty": "Difficulty",
+        "difficultyLevel": {
+          "BEGINNER": "Beginner",
+          "INTERMEDIATE": "Intermediate",
+          "ADVANCED": "Advanced",
+          "EXPERT": "Expert"
+        }
+      }
     },
     "specialties": {
       "title": "Specialties",

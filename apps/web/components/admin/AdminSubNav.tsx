@@ -12,6 +12,7 @@ export function AdminSubNav() {
   const tabs = [
     { href: '/admin/users', label: t('users') },
     { href: '/admin/specialties', label: t('specialties') },
+    { href: '/admin/exams', label: t('exams') },
   ] as const;
 
   return (

@@ -19,6 +19,9 @@ export const routing = defineRouting({
     '/admin': '/admin',
     '/admin/users': '/admin/users',
     '/admin/specialties': '/admin/specialties',
+    '/admin/exams': '/admin/exams',
+    '/admin/exams/new': '/admin/exams/new',
+    '/admin/exams/[examId]': '/admin/exams/[examId]',
     '/profile': '/profile',
   },
 });

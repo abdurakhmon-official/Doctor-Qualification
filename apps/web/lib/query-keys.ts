@@ -9,4 +9,7 @@ export const queryKeys = {
   adminUsers: (query: Record<string, unknown> = {}) => [...queryKeys.adminUsersBase, query] as const,
   specialties: ['specialties'] as const,
   adminSpecialties: ['admin-specialties'] as const,
+  adminExamsBase: ['admin-exams'] as const,
+  adminExams: (query: Record<string, unknown> = {}) => [...queryKeys.adminExamsBase, query] as const,
+  adminExam: (examId: string) => ['admin-exam', examId] as const,
 };

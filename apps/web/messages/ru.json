@@ -22,7 +22,8 @@
     "fields": {
       "fullName": "Ф.И.О.",
       "email": "Email",
-      "password": "Пароль"
+      "password": "Пароль",
+      "selectPlaceholder": "Выберите"
     },
     "signIn": {
       "title": "Войти",
@@ -55,7 +56,57 @@
   "admin": {
     "nav": {
       "users": "Пользователи",
-      "specialties": "Специальности"
+      "specialties": "Специальности",
+      "exams": "Экзамены"
+    },
+    "exams": {
+      "title": "Экзамены",
+      "add": "Добавить",
+      "create": "Создать",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "empty": "Экзамены не найдены",
+      "backToList": "Вернуться к списку экзаменов",
+      "fields": {
+        "title": "Название",
+        "specialty": "Специальность",
+        "description": "Описание",
+        "durationMinutes": "Длительность (мин)",
+        "minCertificateScore": "Минимальный балл для сертификата (%)"
+      },
+      "status": {
+        "DRAFT": "Черновик",
+        "PUBLISHED": "Опубликован"
+      },
+      "publish": "Опубликовать",
+      "unpublish": "Вернуть в черновик",
+      "save": "Сохранить",
+      "allSpecialties": "Все специальности",
+      "allStatuses": "Все статусы",
+      "questionCount": "{count} вопросов",
+      "duration": "{minutes} мин",
+      "questions": {
+        "title": "Вопросы",
+        "add": "Добавить вопрос",
+        "empty": "Вопросов нет",
+        "edit": "Редактировать",
+        "delete": "Удалить",
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "text": "Текст вопроса",
+        "optionA": "Вариант A",
+        "optionB": "Вариант B",
+        "optionC": "Вариант C",
+        "optionD": "Вариант D",
+        "correctAnswer": "Правильный ответ",
+        "difficulty": "Уровень",
+        "difficultyLevel": {
+          "BEGINNER": "Начальный",
+          "INTERMEDIATE": "Средний",
+          "ADVANCED": "Высокий",
+          "EXPERT": "Экспертный"
+        }
+      }
     },
     "specialties": {
       "title": "Специальности",
