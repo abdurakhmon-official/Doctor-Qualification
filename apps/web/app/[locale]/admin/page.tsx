@@ -1,6 +1,9 @@
-import { redirect } from '@/i18n/navigation';
+import { setRequestLocale } from 'next-intl/server';
+import { AdminDashboardView } from './AdminDashboardView';
 
 export default async function AdminPage({ params }: PageProps<'/[locale]/admin'>) {
   const { locale } = await params;
-  redirect({ href: '/admin/users', locale });
+  setRequestLocale(locale);
+
+  return <AdminDashboardView />;
 }

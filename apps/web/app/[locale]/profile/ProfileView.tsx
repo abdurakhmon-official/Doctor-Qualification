@@ -15,6 +15,7 @@ import { useSession } from '@/hooks/use-auth';
 import { useUpdateProfile } from '@/hooks/use-user';
 import { useUpload } from '@/hooks/use-upload';
 import { MyResultsSection } from './MyResultsSection';
+import { MyStatsRow } from './MyStatsRow';
 
 export function ProfileView() {
   const t = useTranslations('profile');
@@ -109,6 +110,7 @@ export function ProfileView() {
         </CardContent>
       </Card>
 
+      <MyStatsRow />
       <MyResultsSection />
     </div>
   );

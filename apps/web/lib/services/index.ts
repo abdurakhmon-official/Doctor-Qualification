@@ -1,5 +1,6 @@
 export * from './auth.service';
 export * from './certificate.service';
+export * from './dashboard.service';
 export * from './exam.service';
 export * from './exam-attempt.service';
 export * from './question.service';

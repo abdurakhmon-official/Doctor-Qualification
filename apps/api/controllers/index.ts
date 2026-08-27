@@ -5,6 +5,7 @@
 export * from "./auth.controller";
 export * from "./aws.controller";
 export * from "./certificate.controller";
+export * from "./dashboard.controller";
 export * from "./exam-attempt.controller";
 export * from "./exam.controller";
 export * from "./health.controller";

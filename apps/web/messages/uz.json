@@ -57,6 +57,12 @@
     "results": {
       "title": "Mening natijalarim",
       "empty": "Hozircha imtihon natijalari yo'q"
+    },
+    "stats": {
+      "attemptCount": "Topshirilgan imtihonlar",
+      "avgScore": "O'rtacha natija",
+      "bestScore": "Eng yaxshi natija",
+      "certificateCount": "Sertifikatlar"
     }
   },
   "exams": {
@@ -127,8 +133,26 @@
       "bodyText": "Ushbu sertifikat quyidagi shaxsning mutaxassislik bo'yicha malaka imtihonidan muvaffaqiyatli o'tganligini tasdiqlaydi:"
     }
   },
+  "dashboard": {
+    "admin": {
+      "title": "Dashboard",
+      "stats": {
+        "userCount": "Shifokorlar",
+        "specialtyCount": "Mutaxassislik",
+        "examCount": "Imtihonlar",
+        "questionCount": "Savollar",
+        "certificateCount": "Sertifikat",
+        "todaySubmissions": "Bugungi"
+      },
+      "userGrowthTitle": "Yangi ro'yxatdan o'tishlar (14 kun)",
+      "submissionsTitle": "Topshirilgan imtihonlar (14 kun)",
+      "scoresBySpecialtyTitle": "Mutaxassislik bo'yicha o'rtacha natija",
+      "chartEmpty": "Hozircha ma'lumot yo'q"
+    }
+  },
   "admin": {
     "nav": {
+      "dashboard": "Dashboard",
       "users": "Foydalanuvchilar",
       "specialties": "Mutaxassisliklar",
       "exams": "Imtihonlar",

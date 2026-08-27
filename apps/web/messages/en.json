@@ -57,6 +57,12 @@
     "results": {
       "title": "My results",
       "empty": "No exam results yet"
+    },
+    "stats": {
+      "attemptCount": "Exams taken",
+      "avgScore": "Average score",
+      "bestScore": "Best score",
+      "certificateCount": "Certificates"
     }
   },
   "exams": {
@@ -127,8 +133,26 @@
       "bodyText": "This certificate confirms that the person named below has successfully passed a qualification exam in:"
     }
   },
+  "dashboard": {
+    "admin": {
+      "title": "Dashboard",
+      "stats": {
+        "userCount": "Doctors",
+        "specialtyCount": "Specialties",
+        "examCount": "Exams",
+        "questionCount": "Questions",
+        "certificateCount": "Certificates",
+        "todaySubmissions": "Today"
+      },
+      "userGrowthTitle": "New sign-ups (14 days)",
+      "submissionsTitle": "Exams submitted (14 days)",
+      "scoresBySpecialtyTitle": "Average score by specialty",
+      "chartEmpty": "No data yet"
+    }
+  },
   "admin": {
     "nav": {
+      "dashboard": "Dashboard",
       "users": "Users",
       "specialties": "Specialties",
       "exams": "Exams",

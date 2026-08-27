@@ -57,6 +57,12 @@
     "results": {
       "title": "Мои результаты",
       "empty": "Пока нет результатов экзаменов"
+    },
+    "stats": {
+      "attemptCount": "Сданные экзамены",
+      "avgScore": "Средний результат",
+      "bestScore": "Лучший результат",
+      "certificateCount": "Сертификаты"
     }
   },
   "exams": {
@@ -127,8 +133,26 @@
       "bodyText": "Настоящий сертификат подтверждает, что указанное лицо успешно прошло квалификационный экзамен по специальности:"
     }
   },
+  "dashboard": {
+    "admin": {
+      "title": "Дашборд",
+      "stats": {
+        "userCount": "Врачи",
+        "specialtyCount": "Специальности",
+        "examCount": "Экзамены",
+        "questionCount": "Вопросы",
+        "certificateCount": "Сертификаты",
+        "todaySubmissions": "Сегодня"
+      },
+      "userGrowthTitle": "Новые регистрации (14 дней)",
+      "submissionsTitle": "Сданные экзамены (14 дней)",
+      "scoresBySpecialtyTitle": "Средний результат по специальности",
+      "chartEmpty": "Пока нет данных"
+    }
+  },
   "admin": {
     "nav": {
+      "dashboard": "Дашборд",
       "users": "Пользователи",
       "specialties": "Специальности",
       "exams": "Экзамены",

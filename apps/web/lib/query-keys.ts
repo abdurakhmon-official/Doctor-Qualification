@@ -19,4 +19,7 @@ export const queryKeys = {
   certificate: (certificateId: string) => ['certificate', certificateId] as const,
   adminCertificatesBase: ['admin-certificates'] as const,
   adminCertificates: (query: Record<string, unknown> = {}) => [...queryKeys.adminCertificatesBase, query] as const,
+  publicStats: ['public-stats'] as const,
+  myDashboard: ['my-dashboard'] as const,
+  adminDashboard: ['admin-dashboard'] as const,
 };

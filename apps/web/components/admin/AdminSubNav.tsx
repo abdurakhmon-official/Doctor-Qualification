@@ -10,6 +10,7 @@ export function AdminSubNav() {
 
   // add more tabs here as the admin panel grows
   const tabs = [
+    { href: '/admin', label: t('dashboard') },
     { href: '/admin/users', label: t('users') },
     { href: '/admin/specialties', label: t('specialties') },
     { href: '/admin/exams', label: t('exams') },
