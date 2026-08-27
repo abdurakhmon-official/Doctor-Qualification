@@ -104,6 +104,7 @@ export const RateLimit = (options: RateLimitOptions): MethodDecorator => {
 
 export const RATE_LIMITS = {
   auth: { bucket: 'auth', windowSeconds: 300, max: 15 },
+  public: { bucket: 'public', windowSeconds: 60, max: 30 },
   passwordReset: { bucket: 'pwreset', windowSeconds: 3600, max: 5 },
   upload: { bucket: 'upload', windowSeconds: 300, max: 30 },
   admin: { bucket: 'admin', windowSeconds: 60, max: 120 },

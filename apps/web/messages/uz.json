@@ -6,6 +6,7 @@
     "signOut": "Chiqish",
     "profile": "Profil",
     "exams": "Imtihonlar",
+    "certificates": "Sertifikatlar",
     "admin": "Admin panel",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish"
@@ -100,11 +101,45 @@
       "viewHistory": "Natijalarim"
     }
   },
+  "certificates": {
+    "title": "Mening sertifikatlarim",
+    "empty": "Hozircha sertifikatlar yo'q",
+    "revoked": "Bekor qilingan"
+  },
+  "certificate": {
+    "notFound": "Sertifikat topilmadi",
+    "revokedNotice": "Bu sertifikat bekor qilingan",
+    "expiredNotice": "Bu sertifikatning amal qilish muddati tugagan",
+    "valid": "Sertifikat haqiqiy",
+    "score": "Natija",
+    "issuedAt": "Berilgan sana",
+    "expiresAt": "Amal qilish muddati",
+    "certificateId": "Sertifikat raqami",
+    "specialty": "Mutaxassislik",
+    "level": "Daraja",
+    "downloadPdf": "PDF yuklab olish",
+    "downloading": "Tayyorlanmoqda…",
+    "downloadFailed": "PDF tayyorlashda xatolik yuz berdi",
+    "pdf": {
+      "brand": "Doctor Qualification",
+      "title": "SERTIFIKAT",
+      "subtitle": "Shifokorlar bilim va malakasini baholash platformasi",
+      "bodyText": "Ushbu sertifikat quyidagi shaxsning mutaxassislik bo'yicha malaka imtihonidan muvaffaqiyatli o'tganligini tasdiqlaydi:"
+    }
+  },
   "admin": {
     "nav": {
       "users": "Foydalanuvchilar",
       "specialties": "Mutaxassisliklar",
-      "exams": "Imtihonlar"
+      "exams": "Imtihonlar",
+      "certificates": "Sertifikatlar"
+    },
+    "certificates": {
+      "title": "Sertifikatlar",
+      "empty": "Sertifikatlar topilmadi",
+      "revoked": "Bekor qilingan",
+      "view": "Ko'rish",
+      "revoke": "Bekor qilish"
     },
     "exams": {
       "title": "Imtihonlar",

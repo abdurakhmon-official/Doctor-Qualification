@@ -26,6 +26,9 @@ export const routing = defineRouting({
     '/exams': '/exams',
     '/exams/[examId]': '/exams/[examId]',
     '/attempts/[attemptId]': '/attempts/[attemptId]',
+    '/certificates': '/certificates',
+    '/certificates/[certificateId]': '/certificates/[certificateId]',
+    '/admin/certificates': '/admin/certificates',
   },
 });
 

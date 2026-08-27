@@ -6,6 +6,7 @@
     "signOut": "Sign out",
     "profile": "Profile",
     "exams": "Exams",
+    "certificates": "Certificates",
     "admin": "Admin panel",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -100,11 +101,45 @@
       "viewHistory": "My results"
     }
   },
+  "certificates": {
+    "title": "My certificates",
+    "empty": "No certificates yet",
+    "revoked": "Revoked"
+  },
+  "certificate": {
+    "notFound": "Certificate not found",
+    "revokedNotice": "This certificate has been revoked",
+    "expiredNotice": "This certificate has expired",
+    "valid": "Certificate is valid",
+    "score": "Score",
+    "issuedAt": "Issued on",
+    "expiresAt": "Valid until",
+    "certificateId": "Certificate ID",
+    "specialty": "Specialty",
+    "level": "Level",
+    "downloadPdf": "Download PDF",
+    "downloading": "Preparing…",
+    "downloadFailed": "Failed to prepare the PDF",
+    "pdf": {
+      "brand": "Doctor Qualification",
+      "title": "CERTIFICATE",
+      "subtitle": "Doctor qualification assessment platform",
+      "bodyText": "This certificate confirms that the person named below has successfully passed a qualification exam in:"
+    }
+  },
   "admin": {
     "nav": {
       "users": "Users",
       "specialties": "Specialties",
-      "exams": "Exams"
+      "exams": "Exams",
+      "certificates": "Certificates"
+    },
+    "certificates": {
+      "title": "Certificates",
+      "empty": "No certificates found",
+      "revoked": "Revoked",
+      "view": "View",
+      "revoke": "Revoke"
     },
     "exams": {
       "title": "Exams",

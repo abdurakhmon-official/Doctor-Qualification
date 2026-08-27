@@ -15,4 +15,8 @@ export const queryKeys = {
   publishedExams: (specialtyId?: string) => ['published-exams', specialtyId ?? null] as const,
   myAttemptsBase: ['my-attempts'] as const,
   attempt: (attemptId: string) => ['attempt', attemptId] as const,
+  myCertificatesBase: ['my-certificates'] as const,
+  certificate: (certificateId: string) => ['certificate', certificateId] as const,
+  adminCertificatesBase: ['admin-certificates'] as const,
+  adminCertificates: (query: Record<string, unknown> = {}) => [...queryKeys.adminCertificatesBase, query] as const,
 };
