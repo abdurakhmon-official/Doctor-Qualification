@@ -13,10 +13,49 @@
     "closeMenu": "Menyuni yopish"
   },
   "home": {
+    "badge": "Raqamli baholash · Rasmiy tasdiqlash",
     "title": "Shifokorlar bilim va malakasini baholash platformasi",
     "subtitle": "Mutaxassislik bo'yicha onlayn imtihon topshiring, malaka darajangizni aniqlang va tasdiqlanadigan raqamli sertifikat oling.",
-    "getStarted": "Boshlash",
-    "signIn": "Kirish"
+    "ctaPrimary": "Imtihonga kirish",
+    "ctaSecondary": "Qanday ishlaydi?",
+    "verify": {
+      "title": "Sertifikatni tekshirish",
+      "placeholder": "Certificate ID kiriting",
+      "button": "Tekshirish"
+    },
+    "features": {
+      "specialties": { "title": "Barcha mutaxassisliklar", "subtitle": "{count}+ tibbiyot yo'nalishlari" },
+      "certificate": { "title": "Rasmiy sertifikat", "subtitle": "QR kod bilan tasdiqlanadi" },
+      "levels": { "title": "Daraja tizimi", "subtitle": "5 bosqichli baholash tizimi" },
+      "timed": { "title": "Onlayn imtihon", "subtitle": "24/7 istalgan vaqtda" }
+    },
+    "stats": {
+      "title": "Platforma statistikasi",
+      "userCount": "Jami shifokorlar",
+      "attemptCount": "Imtihon topshirganlar",
+      "certificateCount": "Sertifikat olganlar",
+      "avgScore": "O'rtacha natija"
+    },
+    "popularSpecialties": {
+      "title": "Ommabop mutaxassisliklar",
+      "viewAll": "Barchasini ko'rish",
+      "empty": "Hozircha ma'lumot yo'q",
+      "count": "{count} nafar"
+    },
+    "howItWorks": {
+      "title": "Qanday ishlaydi?",
+      "steps": {
+        "1": { "title": "Ro'yxatdan o'tish", "description": "Hisob yarating va profilni to'ldiring" },
+        "2": { "title": "Mutaxassislik tanlash", "description": "O'zingizning yo'nalishingizni tanlang" },
+        "3": { "title": "Test topshirish", "description": "Savollarga javob bering va testni yakunlang" },
+        "4": { "title": "Natijani olish", "description": "Natijangizni ko'ring va darajangizni aniqlang" },
+        "5": { "title": "Sertifikat olish", "description": "Elektron sertifikatni yuklab oling" }
+      }
+    },
+    "ctaBand": {
+      "title": "Bilimingizni sinang va professional darajangizni tasdiqlang!",
+      "subtitle": "Bugun imtihonga kiring va rasmiy sertifikatga ega bo'ling"
+    }
   },
   "footer": {
     "copyright": "© {year} Doctor Qualification"

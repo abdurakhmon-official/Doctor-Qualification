@@ -13,10 +13,49 @@
     "closeMenu": "Close menu"
   },
   "home": {
+    "badge": "Digital assessment · Official certification",
     "title": "Assess and confirm doctors' qualification",
     "subtitle": "Take an online exam by specialty, find out your qualification level, and get a verifiable digital certificate.",
-    "getStarted": "Get started",
-    "signIn": "Sign in"
+    "ctaPrimary": "Go to exams",
+    "ctaSecondary": "How it works",
+    "verify": {
+      "title": "Verify a certificate",
+      "placeholder": "Enter Certificate ID",
+      "button": "Verify"
+    },
+    "features": {
+      "specialties": { "title": "All specialties", "subtitle": "{count}+ medical fields" },
+      "certificate": { "title": "Official certificate", "subtitle": "Verified by QR code" },
+      "levels": { "title": "Level system", "subtitle": "A 5-tier grading system" },
+      "timed": { "title": "Online exam", "subtitle": "Available 24/7" }
+    },
+    "stats": {
+      "title": "Platform statistics",
+      "userCount": "Total doctors",
+      "attemptCount": "Exams taken",
+      "certificateCount": "Certificates earned",
+      "avgScore": "Average score"
+    },
+    "popularSpecialties": {
+      "title": "Popular specialties",
+      "viewAll": "View all",
+      "empty": "No data yet",
+      "count": "{count} doctors"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "steps": {
+        "1": { "title": "Sign up", "description": "Create an account and fill in your profile" },
+        "2": { "title": "Choose a specialty", "description": "Pick your medical field" },
+        "3": { "title": "Take the exam", "description": "Answer the questions and finish the test" },
+        "4": { "title": "Get your result", "description": "See your score and qualification level" },
+        "5": { "title": "Get your certificate", "description": "Download your digital certificate" }
+      }
+    },
+    "ctaBand": {
+      "title": "Test your knowledge and confirm your professional level!",
+      "subtitle": "Take the exam today and get an official certificate"
+    }
   },
   "footer": {
     "copyright": "© {year} Doctor Qualification"

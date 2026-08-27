@@ -86,11 +86,15 @@ export class DashboardService {
 
   /** Ochiq (autentifikatsiyasiz) — bosh sahifadagi "Platforma statistikasi" bloki uchun. */
   async publicStats() {
-    const [userCount, attemptCount, certificateCount, scoredAttempts] = await Promise.all([
+    const [userCount, attemptCount, certificateCount, scoredAttempts, specialtyAttempts] = await Promise.all([
       prisma.user.count({ where: { role: USER_ROLE.USER, deletedAt: null } }),
       prisma.examAttempt.count({ where: { submittedAt: { not: null } } }),
       prisma.certificate.count({ where: { revoked: false } }),
       prisma.examAttempt.findMany({ where: { submittedAt: { not: null }, score: { not: null } }, select: { score: true } }),
+      prisma.examAttempt.findMany({
+        where: { submittedAt: { not: null } },
+        select: { exam: { select: { specialtyId: true, specialty: { select: { name: true } } } } },
+      }),
     ]);
 
     const data: PublicStatsOutput = {
@@ -98,8 +102,26 @@ export class DashboardService {
       attemptCount,
       certificateCount,
       avgScore: averageScore(scoredAttempts.map((attempt) => attempt.score)),
+      popularSpecialties: this.popularSpecialties(specialtyAttempts),
     };
 
     return { success: true, data };
+  }
+
+  private popularSpecialties(
+    attempts: { exam: { specialtyId: string; specialty: { name: unknown } } }[],
+  ): PublicStatsOutput['popularSpecialties'] {
+    const counts = new Map<string, { name: unknown; count: number }>();
+
+    for (const attempt of attempts) {
+      const entry = counts.get(attempt.exam.specialtyId) ?? { name: attempt.exam.specialty.name, count: 0 };
+      entry.count += 1;
+      counts.set(attempt.exam.specialtyId, entry);
+    }
+
+    return Array.from(counts.entries())
+      .map(([id, entry]) => ({ id, name: entry.name as PublicStatsOutput['popularSpecialties'][number]['name'], attemptCount: entry.count }))
+      .sort((a, b) => b.attemptCount - a.attemptCount)
+      .slice(0, 5);
   }
 }

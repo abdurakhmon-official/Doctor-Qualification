@@ -1,3 +1,5 @@
+import type { LocalizedText } from '../common/localized-text';
+
 // interfaces
 
 export interface ScoreByLabel {
@@ -35,4 +37,5 @@ export interface PublicStatsOutput {
   attemptCount: number;
   certificateCount: number;
   avgScore: number;
+  popularSpecialties: { id: string; name: LocalizedText; attemptCount: number }[];
 }
