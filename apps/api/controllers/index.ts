@@ -10,5 +10,6 @@ export * from "./exam-attempt.controller";
 export * from "./exam.controller";
 export * from "./health.controller";
 export * from "./question.controller";
+export * from "./rating.controller";
 export * from "./specialty.controller";
 export * from "./user.controller";

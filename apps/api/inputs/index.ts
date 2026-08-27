@@ -8,5 +8,6 @@ export * from "./certificate.input";
 export * from "./exam-attempt.input";
 export * from "./exam.input";
 export * from "./question.input";
+export * from "./rating.input";
 export * from "./specialty.input";
 export * from "./user.input";

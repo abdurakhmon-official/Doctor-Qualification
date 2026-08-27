@@ -22,4 +22,8 @@ export const queryKeys = {
   publicStats: ['public-stats'] as const,
   myDashboard: ['my-dashboard'] as const,
   adminDashboard: ['admin-dashboard'] as const,
+  ratingsBase: ['ratings'] as const,
+  ratings: (query: Record<string, unknown> = {}) => [...queryKeys.ratingsBase, query] as const,
+  myRating: (specialtyId: string) => ['my-rating', specialtyId] as const,
+  ratingSettings: ['rating-settings'] as const,
 };

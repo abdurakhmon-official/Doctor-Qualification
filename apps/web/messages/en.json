@@ -7,6 +7,7 @@
     "profile": "Profile",
     "exams": "Exams",
     "certificates": "Certificates",
+    "rating": "Rating",
     "admin": "Admin panel",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -150,13 +151,37 @@
       "chartEmpty": "No data yet"
     }
   },
+  "rating": {
+    "title": "Doctor rating",
+    "empty": "No rating yet for this specialty",
+    "myRank": "your rank",
+    "notEligible": "Take enough exams in this specialty to appear in the rating",
+    "avgScore": "Average score",
+    "bestScore": "Best score",
+    "attemptCount": "Attempts",
+    "period": {
+      "all": "All time",
+      "week": "Past week",
+      "month": "Past month"
+    }
+  },
   "admin": {
     "nav": {
       "dashboard": "Dashboard",
       "users": "Users",
       "specialties": "Specialties",
       "exams": "Exams",
-      "certificates": "Certificates"
+      "certificates": "Certificates",
+      "ratingSettings": "Rating settings"
+    },
+    "ratingSettings": {
+      "title": "Rating settings",
+      "avgScoreWeight": "Average score weight",
+      "bestScoreWeight": "Best score weight",
+      "consistencyWeight": "Consistency weight",
+      "attemptCountWeight": "Attempt count weight",
+      "minAttemptsRequired": "Minimum attempts to appear in the rating",
+      "save": "Save"
     },
     "certificates": {
       "title": "Certificates",

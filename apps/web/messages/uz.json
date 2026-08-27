@@ -7,6 +7,7 @@
     "profile": "Profil",
     "exams": "Imtihonlar",
     "certificates": "Sertifikatlar",
+    "rating": "Reyting",
     "admin": "Admin panel",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish"
@@ -150,13 +151,37 @@
       "chartEmpty": "Hozircha ma'lumot yo'q"
     }
   },
+  "rating": {
+    "title": "Shifokorlar reytingi",
+    "empty": "Bu mutaxassislik bo'yicha hali reyting yo'q",
+    "myRank": "sizning o'rningiz",
+    "notEligible": "Reytingda ko'rinish uchun ushbu mutaxassislik bo'yicha yetarlicha imtihon topshiring",
+    "avgScore": "O'rtacha ball",
+    "bestScore": "Eng yaxshi ball",
+    "attemptCount": "Urinishlar",
+    "period": {
+      "all": "Barcha vaqt",
+      "week": "So'nggi hafta",
+      "month": "So'nggi oy"
+    }
+  },
   "admin": {
     "nav": {
       "dashboard": "Dashboard",
       "users": "Foydalanuvchilar",
       "specialties": "Mutaxassisliklar",
       "exams": "Imtihonlar",
-      "certificates": "Sertifikatlar"
+      "certificates": "Sertifikatlar",
+      "ratingSettings": "Reyting sozlamalari"
+    },
+    "ratingSettings": {
+      "title": "Reyting sozlamalari",
+      "avgScoreWeight": "O'rtacha ball og'irligi",
+      "bestScoreWeight": "Eng yaxshi ball og'irligi",
+      "consistencyWeight": "Barqarorlik og'irligi",
+      "attemptCountWeight": "Urinishlar soni og'irligi",
+      "minAttemptsRequired": "Reytingda ko'rinish uchun minimal urinishlar soni",
+      "save": "Saqlash"
     },
     "certificates": {
       "title": "Sertifikatlar",

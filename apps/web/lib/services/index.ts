@@ -4,6 +4,7 @@ export * from './dashboard.service';
 export * from './exam.service';
 export * from './exam-attempt.service';
 export * from './question.service';
+export * from './rating.service';
 export * from './specialty.service';
 export * from './upload.service';
 export * from './user.service';

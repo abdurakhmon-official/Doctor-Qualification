@@ -7,6 +7,7 @@
     "profile": "Профиль",
     "exams": "Экзамены",
     "certificates": "Сертификаты",
+    "rating": "Рейтинг",
     "admin": "Админ-панель",
     "openMenu": "Открыть меню",
     "closeMenu": "Закрыть меню"
@@ -150,13 +151,37 @@
       "chartEmpty": "Пока нет данных"
     }
   },
+  "rating": {
+    "title": "Рейтинг врачей",
+    "empty": "По этой специальности пока нет рейтинга",
+    "myRank": "ваше место",
+    "notEligible": "Сдайте достаточно экзаменов по этой специальности, чтобы попасть в рейтинг",
+    "avgScore": "Средний балл",
+    "bestScore": "Лучший балл",
+    "attemptCount": "Попытки",
+    "period": {
+      "all": "За всё время",
+      "week": "За неделю",
+      "month": "За месяц"
+    }
+  },
   "admin": {
     "nav": {
       "dashboard": "Дашборд",
       "users": "Пользователи",
       "specialties": "Специальности",
       "exams": "Экзамены",
-      "certificates": "Сертификаты"
+      "certificates": "Сертификаты",
+      "ratingSettings": "Настройки рейтинга"
+    },
+    "ratingSettings": {
+      "title": "Настройки рейтинга",
+      "avgScoreWeight": "Вес среднего балла",
+      "bestScoreWeight": "Вес лучшего балла",
+      "consistencyWeight": "Вес стабильности",
+      "attemptCountWeight": "Вес количества попыток",
+      "minAttemptsRequired": "Минимум попыток для попадания в рейтинг",
+      "save": "Сохранить"
     },
     "certificates": {
       "title": "Сертификаты",

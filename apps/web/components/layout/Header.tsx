@@ -43,6 +43,11 @@ export function Header() {
                   {t('certificates')}
                 </Button>
               </Link>
+              <Link href="/rating">
+                <Button variant="ghost" size="sm">
+                  {t('rating')}
+                </Button>
+              </Link>
               <Link href="/profile">
                 <Button variant="ghost" size="sm">
                   {t('profile')}
@@ -101,6 +106,11 @@ export function Header() {
                 <Link href="/certificates" onClick={closeMenu}>
                   <Button variant="ghost" size="sm" className="w-full justify-start">
                     {t('certificates')}
+                  </Button>
+                </Link>
+                <Link href="/rating" onClick={closeMenu}>
+                  <Button variant="ghost" size="sm" className="w-full justify-start">
+                    {t('rating')}
                   </Button>
                 </Link>
                 <Link href="/profile" onClick={closeMenu}>
