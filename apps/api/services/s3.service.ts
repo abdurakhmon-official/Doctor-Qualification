@@ -19,7 +19,8 @@ import {
   storageDriver,
 } from '@/modules/storage';
 import { uuid } from '@/utils';
-import { badRequest } from '@/utils/errors.utils';
+import { matchesMimeType } from '@/utils/magic-bytes.utils';
+import { UploadMimeNotAllowedException } from '@/exceptions/upload.exceptions';
 import {
   ALLOWED_MIME_BY_FOLDER,
   MAX_UPLOAD_BYTES_BY_FOLDER,
@@ -137,6 +138,10 @@ export class S3Service {
     }
     this.assertMimeAllowedForFolder(folder as UploadFolder, mimeType);
 
+    if (!matchesMimeType(file.buffer, mimeType)) {
+      throw new UploadMimeNotAllowedException(`file content does not match declared type: ${mimeType}`);
+    }
+
     if (file.size > MAX_UPLOAD_BYTES_BY_FOLDER[folder as UploadFolder]) {
       throw new BadRequest(`file is larger than ${this.readableLimit(folder as UploadFolder)}`);
     }
@@ -212,7 +217,7 @@ export class S3Service {
 
   private assertMimeAllowedForFolder(folder: UploadFolder, mimeType: string): void {
     if (!ALLOWED_MIME_BY_FOLDER[folder].includes(mimeType)) {
-      throw badRequest('UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER', `mime type not allowed for folder ${folder}`);
+      throw new UploadMimeNotAllowedException(`mime type not allowed for folder ${folder}`);
     }
   }
 

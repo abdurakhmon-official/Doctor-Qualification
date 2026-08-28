@@ -1,13 +1,15 @@
-import { Injectable, InjectContext } from '@tsed/di';
+import { Inject, Injectable, InjectContext } from '@tsed/di';
 import { PlatformContext } from '@tsed/common';
 import type { Request } from 'express';
 import { addYears } from 'date-fns';
 import { AdminCertificateQuerySchema } from '@repo/contracts';
 import prisma from '@/modules/db';
 import { generateCertificateId } from '@/utils/certificate.utils';
-import { notFound, requireUserId } from '@/utils/errors.utils';
+import { requireUserId } from '@/utils/errors.utils';
+import { CertificateNotFoundException } from '@/exceptions/certificate.exceptions';
+import { AuditService } from '@/services/audit.service';
 import type { LocalizedText } from '@repo/contracts';
-import { QUALIFICATION_LEVEL } from '../generated/prisma';
+import { QUALIFICATION_LEVEL, type Prisma } from '../generated/prisma';
 
 interface IssueInput {
   attemptId: string;
@@ -24,17 +26,29 @@ export class CertificateService {
   @InjectContext()
   private context!: PlatformContext;
 
+  @Inject()
+  private auditService!: AuditService;
+
   private get userId(): string {
     return requireUserId(this.context.getRequest<Request>().user);
   }
 
-  /** attemptId'ga unique constraint borligi sababli idempotent — takror chaqirilsa ham faqat bitta sertifikat yaratiladi. */
-  async checkAndIssue(input: IssueInput): Promise<boolean> {
-    const existing = await prisma.certificate.findUnique({ where: { attemptId: input.attemptId }, select: { id: true } });
+  private get actor() {
+    const user = this.context.getRequest<Request>().user!;
+    return { actorId: user.id, actorEmail: user.email };
+  }
+
+  /**
+   * attemptId'ga unique constraint borligi sababli idempotent — takror chaqirilsa ham faqat bitta sertifikat yaratiladi.
+   * `client` — ExamAttemptService.submitAttempt shu metodni attempt yozuvini yangilash bilan bitta `$transaction` ichida chaqiradi;
+   * standalone chaqiruv uchun default — oddiy `prisma` singleton.
+   */
+  async checkAndIssue(input: IssueInput, client: Prisma.TransactionClient = prisma): Promise<boolean> {
+    const existing = await client.certificate.findUnique({ where: { attemptId: input.attemptId }, select: { id: true } });
     if (existing) return true;
 
     try {
-      await prisma.certificate.create({
+      await client.certificate.create({
         data: {
           certificateId: generateCertificateId(),
           attemptId: input.attemptId,
@@ -75,7 +89,7 @@ export class CertificateService {
   /** Ochiq (autentifikatsiyasiz) — Certificate ID yoki QR orqali har kim tekshira oladi. */
   async verify(certificateId: string) {
     const certificate = await prisma.certificate.findUnique({ where: { certificateId } });
-    if (!certificate) throw notFound('CERTIFICATE_NOT_FOUND', 'certificate not found');
+    if (!certificate) throw new CertificateNotFoundException(certificateId);
 
     return {
       success: true,
@@ -118,10 +132,19 @@ export class CertificateService {
   }
 
   async revoke(certificateId: string) {
-    const certificate = await prisma.certificate.findUnique({ where: { certificateId }, select: { id: true } });
-    if (!certificate) throw notFound('CERTIFICATE_NOT_FOUND', 'certificate not found');
+    const certificate = await prisma.certificate.findUnique({ where: { certificateId }, select: { id: true, revoked: true } });
+    if (!certificate) throw new CertificateNotFoundException(certificateId);
 
     await prisma.certificate.update({ where: { certificateId }, data: { revoked: true, revokedAt: new Date() } });
+
+    await this.auditService.log({
+      ...this.actor,
+      action: 'CERTIFICATE_REVOKED',
+      entityType: 'Certificate',
+      entityId: certificate.id,
+      before: { revoked: certificate.revoked },
+      after: { revoked: true },
+    });
 
     return { success: true, data: null };
   }

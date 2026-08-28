@@ -1,12 +1,30 @@
-import { Injectable } from '@tsed/di';
+import { Inject, Injectable, InjectContext } from '@tsed/di';
+import { PlatformContext } from '@tsed/common';
+import type { Request } from 'express';
 import { AdminExamQuerySchema } from '@repo/contracts';
 import prisma from '@/modules/db';
-import { badRequest, notFound } from '@/utils/errors.utils';
+import { SpecialtyService } from '@/services/specialty.service';
+import { AuditService } from '@/services/audit.service';
 import type { CreateExamInput, UpdateExamInput } from '@/inputs/exam.input';
 import { EXAM_STATUS } from '../generated/prisma';
+import { ExamHasNoQuestionsException, ExamNotFoundException } from '@/exceptions/exam.exceptions';
 
 @Injectable()
 export class ExamService {
+  @Inject()
+  private specialtyService!: SpecialtyService;
+
+  @Inject()
+  private auditService!: AuditService;
+
+  @InjectContext()
+  private context!: PlatformContext;
+
+  private get actor() {
+    const user = this.context.getRequest<Request>().user!;
+    return { actorId: user.id, actorEmail: user.email };
+  }
+
   private static readonly LIST_SELECT = {
     id: true,
     specialtyId: true,
@@ -71,13 +89,13 @@ export class ExamService {
 
   async adminGet(examId: string) {
     const exam = await prisma.exam.findUnique({ where: { id: examId }, select: ExamService.DETAIL_SELECT });
-    if (!exam) throw notFound('EXAM_NOT_FOUND', 'exam not found');
+    if (!exam) throw new ExamNotFoundException(examId);
 
     return { success: true, data: exam };
   }
 
   async create(input: CreateExamInput) {
-    await this.assertSpecialtyExists(input.specialtyId);
+    await this.specialtyService.assertExists(input.specialtyId);
 
     const exam = await prisma.exam.create({
       data: {
@@ -90,17 +108,25 @@ export class ExamService {
       select: ExamService.DETAIL_SELECT,
     });
 
+    await this.auditService.log({
+      ...this.actor,
+      action: 'EXAM_CREATED',
+      entityType: 'Exam',
+      entityId: exam.id,
+      after: exam,
+    });
+
     return { success: true, data: exam };
   }
 
   async update(examId: string, input: UpdateExamInput) {
     const before = await prisma.exam.findUnique({ where: { id: examId }, select: ExamService.DETAIL_SELECT });
-    if (!before) throw notFound('EXAM_NOT_FOUND', 'exam not found');
+    if (!before) throw new ExamNotFoundException(examId);
 
-    if (input.specialtyId) await this.assertSpecialtyExists(input.specialtyId);
+    if (input.specialtyId) await this.specialtyService.assertExists(input.specialtyId);
 
     if (input.status === EXAM_STATUS.PUBLISHED && before.questions.length === 0) {
-      throw badRequest('EXAM_HAS_NO_QUESTIONS', 'an exam with no questions cannot be published');
+      throw new ExamHasNoQuestionsException(examId);
     }
 
     const exam = await prisma.exam.update({
@@ -116,20 +142,57 @@ export class ExamService {
       select: ExamService.DETAIL_SELECT,
     });
 
+    await this.auditService.log({
+      ...this.actor,
+      action: 'EXAM_UPDATED',
+      entityType: 'Exam',
+      entityId: exam.id,
+      before,
+      after: exam,
+    });
+
     return { success: true, data: exam };
   }
 
   async delete(examId: string) {
-    const before = await prisma.exam.findUnique({ where: { id: examId }, select: { id: true } });
-    if (!before) throw notFound('EXAM_NOT_FOUND', 'exam not found');
+    const before = await prisma.exam.findUnique({ where: { id: examId }, select: ExamService.DETAIL_SELECT });
+    if (!before) throw new ExamNotFoundException(examId);
 
     await prisma.exam.delete({ where: { id: examId } });
+
+    await this.auditService.log({
+      ...this.actor,
+      action: 'EXAM_DELETED',
+      entityType: 'Exam',
+      entityId: examId,
+      before,
+    });
 
     return { success: true, data: null };
   }
 
-  private async assertSpecialtyExists(specialtyId: string): Promise<void> {
-    const specialty = await prisma.specialty.findUnique({ where: { id: specialtyId }, select: { id: true } });
-    if (!specialty) throw notFound('SPECIALTY_NOT_FOUND', 'specialty not found');
+  /** Boshqa domen service'lari (masalan QuestionService) examId mavjudligini shu orqali tekshiradi — o'z Prisma modeliga bevosita kirmaydi. */
+  async assertExists(examId: string): Promise<void> {
+    const exam = await prisma.exam.findUnique({ where: { id: examId }, select: { id: true } });
+    if (!exam) throw new ExamNotFoundException(examId);
+  }
+
+  /** ExamAttemptService bunga tayanadi — imtihonni boshlash/topshirish/ko'rib chiqish uchun kerakli barcha ma'lumot bitta joyda. */
+  async getDetailForAttempt(examId: string) {
+    return prisma.exam.findUnique({
+      where: { id: examId },
+      select: {
+        id: true,
+        title: true,
+        durationMinutes: true,
+        minCertificateScore: true,
+        status: true,
+        specialty: { select: { name: true } },
+        questions: {
+          select: { id: true, text: true, options: true, correctIndex: true, imageKey: true, order: true },
+          orderBy: { order: 'asc' as const },
+        },
+      },
+    });
   }
 }

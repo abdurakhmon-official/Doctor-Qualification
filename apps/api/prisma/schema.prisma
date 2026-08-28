@@ -146,6 +146,7 @@ model RatingSettings {
   consistencyWeight   Float    @default(0.2) @map("consistency_weight")
   attemptCountWeight  Float    @default(0.2) @map("attempt_count_weight")
   minAttemptsRequired Int      @default(1) @map("min_attempts_required")
+  createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @updatedAt @map("updated_at")
 
   @@map("rating_settings")
@@ -171,13 +172,41 @@ model Certificate {
   attempt ExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([examId])
   @@map("certificates")
 }
 
+/** Singleton — sertifikatning marosim matni (rule: dynamic standards.md — "Shablon matni... admin ma'lumotida"). Ko'rinish/joylashuv kodda qoladi, faqat matn o'zi shu yerda. */
 model CertificateTemplate {
   id        String   @id @default(uuid())
-  text      String
+  brand     Json
+  title     Json
+  subtitle  Json
+  bodyText  Json     @map("body_text")
+  createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("certificate_templates")
+}
+
+/**
+ * Markazlashgan audit trail (rule: dynamic standards.md §4) — settings/lookup jadvallar o'zgarganda
+ * kim/qachon/nimani o'zgartirgani shu yerda yoziladi. `actorId`/`actorEmail` denormalized —
+ * User keyinchalik o'chirilsa/o'zgarsa ham tarixiy yozuv o'zgarmas qoladi (shuning uchun FK yo'q).
+ */
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String   @map("actor_id")
+  actorEmail String   @map("actor_email")
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String?  @map("entity_id")
+  before     Json?
+  after      Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([entityType, entityId])
+  @@index([actorId])
+  @@index([createdAt])
+  @@map("audit_logs")
 }

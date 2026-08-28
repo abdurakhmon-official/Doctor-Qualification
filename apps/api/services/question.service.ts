@@ -1,10 +1,14 @@
-import { Injectable } from '@tsed/di';
+import { Inject, Injectable } from '@tsed/di';
 import prisma from '@/modules/db';
-import { notFound } from '@/utils/errors.utils';
+import { ExamService } from '@/services/exam.service';
+import { QuestionNotFoundException } from '@/exceptions/question.exceptions';
 import type { CreateQuestionInput, UpdateQuestionInput } from '@/inputs/question.input';
 
 @Injectable()
 export class QuestionService {
+  @Inject()
+  private examService!: ExamService;
+
   private static readonly SELECT = {
     id: true,
     examId: true,
@@ -17,7 +21,7 @@ export class QuestionService {
   };
 
   async create(examId: string, input: CreateQuestionInput) {
-    await this.assertExamExists(examId);
+    await this.examService.assertExists(examId);
 
     const count = await prisma.question.count({ where: { examId } });
 
@@ -51,11 +55,6 @@ export class QuestionService {
 
   private async findOrThrow(questionId: string): Promise<void> {
     const question = await prisma.question.findUnique({ where: { id: questionId }, select: { id: true } });
-    if (!question) throw notFound('QUESTION_NOT_FOUND', 'question not found');
-  }
-
-  private async assertExamExists(examId: string): Promise<void> {
-    const exam = await prisma.exam.findUnique({ where: { id: examId }, select: { id: true } });
-    if (!exam) throw notFound('EXAM_NOT_FOUND', 'exam not found');
+    if (!question) throw new QuestionNotFoundException(questionId);
   }
 }

@@ -23,7 +23,7 @@ const config = merge(
     stage: process.env.STAGE || 'local',
     env: process.env.NODE_ENV || 'development',
     port: Number(process.env.PORT) || 3000,
-    apiRoot: '/api',
+    apiRoot: '/api/v1',
     jwt: {
       secret: required('JWT_SECRET'),
       expiresIn: process.env.JWT_EXPIRES_IN || '1d',
@@ -57,7 +57,7 @@ const config = merge(
       port: Number(process.env.MAIL_PORT) || 587,
       user: process.env.MAIL_USER || '',
       password: process.env.MAIL_PASSWORD || '',
-      from: process.env.MAIL_FROM || 'App <no-reply@example.com>',
+      from: process.env.MAIL_FROM || 'Doctor Qualification <no-reply@example.com>',
     },
   },
   envConfig,

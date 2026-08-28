@@ -4,11 +4,19 @@ import type { Request } from 'express';
 import { differenceInSeconds } from 'date-fns';
 import type { LocalizedText } from '@repo/contracts';
 import prisma from '@/modules/db';
-import { badRequest, forbidden, notFound, requireUserId } from '@/utils/errors.utils';
+import { requireUserId } from '@/utils/errors.utils';
 import { gradeAttempt, gradeToLevel } from '@/utils/scoring.utils';
 import { CertificateService } from '@/services/certificate.service';
+import { ExamService } from '@/services/exam.service';
 import { EXAM_STATUS, Prisma } from '../generated/prisma';
 import type { StartAttemptInput, SubmitAttemptInput } from '@/inputs/exam-attempt.input';
+import { ExamHasNoQuestionsException, ExamNotFoundException } from '@/exceptions/exam.exceptions';
+import {
+  AttemptAlreadySubmittedException,
+  AttemptForbiddenException,
+  AttemptNotFoundException,
+  AttemptTimeExpiredException,
+} from '@/exceptions/exam-attempt.exceptions';
 
 @Injectable()
 export class ExamAttemptService {
@@ -19,6 +27,9 @@ export class ExamAttemptService {
 
   @Inject()
   private certificateService!: CertificateService;
+
+  @Inject()
+  private examService!: ExamService;
 
   private get user() {
     return this.context.getRequest<Request>().user;
@@ -62,23 +73,10 @@ export class ExamAttemptService {
   }
 
   async startAttempt(input: StartAttemptInput) {
-    const exam = await prisma.exam.findUnique({
-      where: { id: input.examId },
-      select: {
-        id: true,
-        title: true,
-        durationMinutes: true,
-        minCertificateScore: true,
-        status: true,
-        questions: {
-          select: { id: true, text: true, options: true, imageKey: true, order: true },
-          orderBy: { order: 'asc' },
-        },
-      },
-    });
+    const exam = await this.examService.getDetailForAttempt(input.examId);
 
-    if (!exam || exam.status !== EXAM_STATUS.PUBLISHED) throw notFound('EXAM_NOT_FOUND', 'exam not found');
-    if (exam.questions.length === 0) throw badRequest('EXAM_HAS_NO_QUESTIONS', 'an exam with no questions cannot be taken');
+    if (!exam || exam.status !== EXAM_STATUS.PUBLISHED) throw new ExamNotFoundException(input.examId);
+    if (exam.questions.length === 0) throw new ExamHasNoQuestionsException(exam.id);
 
     const attempt = await prisma.examAttempt.create({
       data: {
@@ -98,7 +96,7 @@ export class ExamAttemptService {
         examTitle: exam.title,
         durationMinutes: exam.durationMinutes,
         startedAt: attempt.startedAt.toISOString(),
-        questions: exam.questions,
+        questions: exam.questions.map(({ id, text, options, imageKey, order }) => ({ id, text, options, imageKey, order })),
       },
     };
   }
@@ -106,51 +104,51 @@ export class ExamAttemptService {
   async submitAttempt(attemptId: string, input: SubmitAttemptInput) {
     const attempt = await this.findOwnedInProgressAttempt(attemptId);
 
-    const exam = await prisma.exam.findUniqueOrThrow({
-      where: { id: attempt.examId },
-      select: {
-        id: true,
-        title: true,
-        durationMinutes: true,
-        specialty: { select: { name: true } },
-        questions: { select: { id: true, correctIndex: true } },
-      },
-    });
+    const exam = await this.examService.getDetailForAttempt(attempt.examId);
+    if (!exam) throw new ExamNotFoundException(attempt.examId);
 
     const elapsedSeconds = differenceInSeconds(new Date(), attempt.startedAt);
     const allowedSeconds = exam.durationMinutes * 60;
     if (elapsedSeconds > allowedSeconds + ExamAttemptService.SUBMIT_GRACE_SECONDS) {
-      throw badRequest('ATTEMPT_TIME_EXPIRED', 'the time allowed for this attempt has expired');
+      throw new AttemptTimeExpiredException();
     }
 
     const validAnswers = this.pickValidAnswers(exam.questions, input.answers);
     const result = gradeAttempt(exam.questions, validAnswers);
     const level = gradeToLevel(result.score);
 
-    const updated = await prisma.examAttempt.update({
-      where: { id: attempt.id },
-      data: {
-        answers: validAnswers as unknown as Prisma.InputJsonValue,
-        score: result.score,
-        correctCount: result.correctCount,
-        level,
-        timeSpentSeconds: Math.min(elapsedSeconds, allowedSeconds),
-        submittedAt: new Date(),
-      },
-    });
-
-    let certificateIssued = false;
-    if (result.score >= attempt.minCertificateScore) {
-      certificateIssued = await this.certificateService.checkAndIssue({
-        attemptId: attempt.id,
-        userId: this.userId,
-        examId: exam.id,
-        userFullName: this.user!.fullName,
-        specialtyName: exam.specialty.name as LocalizedText,
-        score: result.score,
-        level,
+    /** Natijani saqlash va sertifikat berish — bog'liq yozuvlar, bitta tranzaksiyada birga muvaffaqiyatli yoki birga bekor bo'ladi. */
+    const [updated, certificateIssued] = await prisma.$transaction(async (tx) => {
+      const updatedAttempt = await tx.examAttempt.update({
+        where: { id: attempt.id },
+        data: {
+          answers: validAnswers as unknown as Prisma.InputJsonValue,
+          score: result.score,
+          correctCount: result.correctCount,
+          level,
+          timeSpentSeconds: Math.min(elapsedSeconds, allowedSeconds),
+          submittedAt: new Date(),
+        },
       });
-    }
+
+      const issued =
+        result.score >= attempt.minCertificateScore
+          ? await this.certificateService.checkAndIssue(
+              {
+                attemptId: attempt.id,
+                userId: this.userId,
+                examId: exam.id,
+                userFullName: this.user!.fullName,
+                specialtyName: exam.specialty.name as LocalizedText,
+                score: result.score,
+                level,
+              },
+              tx,
+            )
+          : false;
+
+      return [updatedAttempt, issued] as const;
+    });
 
     return {
       success: true,
@@ -201,23 +199,14 @@ export class ExamAttemptService {
   async getAttempt(attemptId: string) {
     const attempt = await prisma.examAttempt.findUnique({
       where: { id: attemptId },
-      include: {
-        certificate: { select: { id: true } },
-        exam: {
-          select: {
-            title: true,
-            durationMinutes: true,
-            questions: {
-              select: { id: true, text: true, options: true, imageKey: true, correctIndex: true, order: true },
-              orderBy: { order: 'asc' },
-            },
-          },
-        },
-      },
+      include: { certificate: { select: { id: true } } },
     });
 
-    if (!attempt) throw notFound('ATTEMPT_NOT_FOUND', 'attempt not found');
-    if (attempt.userId !== this.userId) throw forbidden('ATTEMPT_FORBIDDEN', 'this attempt does not belong to you');
+    if (!attempt) throw new AttemptNotFoundException(attemptId);
+    if (attempt.userId !== this.userId) throw new AttemptForbiddenException();
+
+    const exam = await this.examService.getDetailForAttempt(attempt.examId);
+    if (!exam) throw new ExamNotFoundException(attempt.examId);
 
     if (!attempt.submittedAt) {
       return {
@@ -226,10 +215,10 @@ export class ExamAttemptService {
           status: 'IN_PROGRESS' as const,
           id: attempt.id,
           examId: attempt.examId,
-          examTitle: attempt.exam.title,
-          durationMinutes: attempt.exam.durationMinutes,
+          examTitle: exam.title,
+          durationMinutes: exam.durationMinutes,
           startedAt: attempt.startedAt.toISOString(),
-          questions: attempt.exam.questions.map(({ id, text, options, imageKey, order }) => ({ id, text, options, imageKey, order })),
+          questions: exam.questions.map(({ id, text, options, imageKey, order }) => ({ id, text, options, imageKey, order })),
         },
       };
     }
@@ -242,7 +231,7 @@ export class ExamAttemptService {
         status: 'SUBMITTED' as const,
         id: attempt.id,
         examId: attempt.examId,
-        examTitle: attempt.exam.title,
+        examTitle: exam.title,
         score: attempt.score ?? 0,
         correctCount: attempt.correctCount ?? 0,
         questionCount: attempt.questionCount,
@@ -251,7 +240,7 @@ export class ExamAttemptService {
         certificateIssued: Boolean(attempt.certificate),
         timeSpentSeconds: attempt.timeSpentSeconds ?? 0,
         submittedAt: attempt.submittedAt.toISOString(),
-        questions: attempt.exam.questions.map((question) => ({
+        questions: exam.questions.map((question) => ({
           text: question.text,
           options: question.options,
           selectedIndex: answers[question.id] ?? null,
@@ -263,9 +252,9 @@ export class ExamAttemptService {
 
   private async findOwnedInProgressAttempt(attemptId: string) {
     const attempt = await prisma.examAttempt.findUnique({ where: { id: attemptId } });
-    if (!attempt) throw notFound('ATTEMPT_NOT_FOUND', 'attempt not found');
-    if (attempt.userId !== this.userId) throw forbidden('ATTEMPT_FORBIDDEN', 'this attempt does not belong to you');
-    if (attempt.submittedAt) throw badRequest('ATTEMPT_ALREADY_SUBMITTED', 'this attempt has already been submitted');
+    if (!attempt) throw new AttemptNotFoundException(attemptId);
+    if (attempt.userId !== this.userId) throw new AttemptForbiddenException();
+    if (attempt.submittedAt) throw new AttemptAlreadySubmittedException(attemptId);
 
     return attempt;
   }
