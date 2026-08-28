@@ -24,10 +24,22 @@
       "button": "Tekshirish"
     },
     "features": {
-      "specialties": { "title": "Barcha mutaxassisliklar", "subtitle": "{count}+ tibbiyot yo'nalishlari" },
-      "certificate": { "title": "Rasmiy sertifikat", "subtitle": "QR kod bilan tasdiqlanadi" },
-      "levels": { "title": "Daraja tizimi", "subtitle": "5 bosqichli baholash tizimi" },
-      "timed": { "title": "Onlayn imtihon", "subtitle": "24/7 istalgan vaqtda" }
+      "specialties": {
+        "title": "Barcha mutaxassisliklar",
+        "subtitle": "{count}+ tibbiyot yo'nalishlari"
+      },
+      "certificate": {
+        "title": "Rasmiy sertifikat",
+        "subtitle": "QR kod bilan tasdiqlanadi"
+      },
+      "levels": {
+        "title": "Daraja tizimi",
+        "subtitle": "5 bosqichli baholash tizimi"
+      },
+      "timed": {
+        "title": "Onlayn imtihon",
+        "subtitle": "24/7 istalgan vaqtda"
+      }
     },
     "stats": {
       "title": "Platforma statistikasi",
@@ -45,11 +57,26 @@
     "howItWorks": {
       "title": "Qanday ishlaydi?",
       "steps": {
-        "1": { "title": "Ro'yxatdan o'tish", "description": "Hisob yarating va profilni to'ldiring" },
-        "2": { "title": "Mutaxassislik tanlash", "description": "O'zingizning yo'nalishingizni tanlang" },
-        "3": { "title": "Test topshirish", "description": "Savollarga javob bering va testni yakunlang" },
-        "4": { "title": "Natijani olish", "description": "Natijangizni ko'ring va darajangizni aniqlang" },
-        "5": { "title": "Sertifikat olish", "description": "Elektron sertifikatni yuklab oling" }
+        "1": {
+          "title": "Ro'yxatdan o'tish",
+          "description": "Hisob yarating va profilni to'ldiring"
+        },
+        "2": {
+          "title": "Mutaxassislik tanlash",
+          "description": "O'zingizning yo'nalishingizni tanlang"
+        },
+        "3": {
+          "title": "Test topshirish",
+          "description": "Savollarga javob bering va testni yakunlang"
+        },
+        "4": {
+          "title": "Natijani olish",
+          "description": "Natijangizni ko'ring va darajangizni aniqlang"
+        },
+        "5": {
+          "title": "Sertifikat olish",
+          "description": "Elektron sertifikatni yuklab oling"
+        }
       }
     },
     "ctaBand": {
@@ -165,13 +192,7 @@
     "level": "Daraja",
     "downloadPdf": "PDF yuklab olish",
     "downloading": "Tayyorlanmoqda…",
-    "downloadFailed": "PDF tayyorlashda xatolik yuz berdi",
-    "pdf": {
-      "brand": "Doctor Qualification",
-      "title": "SERTIFIKAT",
-      "subtitle": "Shifokorlar bilim va malakasini baholash platformasi",
-      "bodyText": "Ushbu sertifikat quyidagi shaxsning mutaxassislik bo'yicha malaka imtihonidan muvaffaqiyatli o'tganligini tasdiqlaydi:"
-    }
+    "downloadFailed": "PDF tayyorlashda xatolik yuz berdi"
   },
   "dashboard": {
     "admin": {
@@ -211,7 +232,9 @@
       "specialties": "Mutaxassisliklar",
       "exams": "Imtihonlar",
       "certificates": "Sertifikatlar",
-      "ratingSettings": "Reyting sozlamalari"
+      "ratingSettings": "Reyting sozlamalari",
+      "auditLogs": "Audit jurnali",
+      "certificateTemplate": "Sertifikat shabloni"
     },
     "ratingSettings": {
       "title": "Reyting sozlamalari",
@@ -305,6 +328,23 @@
       "activate": "Faollashtirish",
       "deactivate": "Faolsizlantirish",
       "empty": "Foydalanuvchi topilmadi"
+    },
+    "auditLogs": {
+      "title": "Audit jurnali",
+      "empty": "Audit jurnali yozuvlari topilmadi",
+      "before": "Oldin",
+      "after": "Keyin"
+    },
+    "certificateTemplate": {
+      "title": "Sertifikat shabloni",
+      "description": "Ushbu matn sertifikat sahifasida va yuklab olinadigan PDFda ko'rsatiladi.",
+      "fields": {
+        "brand": "Brend",
+        "title": "Sarlavha",
+        "subtitle": "Kichik sarlavha",
+        "bodyText": "Asosiy matn"
+      },
+      "save": "Saqlash"
     }
   },
   "serverMessages": {

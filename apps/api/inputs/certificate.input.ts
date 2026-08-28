@@ -1,2 +1,2 @@
-export { AdminCertificateQuerySchema } from '@repo/contracts';
-export type { AdminCertificateQuery } from '@repo/contracts';
+export { AdminCertificateQuerySchema, UpdateCertificateTemplateInputSchema } from '@repo/contracts';
+export type { AdminCertificateQuery, UpdateCertificateTemplateInput } from '@repo/contracts';

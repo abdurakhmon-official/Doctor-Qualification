@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { LocalizedText } from '../common/localized-text';
+import { LocalizedTextSchema, type LocalizedText } from '../common/localized-text';
 import type { QualificationLevel } from '../exam-attempt/exam-attempt.schema';
 
 // schemas
@@ -9,9 +9,18 @@ export const AdminCertificateQuerySchema = z.object({
   size: z.coerce.number().int().positive().max(50).default(20),
 });
 
+/** Sertifikatning marosim matni — ko'rinish/joylashuv kodda qoladi, faqat shu matn admin ixtiyorida (rule: dynamic standards.md). */
+export const UpdateCertificateTemplateInputSchema = z.object({
+  brand: LocalizedTextSchema,
+  title: LocalizedTextSchema,
+  subtitle: LocalizedTextSchema,
+  bodyText: LocalizedTextSchema,
+});
+
 // types
 
 export type AdminCertificateQuery = z.infer<typeof AdminCertificateQuerySchema>;
+export type UpdateCertificateTemplateInput = z.infer<typeof UpdateCertificateTemplateInputSchema>;
 
 // interfaces
 
@@ -46,4 +55,11 @@ export interface AdminCertificateListItem {
   issuedAt: string;
   expiresAt: string;
   revoked: boolean;
+}
+
+export interface CertificateTemplateOutput {
+  brand: LocalizedText;
+  title: LocalizedText;
+  subtitle: LocalizedText;
+  bodyText: LocalizedText;
 }

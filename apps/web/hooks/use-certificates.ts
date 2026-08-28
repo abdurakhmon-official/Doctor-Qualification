@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { AdminCertificateQuery } from '@repo/contracts';
+import type { AdminCertificateQuery, UpdateCertificateTemplateInput } from '@repo/contracts';
 import { queryKeys } from '@/lib/query-keys';
 import { certificateService } from '@/lib/services';
 
@@ -32,5 +32,21 @@ export const useRevokeCertificate = () => {
   return useMutation({
     mutationFn: (certificateId: string) => certificateService.revoke(certificateId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.adminCertificatesBase }),
+  });
+};
+
+export const useCertificateTemplate = () => {
+  return useQuery({
+    queryKey: queryKeys.certificateTemplate,
+    queryFn: () => certificateService.getTemplate(),
+  });
+};
+
+export const useUpdateCertificateTemplate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (input: UpdateCertificateTemplateInput) => certificateService.updateTemplate(input),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.certificateTemplate }),
   });
 };

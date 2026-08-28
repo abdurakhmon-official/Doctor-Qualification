@@ -14,13 +14,14 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { CertificateDocument } from '@/components/certificate/CertificateDocument';
 import { pickLocalized } from '@/lib/localized';
 import { LEVEL_BADGE_VARIANT } from '@/lib/utils';
-import { useCertificate } from '@/hooks/use-certificates';
+import { useCertificate, useCertificateTemplate } from '@/hooks/use-certificates';
 
 export function CertificateDetailView({ certificateId }: { certificateId: string }) {
   const t = useTranslations('certificate');
   const tLevel = useTranslations('attempts.result.level');
   const locale = useLocale() as Locale;
   const { data: certificate, isError } = useCertificate(certificateId);
+  const { data: template } = useCertificateTemplate();
   const [verifyUrl, setVerifyUrl] = useState('');
   const [downloading, setDownloading] = useState(false);
 
@@ -37,11 +38,15 @@ export function CertificateDetailView({ certificateId }: { certificateId: string
     );
   }
 
-  if (!certificate) return null;
+  if (!certificate || !template) return null;
 
   const specialtyName = pickLocalized(certificate.specialtyName, locale);
   const levelLabel = tLevel(certificate.level);
   const invalid = certificate.revoked || certificate.expired;
+  const templateBrand = pickLocalized(template.brand, locale);
+  const templateTitle = pickLocalized(template.title, locale);
+  const templateSubtitle = pickLocalized(template.subtitle, locale);
+  const templateBodyText = pickLocalized(template.bodyText, locale);
 
   const onDownload = async () => {
     setDownloading(true);
@@ -56,10 +61,10 @@ export function CertificateDetailView({ certificateId }: { certificateId: string
           qrDataUrl={qrDataUrl}
           issuedAtFormatted={new Date(certificate.issuedAt).toLocaleDateString(locale)}
           labels={{
-            brand: t('pdf.brand'),
-            title: t('pdf.title'),
-            subtitle: t('pdf.subtitle'),
-            bodyText: t('pdf.bodyText'),
+            brand: templateBrand,
+            title: templateTitle,
+            subtitle: templateSubtitle,
+            bodyText: templateBodyText,
             specialtyLabel: t('specialty'),
             scoreLabel: t('score'),
             dateLabel: t('issuedAt'),
@@ -96,12 +101,12 @@ export function CertificateDetailView({ certificateId }: { certificateId: string
           <CardContent className="flex flex-col items-center gap-5 rounded-lg border border-dashed border-primary/30 py-10 text-center">
             <div className="flex items-center gap-2 text-primary">
               <Award className="size-6" />
-              <span className="text-xs font-bold tracking-widest uppercase">{t('pdf.brand')}</span>
+              <span className="text-xs font-bold tracking-widest uppercase">{templateBrand}</span>
             </div>
 
             <div>
-              <p className="text-2xl font-extrabold tracking-tight">{t('pdf.title')}</p>
-              <p className="text-sm text-muted-foreground">{t('pdf.subtitle')}</p>
+              <p className="text-2xl font-extrabold tracking-tight">{templateTitle}</p>
+              <p className="text-sm text-muted-foreground">{templateSubtitle}</p>
             </div>
 
             <p className="text-3xl font-bold">{certificate.userFullName}</p>

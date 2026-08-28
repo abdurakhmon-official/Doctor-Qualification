@@ -1,4 +1,12 @@
-import type { AdminCertificateListItem, AdminCertificateQuery, ApiResponse, CertificateOutput, MyCertificateListItem } from '@repo/contracts';
+import type {
+  AdminCertificateListItem,
+  AdminCertificateQuery,
+  ApiResponse,
+  CertificateOutput,
+  CertificateTemplateOutput,
+  MyCertificateListItem,
+  UpdateCertificateTemplateInput,
+} from '@repo/contracts';
 import { BaseService, type Paged } from '@/lib/services/base.service';
 import api from '@/lib/axios';
 
@@ -7,6 +15,16 @@ export class CertificateService extends BaseService<CertificateOutput, never, ne
 
   async myCertificates(): Promise<MyCertificateListItem[]> {
     const { data } = await api.get<ApiResponse<MyCertificateListItem[]>>(`/${this.BASE_PATH}/my`);
+    return data.data;
+  }
+
+  async getTemplate(): Promise<CertificateTemplateOutput> {
+    const { data } = await api.get<ApiResponse<CertificateTemplateOutput>>(`/${this.BASE_PATH}/template`);
+    return data.data;
+  }
+
+  async updateTemplate(input: UpdateCertificateTemplateInput): Promise<CertificateTemplateOutput> {
+    const { data } = await api.put<ApiResponse<CertificateTemplateOutput>>(`/${this.BASE_PATH}/template`, input);
     return data.data;
   }
 

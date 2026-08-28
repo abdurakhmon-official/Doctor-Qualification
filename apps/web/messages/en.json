@@ -24,10 +24,22 @@
       "button": "Verify"
     },
     "features": {
-      "specialties": { "title": "All specialties", "subtitle": "{count}+ medical fields" },
-      "certificate": { "title": "Official certificate", "subtitle": "Verified by QR code" },
-      "levels": { "title": "Level system", "subtitle": "A 5-tier grading system" },
-      "timed": { "title": "Online exam", "subtitle": "Available 24/7" }
+      "specialties": {
+        "title": "All specialties",
+        "subtitle": "{count}+ medical fields"
+      },
+      "certificate": {
+        "title": "Official certificate",
+        "subtitle": "Verified by QR code"
+      },
+      "levels": {
+        "title": "Level system",
+        "subtitle": "A 5-tier grading system"
+      },
+      "timed": {
+        "title": "Online exam",
+        "subtitle": "Available 24/7"
+      }
     },
     "stats": {
       "title": "Platform statistics",
@@ -45,11 +57,26 @@
     "howItWorks": {
       "title": "How it works",
       "steps": {
-        "1": { "title": "Sign up", "description": "Create an account and fill in your profile" },
-        "2": { "title": "Choose a specialty", "description": "Pick your medical field" },
-        "3": { "title": "Take the exam", "description": "Answer the questions and finish the test" },
-        "4": { "title": "Get your result", "description": "See your score and qualification level" },
-        "5": { "title": "Get your certificate", "description": "Download your digital certificate" }
+        "1": {
+          "title": "Sign up",
+          "description": "Create an account and fill in your profile"
+        },
+        "2": {
+          "title": "Choose a specialty",
+          "description": "Pick your medical field"
+        },
+        "3": {
+          "title": "Take the exam",
+          "description": "Answer the questions and finish the test"
+        },
+        "4": {
+          "title": "Get your result",
+          "description": "See your score and qualification level"
+        },
+        "5": {
+          "title": "Get your certificate",
+          "description": "Download your digital certificate"
+        }
       }
     },
     "ctaBand": {
@@ -165,13 +192,7 @@
     "level": "Level",
     "downloadPdf": "Download PDF",
     "downloading": "Preparing…",
-    "downloadFailed": "Failed to prepare the PDF",
-    "pdf": {
-      "brand": "Doctor Qualification",
-      "title": "CERTIFICATE",
-      "subtitle": "Doctor qualification assessment platform",
-      "bodyText": "This certificate confirms that the person named below has successfully passed a qualification exam in:"
-    }
+    "downloadFailed": "Failed to prepare the PDF"
   },
   "dashboard": {
     "admin": {
@@ -211,7 +232,9 @@
       "specialties": "Specialties",
       "exams": "Exams",
       "certificates": "Certificates",
-      "ratingSettings": "Rating settings"
+      "ratingSettings": "Rating settings",
+      "auditLogs": "Audit log",
+      "certificateTemplate": "Certificate template"
     },
     "ratingSettings": {
       "title": "Rating settings",
@@ -305,6 +328,23 @@
       "activate": "Activate",
       "deactivate": "Deactivate",
       "empty": "No users found"
+    },
+    "auditLogs": {
+      "title": "Audit log",
+      "empty": "No audit log entries found",
+      "before": "Before",
+      "after": "After"
+    },
+    "certificateTemplate": {
+      "title": "Certificate template",
+      "description": "This wording is shown on the certificate page and the downloadable PDF.",
+      "fields": {
+        "brand": "Brand",
+        "title": "Title",
+        "subtitle": "Subtitle",
+        "bodyText": "Body text"
+      },
+      "save": "Save"
     }
   },
   "serverMessages": {
