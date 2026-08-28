@@ -1,10 +1,24 @@
-import { Injectable } from '@tsed/di';
+import { Inject, Injectable, InjectContext } from '@tsed/di';
+import { PlatformContext } from '@tsed/common';
+import type { Request } from 'express';
 import prisma from '@/modules/db';
 import { redis, isRedisReady } from '@/modules/redis';
+import { AuditService } from '@/services/audit.service';
 import type { RatingSettingsOutput, UpdateRatingSettingsInput } from '@repo/contracts';
 
 @Injectable()
 export class RatingSettingsService {
+  @Inject()
+  private auditService!: AuditService;
+
+  @InjectContext()
+  private context!: PlatformContext;
+
+  private get actor() {
+    const user = this.context.getRequest<Request>().user!;
+    return { actorId: user.id, actorEmail: user.email };
+  }
+
   private static readonly CACHE_KEY = 'rating-settings';
   private static readonly DEFAULTS = {
     avgScoreWeight: 0.4,
@@ -34,6 +48,15 @@ export class RatingSettingsService {
 
     const output = this.toOutput(updated);
     await this.writeCache(output);
+
+    await this.auditService.log({
+      ...this.actor,
+      action: 'RATING_SETTINGS_UPDATED',
+      entityType: 'RatingSettings',
+      entityId: row.id,
+      before: this.toOutput(row),
+      after: output,
+    });
 
     return output;
   }

@@ -1,3 +1,4 @@
+export * from './audit.service';
 export * from './auth.service';
 export * from './certificate.service';
 export * from './dashboard.service';

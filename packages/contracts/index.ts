@@ -10,3 +10,4 @@ export * from './exam-attempt/exam-attempt.schema';
 export * from './certificate/certificate.schema';
 export * from './rating/rating.schema';
 export * from './dashboard/dashboard.schema';
+export * from './audit/audit.schema';

@@ -16,6 +16,8 @@ export function AdminSubNav() {
     { href: '/admin/exams', label: t('exams') },
     { href: '/admin/certificates', label: t('certificates') },
     { href: '/admin/rating-settings', label: t('ratingSettings') },
+    { href: '/admin/certificate-template', label: t('certificateTemplate') },
+    { href: '/admin/audit-logs', label: t('auditLogs') },
   ] as const;
 
   return (
