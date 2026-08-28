@@ -3,7 +3,6 @@ import { hashPassword } from '../modules/auth';
 
 const prisma = new PrismaClient();
 
-/** Mutaxassisliklar — reference/lookup ma'lumot (rule: api standards.md §13), barcha muhitda qo'lda seed qilinadi. */
 const SPECIALTIES = [
   { uz: 'Terapevt', ru: 'Терапевт', en: 'General practitioner' },
   { uz: 'Kardiolog', ru: 'Кардиолог', en: 'Cardiologist' },

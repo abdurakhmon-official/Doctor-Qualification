@@ -6,13 +6,6 @@ import prisma from '@/modules/db';
 import { redis, isRedisReady } from '@/modules/redis';
 import { AuditService } from '@/services/audit.service';
 
-/**
- * Sertifikatning marosim matni — singleton, admin-editable (rule: dynamic standards.md,
- * o'z misolidagi "Sertifikat: Shablon matni... admin ma'lumotida" qatoriga mos). Ko'rinish/
- * joylashuv (border, QR, meta blocklar) CertificateDocument.tsx'da kodda qoladi — faqat matn
- * o'zi shu yerda. RatingSettingsService bilan bir xil naqsh: Redis'da keshlanadi, admin
- * o'zgartirganda kesh invalidatsiya qilinadi.
- */
 @Injectable()
 export class CertificateTemplateService {
   private static readonly CACHE_KEY = 'certificate-template';
@@ -42,7 +35,6 @@ export class CertificateTemplateService {
     return { actorId: user.id, actorEmail: user.email };
   }
 
-  /** Ochiq — sertifikat ko'rish sahifasi (o'zining ham, ochiq QR-tekshiruv ham) shu orqali render qiladi. */
   async get(): Promise<CertificateTemplateOutput> {
     const cached = await this.readCache();
     if (cached) return cached;
@@ -115,7 +107,6 @@ export class CertificateTemplateService {
     try {
       await redis.set(CertificateTemplateService.CACHE_KEY, JSON.stringify(template));
     } catch {
-      // Redis o'chirilgan bo'lishi mumkin — muvaffaqiyatsizlik jim o'tkaziladi, DB manba bo'lib qoladi.
     }
   }
 }

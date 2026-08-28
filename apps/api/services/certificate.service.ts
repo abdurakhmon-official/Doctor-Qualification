@@ -38,11 +38,6 @@ export class CertificateService {
     return { actorId: user.id, actorEmail: user.email };
   }
 
-  /**
-   * attemptId'ga unique constraint borligi sababli idempotent — takror chaqirilsa ham faqat bitta sertifikat yaratiladi.
-   * `client` — ExamAttemptService.submitAttempt shu metodni attempt yozuvini yangilash bilan bitta `$transaction` ichida chaqiradi;
-   * standalone chaqiruv uchun default — oddiy `prisma` singleton.
-   */
   async checkAndIssue(input: IssueInput, client: Prisma.TransactionClient = prisma): Promise<boolean> {
     const existing = await client.certificate.findUnique({ where: { attemptId: input.attemptId }, select: { id: true } });
     if (existing) return true;
@@ -86,7 +81,6 @@ export class CertificateService {
     };
   }
 
-  /** Ochiq (autentifikatsiyasiz) — Certificate ID yoki QR orqali har kim tekshira oladi. */
   async verify(certificateId: string) {
     const certificate = await prisma.certificate.findUnique({ where: { certificateId } });
     if (!certificate) throw new CertificateNotFoundException(certificateId);

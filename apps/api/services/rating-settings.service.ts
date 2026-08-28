@@ -101,7 +101,6 @@ export class RatingSettingsService {
     try {
       await redis.set(RatingSettingsService.CACHE_KEY, JSON.stringify(settings));
     } catch {
-      // Redis kesh o'chirilgan bo'lishi mumkin — muvaffaqiyatsizlik jim o'tkaziladi, DB manba bo'lib qoladi.
     }
   }
 }

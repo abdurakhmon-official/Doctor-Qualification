@@ -13,13 +13,6 @@ interface AuditEntry {
   after?: unknown;
 }
 
-/**
- * Markazlashgan audit trail (rule: dynamic standards.md §4) — settings/lookup jadval o'zgarganda
- * kim/qachon/nimani o'zgartirgani shu orqali yoziladi. Har bir domen o'z audit logikasini
- * yozmaydi — shu service'ni chaqiradi. Yozish muvaffaqiyatsiz bo'lsa ham asosiy amal bekor
- * qilinmaydi — audit log ikkinchi darajali yon ta'sir, uni original mutatsiyani xavf ostiga
- * qo'yish noto'g'ri (masalan Redis o'chib qolgani sertifikat berishni to'xtatmasligi kabi).
- */
 @Injectable()
 export class AuditService {
   async log(entry: AuditEntry): Promise<void> {

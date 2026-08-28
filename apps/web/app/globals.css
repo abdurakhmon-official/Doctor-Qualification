@@ -30,10 +30,6 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
-/*
-  Indigo-ko'k accent — ta'lim/texnologiya platformalari uchun ishonchli,
-  professional rang. Kerak bo'lsa shu yerda almashtiriladi.
-*/
 :root {
   --background: oklch(0.99 0.002 260);
   --foreground: oklch(0.2 0.02 260);

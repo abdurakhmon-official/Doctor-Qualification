@@ -176,7 +176,6 @@ model Certificate {
   @@map("certificates")
 }
 
-/** Singleton — sertifikatning marosim matni (rule: dynamic standards.md — "Shablon matni... admin ma'lumotida"). Ko'rinish/joylashuv kodda qoladi, faqat matn o'zi shu yerda. */
 model CertificateTemplate {
   id        String   @id @default(uuid())
   brand     Json
@@ -189,11 +188,6 @@ model CertificateTemplate {
   @@map("certificate_templates")
 }
 
-/**
- * Markazlashgan audit trail (rule: dynamic standards.md §4) — settings/lookup jadvallar o'zgarganda
- * kim/qachon/nimani o'zgartirgani shu yerda yoziladi. `actorId`/`actorEmail` denormalized —
- * User keyinchalik o'chirilsa/o'zgarsa ham tarixiy yozuv o'zgarmas qoladi (shuning uchun FK yo'q).
- */
 model AuditLog {
   id         String   @id @default(uuid())
   actorId    String   @map("actor_id")

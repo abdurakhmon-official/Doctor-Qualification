@@ -84,7 +84,6 @@ export class DashboardService {
     return { success: true, data };
   }
 
-  /** Ochiq (autentifikatsiyasiz) — bosh sahifadagi "Platforma statistikasi" bloki uchun. */
   async publicStats() {
     const [userCount, attemptCount, certificateCount, scoredAttempts, specialtyAttempts] = await Promise.all([
       prisma.user.count({ where: { role: USER_ROLE.USER, deletedAt: null } }),

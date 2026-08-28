@@ -3,11 +3,6 @@ import { AuthenticationRequiredException } from '@/exceptions/auth.exceptions';
 
 type CodedException = BadRequest | NotFound | Unauthorized | Forbidden | PaymentRequired;
 
-/**
- * Umumiy fallback — domenga xos xato bo'lmagan, bir martalik joylar uchun (rule: api standards.md §5
- * har bir domen o'z custom exception classiga ega bo'lishi kerak; ushbu helper faqat shu qoidaga
- * to'g'ri kelmaydigan, chindan ham bitta joyda ishlatiladigan holatlar uchun qoldirilgan).
- */
 const withCode = <T extends CodedException>(Ctor: new (message: string) => T, code: string, message: string): T => {
   const exception = new Ctor(message);
   (exception as T & { _code: string })._code = code;

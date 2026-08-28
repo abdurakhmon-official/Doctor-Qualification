@@ -171,13 +171,11 @@ export class ExamService {
     return { success: true, data: null };
   }
 
-  /** Boshqa domen service'lari (masalan QuestionService) examId mavjudligini shu orqali tekshiradi — o'z Prisma modeliga bevosita kirmaydi. */
   async assertExists(examId: string): Promise<void> {
     const exam = await prisma.exam.findUnique({ where: { id: examId }, select: { id: true } });
     if (!exam) throw new ExamNotFoundException(examId);
   }
 
-  /** ExamAttemptService bunga tayanadi — imtihonni boshlash/topshirish/ko'rib chiqish uchun kerakli barcha ma'lumot bitta joyda. */
   async getDetailForAttempt(examId: string) {
     return prisma.exam.findUnique({
       where: { id: examId },

@@ -24,7 +24,6 @@ export const gradeAttempt = (questions: GradableQuestion[], answers: Record<stri
   return { score, correctCount, questionCount };
 };
 
-/** spec §4: 0-49 boshlang'ich, 50-69 o'rta, 70-84 yaxshi, 85-94 yuqori, 95-100 ekspert. */
 export const gradeToLevel = (score: number): QUALIFICATION_LEVEL => {
   if (score >= 95) return QUALIFICATION_LEVEL.EXPERT;
   if (score >= 85) return QUALIFICATION_LEVEL.HIGH;

@@ -20,7 +20,6 @@ export class UploadService {
     return data.data;
   }
 
-  /** S3'ga to'g'ridan-to'g'ri yuklaydi — ilova `api` instansi ORQALI EMAS (Authorization header presigned URL imzosiga kirmaydi). */
   async upload(folder: string, file: File): Promise<{ key: string; fileName: string }> {
     const policy = await this.generatePolicy(folder, file);
 

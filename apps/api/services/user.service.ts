@@ -64,7 +64,6 @@ export class UserService {
     return user;
   }
 
-  /** AdminService.stats() uchun — rol bo'yicha foydalanuvchi soni. */
   async countByRole() {
     const grouped = await prisma.user.groupBy({ by: ['role'], _count: true });
     const countOf = (role: keyof typeof USER_ROLE) => grouped.find((group) => group.role === USER_ROLE[role])?._count ?? 0;

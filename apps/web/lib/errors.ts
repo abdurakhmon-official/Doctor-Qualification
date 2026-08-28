@@ -17,11 +17,6 @@ export const errorFrom = (error: unknown): ErrorDetail => {
     const body = error.response?.data;
 
     return {
-      /*
-        `_code` wins over `_message`: the server writes English, the
-        reader may not read it. `meta` carries what the sentence
-        interpolates.
-      */
       message: messageFor(body?._code, body?._message, body?.meta) ?? error.message,
       code: body?._code,
       meta: body?.meta,

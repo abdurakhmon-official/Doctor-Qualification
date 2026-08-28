@@ -12,7 +12,6 @@ export const LEVEL_BADGE_VARIANT: Record<QualificationLevel, 'default' | 'succes
   EXPERT: 'success',
 };
 
-/** `UploadService.upload()` qaytargan `key`dan to'liq ko'rinadigan URL yasaydi. */
 export const assetUrl = (key: string | null | undefined): string | undefined => {
   if (!key) return undefined;
   const base = (process.env.NEXT_PUBLIC_API_URL ?? '').replace(/\/$/, '');

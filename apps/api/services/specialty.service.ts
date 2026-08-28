@@ -68,7 +68,6 @@ export class SpecialtyService {
     return { success: true, data: specialty };
   }
 
-  /** Boshqa domen service'lari (masalan ExamService) specialtyId mavjudligini shu orqali tekshiradi — o'z Prisma modeliga bevosita kirmaydi. */
   async assertExists(specialtyId: string): Promise<void> {
     const specialty = await prisma.specialty.findUnique({ where: { id: specialtyId }, select: { id: true } });
     if (!specialty) throw new SpecialtyNotFoundException(specialtyId);

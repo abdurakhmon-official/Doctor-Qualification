@@ -117,7 +117,6 @@ export class ExamAttemptService {
     const result = gradeAttempt(exam.questions, validAnswers);
     const level = gradeToLevel(result.score);
 
-    /** Natijani saqlash va sertifikat berish — bog'liq yozuvlar, bitta tranzaksiyada birga muvaffaqiyatli yoki birga bekor bo'ladi. */
     const [updated, certificateIssued] = await prisma.$transaction(async (tx) => {
       const updatedAttempt = await tx.examAttempt.update({
         where: { id: attempt.id },
