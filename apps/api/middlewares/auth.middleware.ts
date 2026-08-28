@@ -1,7 +1,6 @@
 import { Req } from '@tsed/common';
 import { Context } from '@tsed/platform-params';
 import { Middleware, MiddlewareMethods, UseAuth } from '@tsed/platform-middlewares';
-import { Forbidden, Unauthorized } from '@tsed/exceptions';
 import { Inject } from '@tsed/di';
 import { useDecorators } from '@tsed/core';
 import { Returns, Security } from '@tsed/schema';
@@ -11,6 +10,12 @@ import prisma from '@/modules/db';
 import { Authenticate, verifyJWT } from '@/modules/auth';
 import { TokenService } from '@/services/token.service';
 import { USER_PUBLIC_SELECT, RoleRequirements } from '@/utils/constants';
+import {
+  AccountDeactivatedException,
+  AuthenticationRequiredException,
+  InsufficientRoleException,
+  SessionRevokedException,
+} from '@/exceptions/auth.exceptions';
 
 @Middleware()
 export class AuthMiddleware implements MiddlewareMethods {
@@ -25,7 +30,7 @@ export class AuthMiddleware implements MiddlewareMethods {
     const user = request.user;
 
     if (!user) {
-      throw new Unauthorized('Unauthorized');
+      throw new AuthenticationRequiredException();
     }
 
     if (user.role === USER_ROLE.ADMIN) {
@@ -33,7 +38,7 @@ export class AuthMiddleware implements MiddlewareMethods {
     }
 
     if (options.role && user.role !== options.role) {
-      throw new Forbidden('You are not authorized to access this resource.');
+      throw new InsufficientRoleException();
     }
 
     return true;
@@ -43,13 +48,13 @@ export class AuthMiddleware implements MiddlewareMethods {
     const clientToken = request.token;
 
     if (!clientToken) {
-      throw new Unauthorized('Unauthorized');
+      throw new AuthenticationRequiredException();
     }
 
     const payload = verifyJWT(clientToken);
 
     if (await this.tokenService.isRevoked(payload.jti)) {
-      throw new Unauthorized('Session has been terminated. Please sign in again.');
+      throw new SessionRevokedException();
     }
 
     const user = await prisma.user.findUnique({
@@ -58,11 +63,11 @@ export class AuthMiddleware implements MiddlewareMethods {
     });
 
     if (!user || user.deletedAt) {
-      throw new Unauthorized('Unauthorized');
+      throw new AuthenticationRequiredException();
     }
 
     if (!user.active) {
-      throw new Forbidden('Your account has been deactivated. Please contact an administrator.');
+      throw new AccountDeactivatedException();
     }
 
     request.user = { ...user, isAdmin: user.role === USER_ROLE.ADMIN };

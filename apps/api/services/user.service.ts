@@ -3,10 +3,12 @@ import { PlatformContext } from '@tsed/common';
 import type { Request } from 'express';
 import { AdminUserQuerySchema } from '@repo/contracts';
 import prisma from '@/modules/db';
-import { badRequest, notFound, requireUserId } from '@/utils/errors.utils';
+import { requireUserId } from '@/utils/errors.utils';
 import { USER_PUBLIC_SELECT } from '@/utils/constants';
 import type { SetActiveInput, UpdateProfileInput, UpdateRoleInput } from '@/inputs/user.input';
 import { USER_ROLE } from '../generated/prisma';
+import { AdminCannotModifySelfException, UserNotFoundException } from '@/exceptions/user.exceptions';
+import { AuditService } from '@/services/audit.service';
 
 @Injectable()
 export class UserService {
@@ -24,12 +26,20 @@ export class UserService {
   @InjectContext()
   private context!: PlatformContext;
 
+  @Inject()
+  private auditService!: AuditService;
+
   private get user() {
     return this.context.getRequest<Request>().user;
   }
 
   private get currentUserId(): string {
     return requireUserId(this.user);
+  }
+
+  private get actor() {
+    const user = this.user!;
+    return { actorId: user.id, actorEmail: user.email };
   }
 
   async updateProfile(input: UpdateProfileInput) {
@@ -49,7 +59,7 @@ export class UserService {
 
   async getById(userId: string) {
     const user = await prisma.user.findUnique({ where: { id: userId }, select: UserService.SELECT });
-    if (!user) throw notFound('AUTH_USER_NOT_FOUND', 'user not found');
+    if (!user) throw new UserNotFoundException(userId);
 
     return user;
   }
@@ -101,7 +111,7 @@ export class UserService {
 
   async updateRole(userId: string, input: UpdateRoleInput) {
     this.assertNotSelf(userId);
-    await this.findOrThrow(userId);
+    const before = await this.findOrThrow(userId);
 
     const user = await prisma.user.update({
       where: { id: userId },
@@ -109,12 +119,21 @@ export class UserService {
       select: UserService.LIST_SELECT,
     });
 
+    await this.auditService.log({
+      ...this.actor,
+      action: 'USER_ROLE_UPDATED',
+      entityType: 'User',
+      entityId: userId,
+      before: { role: before.role },
+      after: { role: user.role },
+    });
+
     return { success: true, data: { ...user, createdAt: user.createdAt.toISOString() } };
   }
 
   async setActive(userId: string, input: SetActiveInput) {
     this.assertNotSelf(userId);
-    await this.findOrThrow(userId);
+    const before = await this.findOrThrow(userId);
 
     const user = await prisma.user.update({
       where: { id: userId },
@@ -122,17 +141,27 @@ export class UserService {
       select: UserService.LIST_SELECT,
     });
 
+    await this.auditService.log({
+      ...this.actor,
+      action: 'USER_ACTIVE_UPDATED',
+      entityType: 'User',
+      entityId: userId,
+      before: { active: before.active },
+      after: { active: user.active },
+    });
+
     return { success: true, data: { ...user, createdAt: user.createdAt.toISOString() } };
   }
 
   private assertNotSelf(userId: string): void {
     if (userId === this.currentUserId) {
-      throw badRequest('ADMIN_CANNOT_MODIFY_SELF', "you cannot change your own account's role or active status");
+      throw new AdminCannotModifySelfException();
     }
   }
 
-  private async findOrThrow(userId: string): Promise<void> {
-    const user = await prisma.user.findUnique({ where: { id: userId }, select: { id: true } });
-    if (!user) throw notFound('AUTH_USER_NOT_FOUND', 'user not found');
+  private async findOrThrow(userId: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { id: true, role: true, active: true } });
+    if (!user) throw new UserNotFoundException(userId);
+    return user;
   }
 }

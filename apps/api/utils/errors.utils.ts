@@ -1,7 +1,13 @@
 import { BadRequest, Forbidden, NotFound, PaymentRequired, Unauthorized } from '@tsed/exceptions';
+import { AuthenticationRequiredException } from '@/exceptions/auth.exceptions';
 
 type CodedException = BadRequest | NotFound | Unauthorized | Forbidden | PaymentRequired;
 
+/**
+ * Umumiy fallback — domenga xos xato bo'lmagan, bir martalik joylar uchun (rule: api standards.md §5
+ * har bir domen o'z custom exception classiga ega bo'lishi kerak; ushbu helper faqat shu qoidaga
+ * to'g'ri kelmaydigan, chindan ham bitta joyda ishlatiladigan holatlar uchun qoldirilgan).
+ */
 const withCode = <T extends CodedException>(Ctor: new (message: string) => T, code: string, message: string): T => {
   const exception = new Ctor(message);
   (exception as T & { _code: string })._code = code;
@@ -19,6 +25,6 @@ export const forbidden = (code: string, message: string): Forbidden => withCode(
 export const paymentRequired = (code: string, message: string): PaymentRequired => withCode(PaymentRequired, code, message);
 
 export const requireUserId = (user: { id: string } | undefined): string => {
-  if (!user) throw unauthorized('AUTH_UNAUTHORIZED', 'authentication required');
+  if (!user) throw new AuthenticationRequiredException();
   return user.id;
 };

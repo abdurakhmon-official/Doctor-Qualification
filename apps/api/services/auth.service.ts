@@ -3,13 +3,14 @@ import { PlatformContext } from '@tsed/common';
 import type { Request } from 'express';
 import prisma from '@/modules/db';
 import { comparePassword, createAccessToken, hashPassword, needsRehash } from '@/modules/auth';
-import { badRequest, notFound, unauthorized } from '@/utils/errors.utils';
 import { clearLoginFailures, loginBlockedFor, LOGIN_GUARD, recordLoginFailure } from '@/utils/login-guard.utils';
 import { TooManyRequests } from '@/middlewares/rate-limit.middleware';
 import { TokenService } from '@/services/token.service';
 import { USER_PUBLIC_SELECT } from '@/utils/constants';
 import { USER_ROLE } from '../generated/prisma';
 import type { SignupInput, SigninInput } from '@/inputs/auth.input';
+import { AccountInactiveException, EmailAlreadyTakenException, InvalidCredentialsException } from '@/exceptions/auth.exceptions';
+import { UserNotFoundException } from '@/exceptions/user.exceptions';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +32,7 @@ export class AuthService {
     const email = input.email.toLowerCase();
 
     const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) throw badRequest('AUTH_EMAIL_TAKEN', 'This email is already registered');
+    if (existing) throw new EmailAlreadyTakenException();
 
     const user = await prisma.user.create({
       data: {
@@ -67,18 +68,18 @@ export class AuthService {
 
     if (!user || user.deletedAt) {
       await recordLoginFailure(email);
-      throw badRequest('AUTH_INVALID_CREDENTIALS', 'Invalid email or password');
+      throw new InvalidCredentialsException();
     }
 
     const isValid = await comparePassword(input.password, user.password);
 
     if (!isValid) {
       await recordLoginFailure(email);
-      throw badRequest('AUTH_INVALID_CREDENTIALS', 'Invalid email or password');
+      throw new InvalidCredentialsException();
     }
 
     if (!user.active) {
-      throw unauthorized('AUTH_ACCOUNT_INACTIVE', 'This account is inactive');
+      throw new AccountInactiveException();
     }
 
     await clearLoginFailures(email);
@@ -96,7 +97,7 @@ export class AuthService {
       select: USER_PUBLIC_SELECT,
     });
 
-    if (!user || user.deletedAt) throw notFound('AUTH_USER_NOT_FOUND', 'User not found');
+    if (!user || user.deletedAt) throw new UserNotFoundException(this.user?.id ?? '');
 
     return { success: true, data: { ...user, isAdmin: user.role === USER_ROLE.ADMIN } };
   }
