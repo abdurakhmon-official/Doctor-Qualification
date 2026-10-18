@@ -1,7 +1,7 @@
 import { Controller, Inject } from '@tsed/di';
-import { BodyParams, PathParams } from '@tsed/platform-params';
-import { Delete, Put } from '@tsed/schema';
-import { UpdateQuestionInputSchema } from '@/inputs/question.input';
+import { BodyParams, PathParams, QueryParams } from '@tsed/platform-params';
+import { Delete, Get, Put } from '@tsed/schema';
+import { AdminQuestionQuerySchema, UpdateQuestionInputSchema } from '@/inputs/question.input';
 import type { UpdateQuestionInput } from '@/inputs/question.input';
 import { AdminOnly, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
@@ -11,6 +11,12 @@ import { QuestionService } from '@/services/question.service';
 export class QuestionController {
   @Inject()
   private questionService!: QuestionService;
+
+  @Get('/')
+  @Authorized(AdminOnly())
+  async list(@QueryParams() query: Record<string, unknown>) {
+    return this.questionService.adminList(AdminQuestionQuerySchema.parse(query));
+  }
 
   @Put('/:questionId')
   @Authorized(AdminOnly())

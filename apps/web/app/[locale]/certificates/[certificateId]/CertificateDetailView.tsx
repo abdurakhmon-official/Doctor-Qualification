@@ -47,6 +47,9 @@ export function CertificateDetailView({ certificateId }: { certificateId: string
   const templateTitle = pickLocalized(template.title, locale);
   const templateSubtitle = pickLocalized(template.subtitle, locale);
   const templateBodyText = pickLocalized(template.bodyText, locale);
+  // Official status may only be claimed when the issuer is accredited; otherwise state plainly that it is not.
+  const legalNote =
+    template.isAccredited && template.accreditationText ? pickLocalized(template.accreditationText, locale) : t('disclaimer');
 
   const onDownload = async () => {
     setDownloading(true);
@@ -65,6 +68,7 @@ export function CertificateDetailView({ certificateId }: { certificateId: string
             title: templateTitle,
             subtitle: templateSubtitle,
             bodyText: templateBodyText,
+            legalNote,
             specialtyLabel: t('specialty'),
             scoreLabel: t('score'),
             dateLabel: t('issuedAt'),
@@ -147,6 +151,8 @@ export function CertificateDetailView({ certificateId }: { certificateId: string
                 {t('valid')}
               </div>
             )}
+
+            <p className="max-w-md text-xs text-muted-foreground">{legalNote}</p>
           </CardContent>
         </div>
       </Card>

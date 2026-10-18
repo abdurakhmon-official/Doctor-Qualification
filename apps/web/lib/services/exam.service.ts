@@ -6,6 +6,8 @@ import type {
   CreateExamInput,
   CreateQuestionInput,
   ExamOutput,
+  ImportQuestionsInput,
+  ImportQuestionsOutput,
   QuestionOutput,
   UpdateExamInput,
 } from '@repo/contracts';
@@ -21,6 +23,10 @@ export class ExamService extends BaseService<AdminExamDetail, CreateExamInput, U
 
   async createQuestion(examId: string, input: CreateQuestionInput): Promise<QuestionOutput> {
     return this.sendPost<QuestionOutput, CreateQuestionInput>(`/${examId}/questions`, input);
+  }
+
+  async importQuestions(examId: string, input: ImportQuestionsInput): Promise<ImportQuestionsOutput> {
+    return this.sendPost<ImportQuestionsOutput, ImportQuestionsInput>(`/${examId}/questions/import`, input);
   }
 
   async listPublished(specialtyId?: string): Promise<ExamOutput[]> {

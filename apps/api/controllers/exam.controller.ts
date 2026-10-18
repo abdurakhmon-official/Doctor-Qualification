@@ -3,8 +3,8 @@ import { BodyParams, PathParams, QueryParams } from '@tsed/platform-params';
 import { Delete, Get, Post, Put } from '@tsed/schema';
 import { CreateExamInputSchema, UpdateExamInputSchema } from '@/inputs/exam.input';
 import type { CreateExamInput, UpdateExamInput } from '@/inputs/exam.input';
-import { CreateQuestionInputSchema } from '@/inputs/question.input';
-import type { CreateQuestionInput } from '@/inputs/question.input';
+import { CreateQuestionInputSchema, ImportQuestionsInputSchema } from '@/inputs/question.input';
+import type { CreateQuestionInput, ImportQuestionsInput } from '@/inputs/question.input';
 import { AdminOnly, Authenticate, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { ExamService } from '@/services/exam.service';
@@ -66,5 +66,12 @@ export class ExamController {
   @RateLimit(RATE_LIMITS.admin)
   async createQuestion(@PathParams('examId') examId: string, @BodyParams() body: CreateQuestionInput) {
     return this.questionService.create(examId, CreateQuestionInputSchema.parse(body));
+  }
+
+  @Post('/:examId/questions/import')
+  @Authorized(AdminOnly())
+  @RateLimit(RATE_LIMITS.admin)
+  async importQuestions(@PathParams('examId') examId: string, @BodyParams() body: ImportQuestionsInput) {
+    return this.questionService.import(examId, ImportQuestionsInputSchema.parse(body));
   }
 }

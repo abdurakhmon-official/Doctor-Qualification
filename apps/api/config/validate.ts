@@ -86,6 +86,10 @@ export const validateConfig = (): Check[] => {
     });
   }
 
+  if (!config.ai.apiKey) {
+    checks.push({ level: 'warn', message: 'ANTHROPIC_API_KEY is not set — the AI assistant is switched off' });
+  }
+
   if (isProduction && !config.redis.url.includes('://')) {
     checks.push({ level: 'error', message: 'REDIS_URL is not a valid connection string' });
   }

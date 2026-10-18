@@ -1,2 +1,7 @@
-export { CreateQuestionInputSchema, UpdateQuestionInputSchema } from '@repo/contracts';
-export type { CreateQuestionInput, UpdateQuestionInput } from '@repo/contracts';
+export {
+  CreateQuestionInputSchema,
+  UpdateQuestionInputSchema,
+  ImportQuestionsInputSchema,
+  AdminQuestionQuerySchema,
+} from '@repo/contracts';
+export type { CreateQuestionInput, UpdateQuestionInput, ImportQuestionsInput, AdminQuestionQuery } from '@repo/contracts';

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import type { LocalizedText } from '../common/localized-text';
+import type { QuestionDifficulty } from '../question/question.schema';
 
 // schemas
 
@@ -42,12 +43,23 @@ export interface AttemptReviewQuestion {
   options: LocalizedText[];
   selectedIndex: number | null;
   isCorrect: boolean;
+  topicName: LocalizedText | null;
+  difficulty: QuestionDifficulty;
+}
+
+export interface AttemptTopicResult {
+  /** null groups questions that have no topic yet. */
+  topicId: string | null;
+  topicName: LocalizedText | null;
+  correct: number;
+  total: number;
 }
 
 export interface AttemptSubmitted {
   status: 'SUBMITTED';
   id: string;
   examId: string;
+  specialtyId: string;
   examTitle: LocalizedText;
   score: number;
   correctCount: number;
@@ -57,6 +69,8 @@ export interface AttemptSubmitted {
   certificateIssued: boolean;
   timeSpentSeconds: number;
   submittedAt: string;
+  /** Weakest first. */
+  topics: AttemptTopicResult[];
   questions: AttemptReviewQuestion[];
 }
 

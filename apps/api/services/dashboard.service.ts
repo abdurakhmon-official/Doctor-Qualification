@@ -2,13 +2,28 @@ import { Injectable, InjectContext } from '@tsed/di';
 import { PlatformContext } from '@tsed/common';
 import type { Request } from 'express';
 import { startOfDay } from 'date-fns';
-import type { AdminDashboardOutput, PublicStatsOutput, UserDashboardOutput } from '@repo/contracts';
+import type { z } from 'zod';
+import type {
+  AdminDashboardOutput,
+  LocalizedText,
+  ProgressPoint,
+  PublicStatsOutput,
+  TopicProgress,
+  UserDashboardOutput,
+  UserProgressOutput,
+} from '@repo/contracts';
+import type { UserProgressQuerySchema } from '@/inputs/dashboard.input';
 import prisma from '@/modules/db';
 import { requireUserId } from '@/utils/errors.utils';
 import { averageScore, dailyTrend, groupAverageByLabel, trendRangeStart } from '@/utils/dashboard.utils';
+import { activityStreak, tallyTopics } from '@/utils/progress.utils';
 import { pickLocalized } from '@/utils/localized.utils';
 import { resolveRequestLocale } from '@/i18n/resolve-request-locale.utils';
 import { USER_ROLE } from '../generated/prisma';
+
+// newest attempts of each kind that feed the cabinet; keeps the query bounded for very active users
+const PROGRESS_HISTORY_LIMIT = 500;
+const TIMELINE_POINTS = 30;
 
 @Injectable()
 export class DashboardService {
@@ -39,6 +54,70 @@ export class DashboardService {
       bestScore: stats._max.score ?? 0,
       attemptCount: stats._count._all,
       certificateCount,
+    };
+
+    return { success: true, data };
+  }
+
+  async myProgress({ tzOffset }: z.infer<typeof UserProgressQuerySchema>) {
+    const where = { userId: this.userId, submittedAt: { not: null }, score: { not: null } };
+    const select = { answers: true, score: true, submittedAt: true };
+
+    const [exams, practice] = await Promise.all([
+      prisma.examAttempt.findMany({ where, select, orderBy: { submittedAt: 'desc' }, take: PROGRESS_HISTORY_LIMIT }),
+      prisma.practiceAttempt.findMany({ where, select, orderBy: { submittedAt: 'desc' }, take: PROGRESS_HISTORY_LIMIT }),
+    ]);
+
+    const answerSets = [...exams, ...practice].map((attempt) => (attempt.answers as Record<string, number> | null) ?? {});
+    const questionIds = [...new Set(answerSets.flatMap((answers) => Object.keys(answers)))];
+
+    const questions = await prisma.question.findMany({
+      where: { id: { in: questionIds } },
+      select: {
+        id: true,
+        correctIndex: true,
+        topicId: true,
+        topic: { select: { name: true } },
+        exam: { select: { specialtyId: true, specialty: { select: { name: true } } } },
+      },
+    });
+
+    const { tallies, correct, answered } = tallyTopics(
+      answerSets,
+      new Map(questions.map((question) => [question.id, { ...question, specialtyId: question.exam.specialtyId }])),
+    );
+
+    const topicNames = new Map(questions.map((question) => [question.topicId, question.topic?.name]));
+    const specialtyNames = new Map(questions.map((question) => [question.exam.specialtyId, question.exam.specialty.name]));
+
+    const topics: TopicProgress[] = tallies
+      .map((tally) => ({
+        topicId: tally.topicId,
+        topicName: (tally.topicId ? topicNames.get(tally.topicId) : null) as LocalizedText | null,
+        specialtyId: tally.specialtyId,
+        specialtyName: specialtyNames.get(tally.specialtyId) as LocalizedText,
+        correct: tally.correct,
+        answered: tally.answered,
+        accuracy: Math.round((tally.correct / tally.answered) * 100),
+      }))
+      .sort((a, b) => a.accuracy - b.accuracy || b.answered - a.answered);
+
+    const events: ProgressPoint[] = [
+      ...exams.map((attempt) => ({ date: attempt.submittedAt!.toISOString(), score: attempt.score!, kind: 'EXAM' as const })),
+      ...practice.map((attempt) => ({ date: attempt.submittedAt!.toISOString(), score: attempt.score!, kind: 'PRACTICE' as const })),
+    ].sort((a, b) => a.date.localeCompare(b.date));
+
+    const data: UserProgressOutput = {
+      points: correct,
+      answeredCount: answered,
+      topicsStudied: tallies.filter((tally) => tally.topicId !== null).length,
+      practiceCount: practice.length,
+      ...activityStreak(
+        events.map((event) => new Date(event.date)),
+        tzOffset,
+      ),
+      topics,
+      timeline: events.slice(-TIMELINE_POINTS),
     };
 
     return { success: true, data };

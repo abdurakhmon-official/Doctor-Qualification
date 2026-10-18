@@ -1,4 +1,4 @@
-import type { AdminDashboardOutput, ApiResponse, PublicStatsOutput, UserDashboardOutput } from '@repo/contracts';
+import type { AdminDashboardOutput, ApiResponse, PublicStatsOutput, UserDashboardOutput, UserProgressOutput } from '@repo/contracts';
 import { BaseService } from '@/lib/services/base.service';
 import api from '@/lib/axios';
 
@@ -12,6 +12,11 @@ export class DashboardService extends BaseService<never, never, never> {
 
   async myDashboard(): Promise<UserDashboardOutput> {
     const { data } = await api.get<ApiResponse<UserDashboardOutput>>(`/${this.BASE_PATH}/my`);
+    return data.data;
+  }
+
+  async myProgress(tzOffset: number): Promise<UserProgressOutput> {
+    const { data } = await api.get<ApiResponse<UserProgressOutput>>(`/${this.BASE_PATH}/my/progress`, { params: { tzOffset } });
     return data.data;
   }
 

@@ -1,4 +1,16 @@
+import { z } from 'zod';
 import type { LocalizedText } from '../common/localized-text';
+
+// schemas
+
+/** `tzOffset` follows `Date#getTimezoneOffset()`: minutes UTC minus local (Tashkent = -300). */
+export const UserProgressQuerySchema = z.object({
+  tzOffset: z.coerce.number().int().min(-840).max(840).default(0),
+});
+
+// types
+
+export type UserProgressQuery = z.input<typeof UserProgressQuerySchema>;
 
 // interfaces
 
@@ -30,6 +42,39 @@ export interface UserDashboardOutput {
   bestScore: number;
   attemptCount: number;
   certificateCount: number;
+}
+
+export interface TopicProgress {
+  /** null groups a specialty's questions that have no topic yet. */
+  topicId: string | null;
+  topicName: LocalizedText | null;
+  specialtyId: string;
+  specialtyName: LocalizedText;
+  correct: number;
+  answered: number;
+  /** 0–100, rounded. */
+  accuracy: number;
+}
+
+export interface ProgressPoint {
+  date: string;
+  score: number;
+  kind: 'EXAM' | 'PRACTICE';
+}
+
+/** Exams and practice combined; accuracy counts answered questions only. */
+export interface UserProgressOutput {
+  /** One point per correctly answered question. */
+  points: number;
+  answeredCount: number;
+  topicsStudied: number;
+  practiceCount: number;
+  streakDays: number;
+  activeToday: boolean;
+  /** Weakest first. */
+  topics: TopicProgress[];
+  /** Oldest first, most recent results only. */
+  timeline: ProgressPoint[];
 }
 
 export interface PublicStatsOutput {

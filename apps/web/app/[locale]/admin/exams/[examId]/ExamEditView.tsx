@@ -19,7 +19,7 @@ export function ExamEditView({ examId }: { examId: string }) {
       </Link>
 
       <ExamInfoCard exam={exam} />
-      <QuestionsSection examId={examId} questions={exam.questions} />
+      <QuestionsSection examId={examId} specialtyId={exam.specialtyId} questions={exam.questions} />
     </div>
   );
 }

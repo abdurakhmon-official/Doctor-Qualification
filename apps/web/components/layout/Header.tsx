@@ -27,7 +27,7 @@ export function Header() {
           <span className="truncate">{t('brand')}</span>
         </Link>
 
-        <div className="hidden items-center gap-3 sm:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
           <ThemeToggle />
 
@@ -36,6 +36,16 @@ export function Header() {
               <Link href="/exams">
                 <Button variant="ghost" size="sm">
                   {t('exams')}
+                </Button>
+              </Link>
+              <Link href="/practice">
+                <Button variant="ghost" size="sm">
+                  {t('practice')}
+                </Button>
+              </Link>
+              <Link href="/competitions">
+                <Button variant="ghost" size="sm">
+                  {t('competitions')}
                 </Button>
               </Link>
               <Link href="/certificates">
@@ -78,7 +88,7 @@ export function Header() {
           )}
         </div>
 
-        <div className="flex items-center gap-1 sm:hidden">
+        <div className="flex items-center gap-1 lg:hidden">
           <ThemeToggle />
           <Button
             variant="ghost"
@@ -94,13 +104,23 @@ export function Header() {
       </div>
 
       {menuOpen && (
-        <div className="border-t border-border bg-background px-4 py-4 sm:hidden">
+        <div className="border-t border-border bg-background px-4 py-4 lg:hidden">
           <nav className="flex flex-col gap-1">
             {isAuthenticated ? (
               <>
                 <Link href="/exams" onClick={closeMenu}>
                   <Button variant="ghost" size="sm" className="w-full justify-start">
                     {t('exams')}
+                  </Button>
+                </Link>
+                <Link href="/practice" onClick={closeMenu}>
+                  <Button variant="ghost" size="sm" className="w-full justify-start">
+                    {t('practice')}
+                  </Button>
+                </Link>
+                <Link href="/competitions" onClick={closeMenu}>
+                  <Button variant="ghost" size="sm" className="w-full justify-start">
+                    {t('competitions')}
                   </Button>
                 </Link>
                 <Link href="/certificates" onClick={closeMenu}>

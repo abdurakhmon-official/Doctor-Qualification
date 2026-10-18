@@ -18,6 +18,14 @@ export const useMyDashboard = () => {
   });
 };
 
+export const useMyProgress = () => {
+  return useQuery({
+    queryKey: queryKeys.myProgress,
+    // streak days are counted in the viewer's own time zone
+    queryFn: () => dashboardService.myProgress(new Date().getTimezoneOffset()),
+  });
+};
+
 export const useAdminDashboard = () => {
   return useQuery({
     queryKey: queryKeys.adminDashboard,

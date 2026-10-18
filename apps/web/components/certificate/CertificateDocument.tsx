@@ -1,17 +1,9 @@
-import { Document, Font, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { Document, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import type { CertificateOutput } from '@repo/contracts';
-
-/** DejaVu Sans — full Latin + Cyrillic coverage in one file (needed for the ru-locale certificate text), served via jsDelivr from the `dejavu-fonts-ttf` npm package. */
-Font.register({
-  family: 'DejaVuSans',
-  fonts: [
-    { src: 'https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf/ttf/DejaVuSans.ttf' },
-    { src: 'https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf/ttf/DejaVuSans-Bold.ttf', fontWeight: 'bold' },
-  ],
-});
+import { PDF_FONT_FAMILY } from '@/components/pdf/fonts';
 
 const styles = StyleSheet.create({
-  page: { fontFamily: 'DejaVuSans', padding: 0, backgroundColor: '#f8fafc' },
+  page: { fontFamily: PDF_FONT_FAMILY, padding: 0, backgroundColor: '#f8fafc' },
   border: { flex: 1, margin: 24, border: '3pt solid #1d4ed8', padding: 36, display: 'flex', flexDirection: 'column' },
   innerBorder: { flex: 1, border: '1pt solid #93c5fd', padding: 32, display: 'flex', flexDirection: 'column', alignItems: 'center' },
   brand: { fontSize: 12, color: '#1d4ed8', fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
@@ -28,7 +20,7 @@ const styles = StyleSheet.create({
   metaValue: { fontSize: 12, color: '#0f172a', fontWeight: 'bold' },
   footer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginTop: 'auto' },
   qr: { width: 70, height: 70 },
-  certId: { fontSize: 9, color: '#94a3b8' },
+  legalNote: { fontSize: 8, color: '#64748b', maxWidth: 420 },
 });
 
 export interface CertificateDocumentLabels {
@@ -36,6 +28,7 @@ export interface CertificateDocumentLabels {
   title: string;
   subtitle: string;
   bodyText: string;
+  legalNote: string;
   specialtyLabel: string;
   scoreLabel: string;
   dateLabel: string;
@@ -86,7 +79,7 @@ export function CertificateDocument({ certificate, specialtyName, levelLabel, qr
             </View>
 
             <View style={styles.footer}>
-              <Text style={styles.certId}>{certificate.certificateId}</Text>
+              <Text style={styles.legalNote}>{labels.legalNote}</Text>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <Image src={qrDataUrl} style={styles.qr} />
             </View>

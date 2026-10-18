@@ -10,10 +10,12 @@
     "rating": "Reyting",
     "admin": "Admin panel",
     "openMenu": "Menyuni ochish",
-    "closeMenu": "Menyuni yopish"
+    "closeMenu": "Menyuni yopish",
+    "practice": "Mashq",
+    "competitions": "Musobaqalar"
   },
   "home": {
-    "badge": "Raqamli baholash · Rasmiy tasdiqlash",
+    "badge": "Raqamli baholash · Tekshiriladigan sertifikat",
     "title": "Shifokorlar bilim va malakasini baholash platformasi",
     "subtitle": "Mutaxassislik bo'yicha onlayn imtihon topshiring, malaka darajangizni aniqlang va tasdiqlanadigan raqamli sertifikat oling.",
     "ctaPrimary": "Imtihonga kirish",
@@ -29,7 +31,7 @@
         "subtitle": "{count}+ tibbiyot yo'nalishlari"
       },
       "certificate": {
-        "title": "Rasmiy sertifikat",
+        "title": "Raqamli sertifikat",
         "subtitle": "QR kod bilan tasdiqlanadi"
       },
       "levels": {
@@ -81,7 +83,7 @@
     },
     "ctaBand": {
       "title": "Bilimingizni sinang va professional darajangizni tasdiqlang!",
-      "subtitle": "Bugun imtihonga kiring va rasmiy sertifikatga ega bo'ling"
+      "subtitle": "Bugun imtihonga kiring va tekshiriladigan raqamli sertifikatga ega bo'ling"
     }
   },
   "footer": {
@@ -130,6 +132,44 @@
       "avgScore": "O'rtacha natija",
       "bestScore": "Eng yaxshi natija",
       "certificateCount": "Sertifikatlar"
+    },
+    "cabinetTitle": "Shaxsiy kabinet",
+    "greeting": "Xush kelibsiz, {name}",
+    "cabinet": {
+      "points": "Ballar",
+      "topicsStudied": "O'rganilgan mavzular",
+      "streak": "Faollik seriyasi",
+      "streakKeepGoing": "Seriya — saqlab qolish uchun bugun mashq qiling",
+      "days": "{count} kun",
+      "practiceCount": "Mashqlar soni"
+    },
+    "progress": {
+      "title": "Natijalar dinamikasi",
+      "exam": "Imtihon",
+      "practice": "Mashq",
+      "empty": "Birinchi imtihon yoki mashqdan so'ng natijalaringiz shu yerda ko'rinadi.",
+      "asTable": "Jadval ko'rinishida",
+      "date": "Sana",
+      "type": "Turi",
+      "score": "Natija"
+    },
+    "topics": {
+      "weakTitle": "Ko'proq ishlash kerak",
+      "weakHint": "To'g'ri javoblar 70% dan kam bo'lgan mavzular.",
+      "weakEmpty": "Zaif mavzular topilmadi — shunday davom eting!",
+      "strongTitle": "Kuchli mavzular",
+      "strongHint": "To'g'ri javoblar kamida 80% bo'lgan mavzular.",
+      "strongEmpty": "Mavzu bu yerda ko'rinishi uchun unda kamida {min} ta savolga javob bering.",
+      "noTopic": "Boshqa savollar",
+      "practiceTopic": "Shu mavzuni mashq qilish"
+    },
+    "badges": {
+      "title": "Musobaqa medallari",
+      "place": {
+        "1": "1-o'rin · oltin",
+        "2": "2-o'rin · kumush",
+        "3": "3-o'rin · bronza"
+      }
     }
   },
   "exams": {
@@ -192,7 +232,8 @@
     "level": "Daraja",
     "downloadPdf": "PDF yuklab olish",
     "downloading": "Tayyorlanmoqda…",
-    "downloadFailed": "PDF tayyorlashda xatolik yuz berdi"
+    "downloadFailed": "PDF tayyorlashda xatolik yuz berdi",
+    "disclaimer": "Ushbu sertifikat platformadagi baholash natijasini tasdiqlaydi. U rasmiy davlat malaka hujjati hisoblanmaydi."
   },
   "dashboard": {
     "admin": {
@@ -234,7 +275,10 @@
       "certificates": "Sertifikatlar",
       "ratingSettings": "Reyting sozlamalari",
       "auditLogs": "Audit jurnali",
-      "certificateTemplate": "Sertifikat shabloni"
+      "certificateTemplate": "Sertifikat shabloni",
+      "topics": "Mavzular",
+      "questions": "Savollar bazasi",
+      "competitions": "Musobaqalar"
     },
     "ratingSettings": {
       "title": "Reyting sozlamalari",
@@ -298,6 +342,33 @@
           "INTERMEDIATE": "O'rta",
           "ADVANCED": "Yuqori",
           "EXPERT": "Ekspert"
+        },
+        "topic": "Mavzu",
+        "noTopic": "Mavzusiz",
+        "importCsv": "CSV import",
+        "import": {
+          "title": "Savollarni CSV fayldan import qilish",
+          "description": "Shablonni yuklab oling, har qatorga bitta savol yozing va faylni yuklang. Bitta faylda {max} tagacha savol. Fayl faqat barcha qatorlar to'g'ri bo'lsa import qilinadi.",
+          "template": "Shablonni yuklab olish",
+          "choose": "CSV faylni tanlang",
+          "encoding": "Harflar buzilmasligi uchun faylni “CSV UTF-8” formatida saqlang",
+          "ready": "{count} ta savol import qilishga tayyor",
+          "errorsTitle": "{count} ta xato topildi — ularni tuzatib, faylni qayta yuklang",
+          "line": "{line}-qator",
+          "moreErrors": "…va yana {count} ta",
+          "cancel": "Bekor qilish",
+          "submit": "Import qilish",
+          "importing": "Import qilinmoqda…",
+          "done": "{count} ta savol import qilindi",
+          "errors": {
+            "empty": "Faylda savol qatorlari yo'q",
+            "missingColumns": "Ustunlar yetishmayapti: {detail}",
+            "tooMany": "Qatorlar juda ko'p — bitta faylda ko'pi bilan {detail} ta",
+            "fields": "Bo'sh yoki noto'g'ri maydonlar: {detail}",
+            "correct": "To'g'ri javob A, B, C yoki D bo'lishi kerak (kiritilgan: “{detail}”)",
+            "difficulty": "Qiyinlik BEGINNER, INTERMEDIATE, ADVANCED yoki EXPERT bo'lishi kerak (kiritilgan: “{detail}”)",
+            "topic": "Bu mutaxassislikda “{detail}” nomli faol mavzu yo'q"
+          }
         }
       }
     },
@@ -342,9 +413,67 @@
         "brand": "Brend",
         "title": "Sarlavha",
         "subtitle": "Kichik sarlavha",
-        "bodyText": "Asosiy matn"
+        "bodyText": "Asosiy matn",
+        "isAccredited": "Platforma rasmiy malaka hujjati berish vakolati/akkreditatsiyasiga ega",
+        "accreditationText": "Akkreditatsiya matni (litsenziya yoki qaror raqami, bergan tashkilot)"
       },
+      "accreditationHint": "Bu o'chiq turganda sertifikatlarda ular rasmiy malaka hujjati emasligi haqida izoh ko'rsatiladi.",
       "save": "Saqlash"
+    },
+    "topics": {
+      "title": "Mavzular",
+      "description": "Mavzular har bir mutaxassislikni bo'limlarga ajratadi. Savollar mavzuga biriktiriladi, shunda natijalarni mavzular bo'yicha tahlil qilish mumkin bo'ladi.",
+      "add": "Mavzu qo'shish",
+      "edit": "Tahrirlash",
+      "empty": "Bu mutaxassislikda hali mavzu yo'q",
+      "name": "Nomi",
+      "active": "Faol",
+      "inactive": "Nofaol",
+      "activate": "Faollashtirish",
+      "deactivate": "Faolsizlantirish",
+      "questionCount": "{count} ta savol",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…"
+    },
+    "questionBank": {
+      "title": "Savollar bazasi",
+      "total": "{count} ta savol topildi",
+      "allSpecialties": "Barcha mutaxassisliklar",
+      "allTopics": "Barcha mavzular",
+      "pickSpecialtyFirst": "Avval mutaxassislikni tanlang",
+      "allDifficulties": "Barcha qiyinlik darajalari",
+      "empty": "Bu filtrlarga mos savol topilmadi",
+      "exam": "Imtihon",
+      "openExam": "Imtihonni ochish"
+    },
+    "competitions": {
+      "title": "Musobaqalar",
+      "description": "Haftalik musobaqalar kamida 10 ta chop etilgan savoli bor mutaxassisliklar uchun avtomatik yaratiladi. Bu yerda o'zingiz qo'shishingiz mumkin.",
+      "add": "Yangi musobaqa",
+      "empty": "Hozircha musobaqalar yo'q",
+      "weekly": "Haftalik",
+      "open": "Ochish",
+      "delete": "O'chirish",
+      "stats": "{questions} ta savol · {minutes} daqiqa · {participants} ishtirokchi",
+      "cancel": "Bekor qilish",
+      "saving": "Saqlanmoqda…",
+      "create": "Yaratish",
+      "fields": {
+        "specialty": "Mutaxassislik",
+        "chooseSpecialty": "Mutaxassislikni tanlang",
+        "specialtyRequired": "Mutaxassislikni tanlang",
+        "title": "Nomi",
+        "titleRequired": "Nomini barcha tillarda kiriting",
+        "questionCount": "Savollar soni",
+        "countRange": "{min} dan {max} gacha",
+        "durationMinutes": "Vaqt chegarasi (daqiqa)",
+        "durationRange": "1 dan 180 gacha",
+        "startsAt": "Boshlanishi",
+        "endsAt": "Tugashi",
+        "endsAfterStart": "Boshlanishdan keyin bo'lishi kerak",
+        "questionsHint": "Savollar mutaxassislikning chop etilgan imtihonlaridan tasodifiy tanlanadi va barcha ishtirokchilar uchun bir xil bo'ladi."
+      }
     }
   },
   "serverMessages": {
@@ -362,6 +491,145 @@
     "RATE_LIMITED": "Juda ko'p so'rov yuborildi, biroz kuting",
     "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "Bu fayl turiga ushbu papkada ruxsat berilmagan",
     "ADMIN_CANNOT_MODIFY_SELF": "O'z hisobingizning rolini yoki faolligini o'zgartira olmaysiz",
-    "PROFILE_UPDATED": "Profil muvaffaqiyatli yangilandi"
+    "PROFILE_UPDATED": "Profil muvaffaqiyatli yangilandi",
+    "VALIDATION_ACCREDITATION_TEXT_REQUIRED": "Akkreditatsiya matnini barcha tillarda kiriting",
+    "TOPIC_NOT_FOUND": "Mavzu topilmadi",
+    "TOPIC_SPECIALTY_MISMATCH": "Mavzu ushbu imtihon mutaxassisligiga tegishli emas",
+    "PRACTICE_NO_QUESTIONS": "Bu sozlamalarga mos savol hozircha yo'q — boshqa mavzu yoki qiyinlikni tanlang",
+    "COMPETITION_NOT_FOUND": "Musobaqa topilmadi",
+    "COMPETITION_NOT_ACTIVE": "Bu musobaqa hozir o'tkazilmayapti",
+    "COMPETITION_ENTRY_NOT_FOUND": "Siz bu musobaqada qatnashmagansiz",
+    "COMPETITION_HAS_ENTRIES": "Ishtirokchilari bor musobaqani o'chirib bo'lmaydi",
+    "COMPETITION_NOT_ENOUGH_QUESTIONS": "Bu sozlamalarga mos chop etilgan savollar yetarli emas",
+    "AI_NOT_CONFIGURED": "AI yordamchi bu platformada hali sozlanmagan",
+    "AI_UNAVAILABLE": "AI yordamchi vaqtincha ishlamayapti — keyinroq urinib ko'ring",
+    "AI_DAILY_LIMIT": "Bugungi AI tahlillar limiti tugadi — ertaga qayta urinib ko'ring",
+    "AI_ANALYSIS_REFUSED": "AI yordamchi bu urinishni tahlil qila olmadi",
+    "AI_ATTEMPT_NOT_SUBMITTED": "Faqat yakunlangan urinishlarni tahlil qilish mumkin",
+    "AI_COMPETITION_RUNNING": "Musobaqa urinishlarini musobaqa tugagandan keyin tahlil qilish mumkin"
+  },
+  "practice": {
+    "title": "Mashq",
+    "subtitle": "Savollar bazasidan o'zingizga mos test tuzing. Mashq natijalari reyting va sertifikatlarga ta'sir qilmaydi.",
+    "specialty": "Mutaxassislik",
+    "topics": "Mavzular",
+    "allTopics": "Barcha mavzular",
+    "difficulty": "Qiyinlik",
+    "difficultyAuto": "Avtomatik (natijalarimga qarab)",
+    "difficultyMixed": "Aralash",
+    "questionCount": "Savollar soni",
+    "autoLevels": "Darajangizga qarab tanlandi: {levels}",
+    "available": "{count} ta savol mavjud",
+    "fewerAvailable": "Faqat {count} ta savol mos keldi — test qisqaroq bo'ladi",
+    "noneAvailable": "Bu sozlamalarga mos savol hozircha yo'q — boshqa mavzu yoki qiyinlikni tanlang",
+    "start": "Mashqni boshlash",
+    "starting": "Tayyorlanmoqda…",
+    "history": "So'nggi mashqlar",
+    "inProgress": "Davom etmoqda",
+    "questionsShort": "{count} ta savol",
+    "result": {
+      "practiceNote": "Mashq natijasi — reytingga hisoblanmaydi",
+      "totalQuestions": "Savollar",
+      "correct": "To'g'ri",
+      "incorrect": "Noto'g'ri",
+      "timeSpent": "Sarflangan vaqt",
+      "backToPractice": "Yangi mashq",
+      "retry": "Yana mashq qilish"
+    }
+  },
+  "report": {
+    "brand": "Doctor Qualification",
+    "examTitle": "Imtihon natijalari hisoboti",
+    "practiceTitle": "Mashq natijalari hisoboti",
+    "download": "PDF hisobotni yuklab olish",
+    "preparing": "Tayyorlanmoqda…",
+    "downloadFailed": "Hisobotni tayyorlashda xatolik yuz berdi",
+    "meta": {
+      "doctor": "Shifokor",
+      "date": "Sana",
+      "questions": "Savollar",
+      "correct": "To'g'ri",
+      "timeSpent": "Sarflangan vaqt",
+      "minScore": "Sertifikat chegarasi"
+    },
+    "certificateIssued": "Natija sertifikat chegarasiga yetdi — sertifikat berildi.",
+    "certificateNotIssued": "Sertifikat uchun kamida {minScore}% natija kerak.",
+    "practiceNote": "Mashq natijasi — reytingga hisoblanmaydi va sertifikat bermaydi.",
+    "byTopic": "Mavzular bo'yicha natija",
+    "noTopic": "Mavzusiz",
+    "table": {
+      "topic": "Mavzu",
+      "correct": "To'g'ri",
+      "percent": "%"
+    },
+    "review": "Javoblaringiz",
+    "toReview": "Qayta ko'rib chiqish kerak bo'lgan savollar",
+    "toReviewEmpty": "Barcha savollarga to'g'ri javob berildi.",
+    "yourAnswer": "Sizning javobingiz",
+    "notAnswered": "javob berilmagan",
+    "correct": "To'g'ri",
+    "incorrect": "Noto'g'ri",
+    "disclaimer": "Ushbu hisobot platformadagi baholash natijalarini ko'rsatadi va rasmiy malaka hujjati hisoblanmaydi.",
+    "generatedAt": "Yaratilgan sana: {date}.",
+    "page": "{page} / {total} sahifa"
+  },
+  "competitions": {
+    "title": "Musobaqalar",
+    "subtitle": "Hammaga bir xil savollar, har kimga bitta urinish. Ball teng bo'lsa, vaqt hal qiladi.",
+    "empty": "Hozircha musobaqalar yo'q",
+    "weekly": "Haftalik",
+    "sections": {
+      "ACTIVE": "Hozir davom etmoqda",
+      "UPCOMING": "Tez kunda",
+      "FINISHED": "Yakunlangan"
+    },
+    "status": {
+      "ACTIVE": "Davom etmoqda",
+      "UPCOMING": "Kutilmoqda",
+      "FINISHED": "Yakunlangan"
+    },
+    "format": "{count} ta savol · {minutes} daqiqa",
+    "participants": "{count} ishtirokchi",
+    "myPlace": "Sizning o'rningiz: #{rank} · {score}%",
+    "actions": {
+      "join": "Qatnashish",
+      "continue": "Davom etish",
+      "details": "Batafsil",
+      "results": "Natijalarni ko'rish"
+    },
+    "backToList": "Barcha musobaqalar",
+    "rules": "Faqat bitta urinish. Taymer boshlaganingizda ishga tushadi, vaqt tugaganda javoblar avtomatik topshiriladi. Ko'p ball to'plagan g'olib; ball teng bo'lsa, tezroq bajargan yuqorida.",
+    "starting": "Boshlanmoqda…",
+    "startsAt": "Boshlanishi: {date}",
+    "missed": "Siz bu musobaqada qatnashmagansiz.",
+    "result": {
+      "yourResult": "Sizning natijangiz",
+      "place": "{total} ishtirokchidan {rank}-o'rin",
+      "expired": "Javoblaringiz topshirilishidan oldin vaqt tugadi, shuning uchun natija 0 ball.",
+      "summary": "{correct}/{total} to'g'ri · {time}"
+    },
+    "leaderboard": {
+      "title": "Reyting jadvali",
+      "live": "Jonli — har 30 soniyada yangilanadi",
+      "empty": "Hali tugallangan urinishlar yo'q",
+      "doctor": "Shifokor",
+      "score": "Natija",
+      "time": "Vaqt",
+      "you": "siz"
+    },
+    "aiAfterFinish": "AI ustoz javoblaringizni musobaqa tugagandan so'ng tahlil qila oladi."
+  },
+  "ai": {
+    "title": "AI ustoz",
+    "intro": "Xatolaringiz ortidagi tushunchalar bo'yicha qisqa izoh va qayta o'rganish uchun shaxsiy mavzular ro'yxatini oling.",
+    "generate": "Xatolarimni tushuntir",
+    "generating": "Javoblaringiz tahlil qilinmoqda… bu bir daqiqagacha vaqt olishi mumkin.",
+    "remaining": "Bugun {limit} ta tahlildan {remaining} tasi qoldi",
+    "mistakesTitle": "Nimani tushunish kerak",
+    "question": "{number}-savol",
+    "noAnswersNote": "To'g'ri variantlar aytilmaydi — shunda bu savollar sertifikat imtihonlarida ham adolatli qoladi.",
+    "studyPlanTitle": "Nimani qayta o'rganish kerak",
+    "practice": "Mashq qilish",
+    "disclaimer": "AI tomonidan yaratilgan ta'limiy izoh. U xato qilishi mumkin va hech qanday real bemor bo'yicha maslahat emas — amaldagi klinik qo'llanmalar bilan solishtiring."
   }
 }

@@ -5,10 +5,12 @@ import type { CertificateTemplateOutput, UpdateCertificateTemplateInput } from '
 import prisma from '@/modules/db';
 import { redis, isRedisReady } from '@/modules/redis';
 import { AuditService } from '@/services/audit.service';
+import { Prisma } from '../generated/prisma';
 
 @Injectable()
 export class CertificateTemplateService {
-  private static readonly CACHE_KEY = 'certificate-template';
+  // v2: output gained isAccredited/accreditationText — older cached payloads lack them
+  private static readonly CACHE_KEY = 'certificate-template:v2';
   private static readonly DEFAULTS = {
     brand: { uz: 'Doctor Qualification', ru: 'Doctor Qualification', en: 'Doctor Qualification' },
     title: { uz: 'SERTIFIKAT', ru: 'СЕРТИФИКАТ', en: 'CERTIFICATE' },
@@ -51,7 +53,7 @@ export class CertificateTemplateService {
 
     const updated = await prisma.certificateTemplate.update({
       where: { id: row.id },
-      data: input,
+      data: { ...input, accreditationText: input.accreditationText ?? Prisma.DbNull },
     });
 
     const output = this.toOutput(updated);
@@ -81,12 +83,16 @@ export class CertificateTemplateService {
     title: unknown;
     subtitle: unknown;
     bodyText: unknown;
+    isAccredited: boolean;
+    accreditationText: unknown;
   }): CertificateTemplateOutput {
     return {
       brand: template.brand as CertificateTemplateOutput['brand'],
       title: template.title as CertificateTemplateOutput['title'],
       subtitle: template.subtitle as CertificateTemplateOutput['subtitle'],
       bodyText: template.bodyText as CertificateTemplateOutput['bodyText'],
+      isAccredited: template.isAccredited,
+      accreditationText: (template.accreditationText ?? null) as CertificateTemplateOutput['accreditationText'],
     };
   }
 

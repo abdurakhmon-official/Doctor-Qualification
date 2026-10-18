@@ -10,10 +10,12 @@
     "rating": "Rating",
     "admin": "Admin panel",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "practice": "Practice",
+    "competitions": "Competitions"
   },
   "home": {
-    "badge": "Digital assessment · Official certification",
+    "badge": "Digital assessment · Verifiable certificate",
     "title": "Assess and confirm doctors' qualification",
     "subtitle": "Take an online exam by specialty, find out your qualification level, and get a verifiable digital certificate.",
     "ctaPrimary": "Go to exams",
@@ -29,7 +31,7 @@
         "subtitle": "{count}+ medical fields"
       },
       "certificate": {
-        "title": "Official certificate",
+        "title": "Digital certificate",
         "subtitle": "Verified by QR code"
       },
       "levels": {
@@ -81,7 +83,7 @@
     },
     "ctaBand": {
       "title": "Test your knowledge and confirm your professional level!",
-      "subtitle": "Take the exam today and get an official certificate"
+      "subtitle": "Take the exam today and get a verifiable digital certificate"
     }
   },
   "footer": {
@@ -130,6 +132,44 @@
       "avgScore": "Average score",
       "bestScore": "Best score",
       "certificateCount": "Certificates"
+    },
+    "cabinetTitle": "My cabinet",
+    "greeting": "Welcome back, {name}",
+    "cabinet": {
+      "points": "Points",
+      "topicsStudied": "Topics studied",
+      "streak": "Activity streak",
+      "streakKeepGoing": "Streak — practise today to keep it",
+      "days": "{count, plural, one {# day} other {# days}}",
+      "practiceCount": "Practice sessions"
+    },
+    "progress": {
+      "title": "Results over time",
+      "exam": "Exam",
+      "practice": "Practice",
+      "empty": "Your results will appear here after your first exam or practice.",
+      "asTable": "Show as table",
+      "date": "Date",
+      "type": "Type",
+      "score": "Score"
+    },
+    "topics": {
+      "weakTitle": "Needs work",
+      "weakHint": "Topics where you answer less than 70% correctly.",
+      "weakEmpty": "No weak topics found — keep it up!",
+      "strongTitle": "Strong topics",
+      "strongHint": "Topics where you answer at least 80% correctly.",
+      "strongEmpty": "Answer at least {min} questions in a topic to see it here.",
+      "noTopic": "Other questions",
+      "practiceTopic": "Practise this topic"
+    },
+    "badges": {
+      "title": "Competition medals",
+      "place": {
+        "1": "1st place · gold",
+        "2": "2nd place · silver",
+        "3": "3rd place · bronze"
+      }
     }
   },
   "exams": {
@@ -192,7 +232,8 @@
     "level": "Level",
     "downloadPdf": "Download PDF",
     "downloading": "Preparing…",
-    "downloadFailed": "Failed to prepare the PDF"
+    "downloadFailed": "Failed to prepare the PDF",
+    "disclaimer": "This certificate confirms the result of an assessment on this platform. It is not an official state qualification document."
   },
   "dashboard": {
     "admin": {
@@ -234,7 +275,10 @@
       "certificates": "Certificates",
       "ratingSettings": "Rating settings",
       "auditLogs": "Audit log",
-      "certificateTemplate": "Certificate template"
+      "certificateTemplate": "Certificate template",
+      "topics": "Topics",
+      "questions": "Question bank",
+      "competitions": "Competitions"
     },
     "ratingSettings": {
       "title": "Rating settings",
@@ -298,6 +342,33 @@
           "INTERMEDIATE": "Intermediate",
           "ADVANCED": "Advanced",
           "EXPERT": "Expert"
+        },
+        "topic": "Topic",
+        "noTopic": "No topic",
+        "importCsv": "Import CSV",
+        "import": {
+          "title": "Import questions from CSV",
+          "description": "Download the template, fill one question per row and upload it. Up to {max} questions per file. The whole file is imported only if every row is valid.",
+          "template": "Download template",
+          "choose": "Choose a CSV file",
+          "encoding": "Save the file as “CSV UTF-8” so letters are kept correctly",
+          "ready": "{count, plural, one {# question is} other {# questions are}} ready to import",
+          "errorsTitle": "{count, plural, one {# problem} other {# problems}} found — fix them and upload the file again",
+          "line": "Line {line}",
+          "moreErrors": "…and {count} more",
+          "cancel": "Cancel",
+          "submit": "Import",
+          "importing": "Importing…",
+          "done": "{count, plural, one {# question} other {# questions}} imported",
+          "errors": {
+            "empty": "The file has no question rows",
+            "missingColumns": "Missing columns: {detail}",
+            "tooMany": "Too many rows — the limit is {detail} per file",
+            "fields": "Empty or invalid fields: {detail}",
+            "correct": "Correct answer must be A, B, C or D (got “{detail}”)",
+            "difficulty": "Difficulty must be BEGINNER, INTERMEDIATE, ADVANCED or EXPERT (got “{detail}”)",
+            "topic": "Unknown or inactive topic “{detail}” for this specialty"
+          }
         }
       }
     },
@@ -342,9 +413,67 @@
         "brand": "Brand",
         "title": "Title",
         "subtitle": "Subtitle",
-        "bodyText": "Body text"
+        "bodyText": "Body text",
+        "isAccredited": "The platform holds the authority/accreditation to issue official qualification documents",
+        "accreditationText": "Accreditation statement (licence or decree number, issuing body)"
       },
+      "accreditationHint": "While this is off, certificates carry a notice that they are not an official qualification document.",
       "save": "Save"
+    },
+    "topics": {
+      "title": "Topics",
+      "description": "Topics split each specialty into subject areas. Questions are tagged with a topic so results can be analysed per topic.",
+      "add": "Add topic",
+      "edit": "Edit",
+      "empty": "No topics for this specialty yet",
+      "name": "Name",
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "questionCount": "{count, plural, one {# question} other {# questions}}",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving…"
+    },
+    "questionBank": {
+      "title": "Question bank",
+      "total": "{count, plural, one {# question} other {# questions}} found",
+      "allSpecialties": "All specialties",
+      "allTopics": "All topics",
+      "pickSpecialtyFirst": "Choose a specialty first",
+      "allDifficulties": "All difficulty levels",
+      "empty": "No questions match these filters",
+      "exam": "Exam",
+      "openExam": "Open exam"
+    },
+    "competitions": {
+      "title": "Competitions",
+      "description": "Weekly competitions are created automatically for specialties with at least 10 published questions. Here you can add your own.",
+      "add": "New competition",
+      "empty": "No competitions yet",
+      "weekly": "Weekly",
+      "open": "Open",
+      "delete": "Delete",
+      "stats": "{questions} questions · {minutes} min · {participants} participants",
+      "cancel": "Cancel",
+      "saving": "Saving…",
+      "create": "Create",
+      "fields": {
+        "specialty": "Specialty",
+        "chooseSpecialty": "Choose a specialty",
+        "specialtyRequired": "Choose a specialty",
+        "title": "Title",
+        "titleRequired": "Enter the title in all languages",
+        "questionCount": "Number of questions",
+        "countRange": "From {min} to {max}",
+        "durationMinutes": "Time limit (minutes)",
+        "durationRange": "From 1 to 180",
+        "startsAt": "Starts",
+        "endsAt": "Ends",
+        "endsAfterStart": "Must be after the start",
+        "questionsHint": "Questions are picked at random from published exams of the specialty and stay the same for every participant."
+      }
     }
   },
   "serverMessages": {
@@ -362,6 +491,145 @@
     "RATE_LIMITED": "Too many requests, please slow down",
     "UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER": "This file type is not allowed for this folder",
     "ADMIN_CANNOT_MODIFY_SELF": "You cannot change your own account's role or active status",
-    "PROFILE_UPDATED": "Profile updated successfully"
+    "PROFILE_UPDATED": "Profile updated successfully",
+    "VALIDATION_ACCREDITATION_TEXT_REQUIRED": "Enter the accreditation statement in all languages",
+    "TOPIC_NOT_FOUND": "Topic not found",
+    "TOPIC_SPECIALTY_MISMATCH": "The topic does not belong to this exam's specialty",
+    "PRACTICE_NO_QUESTIONS": "No questions match these settings yet — try other topics or difficulty",
+    "COMPETITION_NOT_FOUND": "Competition not found",
+    "COMPETITION_NOT_ACTIVE": "This competition is not running right now",
+    "COMPETITION_ENTRY_NOT_FOUND": "You have not entered this competition",
+    "COMPETITION_HAS_ENTRIES": "A competition with participants cannot be deleted",
+    "COMPETITION_NOT_ENOUGH_QUESTIONS": "Not enough published questions match these settings",
+    "AI_NOT_CONFIGURED": "The AI assistant is not set up on this platform yet",
+    "AI_UNAVAILABLE": "The AI assistant is temporarily unavailable — please try again later",
+    "AI_DAILY_LIMIT": "You have used all AI analyses for today — try again tomorrow",
+    "AI_ANALYSIS_REFUSED": "The AI assistant could not analyse this attempt",
+    "AI_ATTEMPT_NOT_SUBMITTED": "Only finished attempts can be analysed",
+    "AI_COMPETITION_RUNNING": "Competition entries can be analysed after the competition ends"
+  },
+  "practice": {
+    "title": "Practice",
+    "subtitle": "Build a personal test from the question bank. Practice results do not affect your rating or certificates.",
+    "specialty": "Specialty",
+    "topics": "Topics",
+    "allTopics": "All topics",
+    "difficulty": "Difficulty",
+    "difficultyAuto": "Automatic (by my results)",
+    "difficultyMixed": "Mixed",
+    "questionCount": "Number of questions",
+    "autoLevels": "Chosen for your level: {levels}",
+    "available": "{count, plural, one {# question} other {# questions}} available",
+    "fewerAvailable": "Only {count, plural, one {# question matches} other {# questions match}} — the test will be shorter",
+    "noneAvailable": "No questions match these settings yet — try other topics or difficulty",
+    "start": "Start practice",
+    "starting": "Preparing…",
+    "history": "Recent practice",
+    "inProgress": "In progress",
+    "questionsShort": "{count, plural, one {# question} other {# questions}}",
+    "result": {
+      "practiceNote": "Practice result — not counted in the rating",
+      "totalQuestions": "Questions",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "timeSpent": "Time spent",
+      "backToPractice": "New practice",
+      "retry": "Practice again"
+    }
+  },
+  "report": {
+    "brand": "Doctor Qualification",
+    "examTitle": "Exam results report",
+    "practiceTitle": "Practice results report",
+    "download": "Download PDF report",
+    "preparing": "Preparing…",
+    "downloadFailed": "Failed to prepare the report",
+    "meta": {
+      "doctor": "Doctor",
+      "date": "Date",
+      "questions": "Questions",
+      "correct": "Correct",
+      "timeSpent": "Time spent",
+      "minScore": "Certificate threshold"
+    },
+    "certificateIssued": "The result meets the certificate threshold — a certificate was issued.",
+    "certificateNotIssued": "A score of at least {minScore}% is needed for a certificate.",
+    "practiceNote": "Practice result — not counted in the rating and does not lead to a certificate.",
+    "byTopic": "Results by topic",
+    "noTopic": "No topic",
+    "table": {
+      "topic": "Topic",
+      "correct": "Correct",
+      "percent": "%"
+    },
+    "review": "Your answers",
+    "toReview": "Questions to review",
+    "toReviewEmpty": "All questions were answered correctly.",
+    "yourAnswer": "Your answer",
+    "notAnswered": "not answered",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "disclaimer": "This report shows assessment results on the platform and is not an official qualification document.",
+    "generatedAt": "Generated {date}.",
+    "page": "Page {page} of {total}"
+  },
+  "competitions": {
+    "title": "Competitions",
+    "subtitle": "Same questions for everyone, one attempt each. Ties are broken by time.",
+    "empty": "No competitions yet",
+    "weekly": "Weekly",
+    "sections": {
+      "ACTIVE": "Running now",
+      "UPCOMING": "Coming up",
+      "FINISHED": "Finished"
+    },
+    "status": {
+      "ACTIVE": "Running",
+      "UPCOMING": "Upcoming",
+      "FINISHED": "Finished"
+    },
+    "format": "{count} questions · {minutes} min",
+    "participants": "{count, plural, one {# participant} other {# participants}}",
+    "myPlace": "Your place: #{rank} · {score}%",
+    "actions": {
+      "join": "Take part",
+      "continue": "Continue",
+      "details": "Details",
+      "results": "View results"
+    },
+    "backToList": "All competitions",
+    "rules": "One attempt only. The timer starts when you begin and the answers are submitted automatically when time runs out. Higher score wins; equal scores are ranked by time.",
+    "starting": "Starting…",
+    "startsAt": "Starts {date}",
+    "missed": "You did not take part in this competition.",
+    "result": {
+      "yourResult": "Your result",
+      "place": "Place {rank} of {total}",
+      "expired": "Time ran out before your answers were submitted, so the entry scored 0.",
+      "summary": "{correct}/{total} correct · {time}"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "live": "Live — updates every 30 s",
+      "empty": "No finished entries yet",
+      "doctor": "Doctor",
+      "score": "Score",
+      "time": "Time",
+      "you": "you"
+    },
+    "aiAfterFinish": "The AI tutor can review your answers once this competition has finished."
+  },
+  "ai": {
+    "title": "AI tutor",
+    "intro": "Get a short explanation of the concepts behind your mistakes and a personal list of topics to revisit.",
+    "generate": "Explain my mistakes",
+    "generating": "Analysing your answers… this can take up to a minute.",
+    "remaining": "{remaining} of {limit} analyses left today",
+    "mistakesTitle": "What to understand",
+    "question": "Question {number}",
+    "noAnswersNote": "The correct options are not named, so the same questions stay fair in certification exams.",
+    "studyPlanTitle": "What to revisit",
+    "practice": "Practise",
+    "disclaimer": "Educational feedback generated by AI. It can be wrong and is not advice about any real patient — check against current clinical guidelines."
   }
 }

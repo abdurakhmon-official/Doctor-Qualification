@@ -1,25 +1,36 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { CreateQuestionInputSchema, type CreateQuestionInput, type QuestionOutput } from '@repo/contracts';
+import { CreateQuestionInputSchema, type CreateQuestionInput, type Locale, type QuestionOutput } from '@repo/contracts';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { FormField } from '@/components/ui/FormField';
 import { Select } from '@/components/ui/Select';
 import { LocalizedFields } from '@/components/admin/LocalizedFields';
+import { pickLocalized } from '@/lib/localized';
 import { cn } from '@/lib/utils';
 import { useCreateQuestion } from '@/hooks/use-exams';
 import { useUpdateQuestion } from '@/hooks/use-questions';
+import { useAdminTopics } from '@/hooks/use-topics';
 
 const OPTION_LABELS = ['optionA', 'optionB', 'optionC', 'optionD'] as const;
 const DIFFICULTIES = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT'] as const;
 
 const EMPTY_OPTION = { uz: '', ru: '', en: '' };
 
-export function QuestionForm({ examId, question, onDone }: { examId: string; question?: QuestionOutput; onDone: () => void }) {
+interface QuestionFormProps {
+  examId: string;
+  specialtyId: string;
+  question?: QuestionOutput;
+  onDone: () => void;
+}
+
+export function QuestionForm({ examId, specialtyId, question, onDone }: QuestionFormProps) {
   const t = useTranslations('admin.exams.questions');
+  const locale = useLocale() as Locale;
+  const { data: topics } = useAdminTopics(specialtyId);
   const createQuestion = useCreateQuestion();
   const updateQuestion = useUpdateQuestion(examId);
   const isPending = createQuestion.isPending || updateQuestion.isPending;
@@ -33,12 +44,22 @@ export function QuestionForm({ examId, question, onDone }: { examId: string; que
   } = useForm<CreateQuestionInput>({
     resolver: zodResolver(CreateQuestionInputSchema),
     defaultValues: question
-      ? { text: question.text, options: question.options, correctIndex: question.correctIndex, difficulty: question.difficulty }
-      : { options: [EMPTY_OPTION, EMPTY_OPTION, EMPTY_OPTION, EMPTY_OPTION], correctIndex: 0, difficulty: 'BEGINNER' },
+      ? {
+          text: question.text,
+          options: question.options,
+          correctIndex: question.correctIndex,
+          difficulty: question.difficulty,
+          topicId: question.topicId,
+        }
+      : { options: [EMPTY_OPTION, EMPTY_OPTION, EMPTY_OPTION, EMPTY_OPTION], correctIndex: 0, difficulty: 'BEGINNER', topicId: null },
   });
 
   const correctIndex = watch('correctIndex');
   const difficulty = watch('difficulty');
+  const topicId = watch('topicId');
+
+  // inactive topics are hidden from new picks but kept when a question is already filed under one
+  const topicOptions = topics?.filter((topic) => topic.isActive || topic.id === question?.topicId) ?? [];
 
   const onSubmit = handleSubmit(async (data) => {
     if (question) {
@@ -61,6 +82,17 @@ export function QuestionForm({ examId, question, onDone }: { examId: string; que
               {DIFFICULTIES.map((level) => (
                 <option key={level} value={level}>
                   {t(`difficultyLevel.${level}`)}
+                </option>
+              ))}
+            </Select>
+          </FormField>
+
+          <FormField label={t('topic')} htmlFor="topicId">
+            <Select id="topicId" value={topicId ?? ''} onChange={(event) => setValue('topicId', event.target.value || null)}>
+              <option value="">{t('noTopic')}</option>
+              {topicOptions.map((topic) => (
+                <option key={topic.id} value={topic.id}>
+                  {pickLocalized(topic.name, locale)}
                 </option>
               ))}
             </Select>

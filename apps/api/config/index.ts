@@ -52,6 +52,16 @@ const config = merge(
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
     AWS_FILE_VIEW_EXPIRY_SECONDS: Number(process.env.AWS_FILE_VIEW_EXPIRY) || 3600,
 
+    ai: {
+      // empty = the AI assistant is switched off; everything else keeps working
+      apiKey: process.env.ANTHROPIC_API_KEY || '',
+      model: process.env.AI_MODEL || 'claude-opus-5-5',
+      dailyLimit: Number(process.env.AI_DAILY_LIMIT) || 10,
+      // off by default: exams, practice and contests share one question bank, so naming the
+      // right option in feedback would leak certification answers
+      revealCorrectAnswers: process.env.AI_REVEAL_CORRECT_ANSWERS === 'true',
+    },
+
     mail: {
       host: process.env.MAIL_HOST || '',
       port: Number(process.env.MAIL_PORT) || 587,

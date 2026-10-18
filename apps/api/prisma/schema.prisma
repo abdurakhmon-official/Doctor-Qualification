@@ -56,8 +56,11 @@ model User {
   updatedAt         DateTime  @updatedAt @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
 
-  examAttempts ExamAttempt[]
-  certificates Certificate[]
+  examAttempts       ExamAttempt[]
+  certificates       Certificate[]
+  practiceAttempts   PracticeAttempt[]
+  competitionEntries CompetitionEntry[]
+  attemptAnalyses    AttemptAnalysis[]
 
   @@index([email])
   @@map("users")
@@ -72,9 +75,28 @@ model Specialty {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  exams Exam[]
+  exams            Exam[]
+  topics           Topic[]
+  practiceAttempts PracticeAttempt[]
+  competitions     Competition[]
 
   @@map("specialties")
+}
+
+model Topic {
+  id          String   @id @default(uuid())
+  specialtyId String   @map("specialty_id")
+  name        Json
+  isActive    Boolean  @default(true) @map("is_active")
+  order       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  specialty Specialty  @relation(fields: [specialtyId], references: [id], onDelete: Restrict)
+  questions Question[]
+
+  @@index([specialtyId, order])
+  @@map("topics")
 }
 
 model Exam {
@@ -101,6 +123,8 @@ model Exam {
 model Question {
   id           String               @id @default(uuid())
   examId       String               @map("exam_id")
+  /// Must belong to the same specialty as the exam; null = not yet categorised.
+  topicId      String?              @map("topic_id")
   text         Json
   options      Json
   correctIndex Int                  @map("correct_index")
@@ -110,9 +134,11 @@ model Question {
   createdAt    DateTime             @default(now()) @map("created_at")
   updatedAt    DateTime             @updatedAt @map("updated_at")
 
-  exam Exam @relation(fields: [examId], references: [id], onDelete: Cascade)
+  exam  Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+  topic Topic? @relation(fields: [topicId], references: [id], onDelete: SetNull)
 
   @@index([examId, order])
+  @@index([topicId])
   @@map("questions")
 }
 
@@ -137,6 +163,107 @@ model ExamAttempt {
   @@index([examId, userId])
   @@index([userId])
   @@map("exam_attempts")
+}
+
+/// Self-study run over the question bank. Kept apart from ExamAttempt on purpose:
+/// practice never feeds ratings, dashboards or certificates.
+model PracticeAttempt {
+  id               String    @id @default(uuid())
+  userId           String    @map("user_id")
+  specialtyId      String    @map("specialty_id")
+  /// Empty = every topic of the specialty, including untagged questions.
+  topicIds         String[]  @map("topic_ids")
+  /// Requested mode: AUTO, MIXED or a QUESTION_DIFFICULTY value.
+  difficulty       String
+  /// Frozen at start, in the order shown to the user.
+  questionIds      String[]  @map("question_ids")
+  questionCount    Int       @map("question_count")
+  answers          Json?
+  score            Int?
+  correctCount     Int?      @map("correct_count")
+  timeSpentSeconds Int?      @map("time_spent_seconds")
+  startedAt        DateTime  @default(now()) @map("started_at")
+  submittedAt      DateTime? @map("submitted_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialty Specialty @relation(fields: [specialtyId], references: [id], onDelete: Restrict)
+
+  @@index([userId, startedAt])
+  @@index([userId, specialtyId])
+  @@map("practice_attempts")
+}
+
+/// Time-boxed contest: every participant gets the same frozen question set and one entry.
+/// Status (upcoming/active/finished) is derived from startsAt/endsAt, never stored.
+model Competition {
+  id              String   @id @default(uuid())
+  specialtyId     String   @map("specialty_id")
+  title           Json
+  description     Json?
+  questionIds     String[] @map("question_ids")
+  /// Per-entry time limit; an entry never runs past endsAt either.
+  durationMinutes Int      @map("duration_minutes")
+  startsAt        DateTime @map("starts_at")
+  endsAt          DateTime @map("ends_at")
+  /// Set for auto-created weekly contests (e.g. "2026-W43"); with specialtyId it makes creation idempotent.
+  weekKey         String?  @map("week_key")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  specialty Specialty          @relation(fields: [specialtyId], references: [id], onDelete: Restrict)
+  entries   CompetitionEntry[]
+
+  @@unique([weekKey, specialtyId])
+  @@index([startsAt, endsAt])
+  @@map("competitions")
+}
+
+model CompetitionEntry {
+  id               String    @id @default(uuid())
+  competitionId    String    @map("competition_id")
+  userId           String    @map("user_id")
+  answers          Json?
+  score            Int?
+  correctCount     Int?      @map("correct_count")
+  timeSpentSeconds Int?      @map("time_spent_seconds")
+  startedAt        DateTime  @default(now()) @map("started_at")
+  submittedAt      DateTime? @map("submitted_at")
+
+  competition Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// One entry per user per competition.
+  @@unique([competitionId, userId])
+  @@index([competitionId, score, timeSpentSeconds])
+  @@index([userId])
+  @@map("competition_entries")
+}
+
+enum ANALYSIS_KIND {
+  EXAM
+  PRACTICE
+  COMPETITION
+}
+
+/// AI feedback on one finished attempt, generated once per language and reused (each one is a paid API call).
+model AttemptAnalysis {
+  id           String        @id @default(uuid())
+  userId       String        @map("user_id")
+  kind         ANALYSIS_KIND
+  /// ExamAttempt, PracticeAttempt or CompetitionEntry id, depending on `kind`.
+  attemptId    String        @map("attempt_id")
+  locale       String
+  content      Json
+  model        String
+  inputTokens  Int           @map("input_tokens")
+  outputTokens Int           @map("output_tokens")
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([kind, attemptId, locale])
+  @@index([userId, createdAt])
+  @@map("attempt_analyses")
 }
 
 model RatingSettings {
@@ -182,6 +309,9 @@ model CertificateTemplate {
   title     Json
   subtitle  Json
   bodyText  Json     @map("body_text")
+  /// Only an accredited issuer may present certificates as an official qualification document.
+  isAccredited      Boolean @default(false) @map("is_accredited")
+  accreditationText Json?   @map("accreditation_text")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

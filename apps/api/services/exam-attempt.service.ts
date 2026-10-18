@@ -6,6 +6,7 @@ import type { LocalizedText } from '@repo/contracts';
 import prisma from '@/modules/db';
 import { requireUserId } from '@/utils/errors.utils';
 import { gradeAttempt, gradeToLevel } from '@/utils/scoring.utils';
+import { topicBreakdown } from '@/utils/topic-breakdown.utils';
 import { CertificateService } from '@/services/certificate.service';
 import { ExamService } from '@/services/exam.service';
 import { EXAM_STATUS, Prisma } from '../generated/prisma';
@@ -230,6 +231,7 @@ export class ExamAttemptService {
         status: 'SUBMITTED' as const,
         id: attempt.id,
         examId: attempt.examId,
+        specialtyId: exam.specialtyId,
         examTitle: exam.title,
         score: attempt.score ?? 0,
         correctCount: attempt.correctCount ?? 0,
@@ -239,11 +241,14 @@ export class ExamAttemptService {
         certificateIssued: Boolean(attempt.certificate),
         timeSpentSeconds: attempt.timeSpentSeconds ?? 0,
         submittedAt: attempt.submittedAt.toISOString(),
+        topics: topicBreakdown(exam.questions, answers),
         questions: exam.questions.map((question) => ({
           text: question.text,
           options: question.options,
           selectedIndex: answers[question.id] ?? null,
           isCorrect: answers[question.id] === question.correctIndex,
+          topicName: (question.topic?.name ?? null) as LocalizedText | null,
+          difficulty: question.difficulty,
         })),
       },
     };

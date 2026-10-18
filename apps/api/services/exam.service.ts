@@ -46,7 +46,17 @@ export class ExamService {
     minCertificateScore: true,
     status: true,
     questions: {
-      select: { id: true, examId: true, text: true, options: true, correctIndex: true, difficulty: true, imageKey: true, order: true },
+      select: {
+        id: true,
+        examId: true,
+        topicId: true,
+        text: true,
+        options: true,
+        correctIndex: true,
+        difficulty: true,
+        imageKey: true,
+        order: true,
+      },
       orderBy: { order: 'asc' as const },
     },
   };
@@ -129,17 +139,26 @@ export class ExamService {
       throw new ExamHasNoQuestionsException(examId);
     }
 
-    const exam = await prisma.exam.update({
-      where: { id: examId },
-      data: {
-        specialtyId: input.specialtyId,
-        title: input.title,
-        description: input.description,
-        durationMinutes: input.durationMinutes,
-        minCertificateScore: input.minCertificateScore,
-        status: input.status,
-      },
-      select: ExamService.DETAIL_SELECT,
+    const specialtyChanged = input.specialtyId !== undefined && input.specialtyId !== before.specialtyId;
+
+    const exam = await prisma.$transaction(async (tx) => {
+      // topics are specialty-scoped, so a specialty move would leave questions filed under foreign topics
+      if (specialtyChanged) {
+        await tx.question.updateMany({ where: { examId }, data: { topicId: null } });
+      }
+
+      return tx.exam.update({
+        where: { id: examId },
+        data: {
+          specialtyId: input.specialtyId,
+          title: input.title,
+          description: input.description,
+          durationMinutes: input.durationMinutes,
+          minCertificateScore: input.minCertificateScore,
+          status: input.status,
+        },
+        select: ExamService.DETAIL_SELECT,
+      });
     });
 
     await this.auditService.log({
@@ -185,9 +204,20 @@ export class ExamService {
         durationMinutes: true,
         minCertificateScore: true,
         status: true,
+        specialtyId: true,
         specialty: { select: { name: true } },
         questions: {
-          select: { id: true, text: true, options: true, correctIndex: true, imageKey: true, order: true },
+          select: {
+            id: true,
+            text: true,
+            options: true,
+            correctIndex: true,
+            imageKey: true,
+            order: true,
+            difficulty: true,
+            topicId: true,
+            topic: { select: { name: true } },
+          },
           orderBy: { order: 'asc' as const },
         },
       },

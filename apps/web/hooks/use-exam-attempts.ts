@@ -26,6 +26,8 @@ export const useSubmitAttempt = () => {
     onSuccess: (_result, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.myAttemptsBase });
       queryClient.invalidateQueries({ queryKey: queryKeys.attempt(variables.attemptId) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.myDashboard });
+      queryClient.invalidateQueries({ queryKey: queryKeys.myProgress });
     },
   });
 };

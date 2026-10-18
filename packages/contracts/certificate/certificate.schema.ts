@@ -9,12 +9,19 @@ export const AdminCertificateQuerySchema = z.object({
   size: z.coerce.number().int().positive().max(50).default(20),
 });
 
-export const UpdateCertificateTemplateInputSchema = z.object({
-  brand: LocalizedTextSchema,
-  title: LocalizedTextSchema,
-  subtitle: LocalizedTextSchema,
-  bodyText: LocalizedTextSchema,
-});
+export const UpdateCertificateTemplateInputSchema = z
+  .object({
+    brand: LocalizedTextSchema,
+    title: LocalizedTextSchema,
+    subtitle: LocalizedTextSchema,
+    bodyText: LocalizedTextSchema,
+    isAccredited: z.boolean(),
+    accreditationText: LocalizedTextSchema.nullable(),
+  })
+  .refine((input) => !input.isAccredited || input.accreditationText !== null, {
+    message: 'VALIDATION_ACCREDITATION_TEXT_REQUIRED',
+    path: ['accreditationText'],
+  });
 
 // types
 
@@ -61,4 +68,6 @@ export interface CertificateTemplateOutput {
   title: LocalizedText;
   subtitle: LocalizedText;
   bodyText: LocalizedText;
+  isAccredited: boolean;
+  accreditationText: LocalizedText | null;
 }

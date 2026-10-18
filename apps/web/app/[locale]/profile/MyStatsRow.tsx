@@ -12,7 +12,7 @@ export function MyStatsRow() {
   if (!data) return null;
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       <StatCard icon={ClipboardCheck} label={t('attemptCount')} value={data.attemptCount} accent="primary" />
       <StatCard icon={TrendingUp} label={t('avgScore')} value={`${data.avgScore}%`} accent="warning" />
       <StatCard icon={Trophy} label={t('bestScore')} value={`${data.bestScore}%`} accent="success" />

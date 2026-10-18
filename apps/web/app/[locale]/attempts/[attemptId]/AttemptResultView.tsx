@@ -5,6 +5,9 @@ import type { AttemptSubmitted, Locale } from '@repo/contracts';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
+import { AiAnalysisCard } from '@/components/ai/AiAnalysisCard';
+import { DownloadReportButton } from '@/components/report/DownloadReportButton';
+import { ResultReviewList, ResultTopicsCard } from '@/components/report/ResultSections';
 import { Link } from '@/i18n/navigation';
 import { pickLocalized } from '@/lib/localized';
 import { cn, LEVEL_BADGE_VARIANT } from '@/lib/utils';
@@ -20,7 +23,7 @@ export function AttemptResultView({ attempt }: { attempt: AttemptSubmitted }) {
   const offset = CIRCLE_CIRCUMFERENCE - (attempt.score / 100) * CIRCLE_CIRCUMFERENCE;
 
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-12">
       <Card>
         <CardContent className="flex flex-col items-center gap-5 py-8 text-center">
           <div className="relative flex size-36 items-center justify-center">
@@ -66,8 +69,14 @@ export function AttemptResultView({ attempt }: { attempt: AttemptSubmitted }) {
               <Button className="w-full">{t('viewHistory')}</Button>
             </Link>
           </div>
+
+          <DownloadReportButton attempt={attempt} className="w-full" />
         </CardContent>
       </Card>
+
+      <AiAnalysisCard kind="EXAM" attemptId={attempt.id} specialtyId={attempt.specialtyId} />
+      <ResultTopicsCard topics={attempt.topics} />
+      <ResultReviewList questions={attempt.questions} />
     </div>
   );
 }
