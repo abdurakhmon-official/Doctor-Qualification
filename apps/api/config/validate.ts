@@ -65,10 +65,15 @@ export const validateConfig = (): Check[] => {
     });
   }
 
-  if (!config.AWS_S3_BUCKET) {
+  // on a single VPS the storage dir is a Docker volume that survives restarts, so local disk is fine there
+  const persistentLocalStorage = process.env.LOCAL_STORAGE_PERSISTENT === 'true';
+
+  if (!config.AWS_S3_BUCKET && !persistentLocalStorage) {
     checks.push({
       level: isProduction ? 'error' : 'warn',
-      message: 'AWS_S3_BUCKET is not set — files are written to local disk and are lost on container restart',
+      message:
+        'AWS_S3_BUCKET is not set — files are written to local disk and are lost on container restart ' +
+        '(set LOCAL_STORAGE_PERSISTENT=true when that directory is a persistent volume)',
     });
   }
 

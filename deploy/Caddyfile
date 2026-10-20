@@ -1,0 +1,18 @@
+# Caddy obtains and renews Let's Encrypt certificates for both domains on its own.
+{
+	email {$ACME_EMAIL}
+}
+
+{$WEB_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy web:3001
+}
+
+{$API_DOMAIN} {
+	encode zstd gzip
+	# the API caps uploads at 25 MB (MAX_UPLOAD_BYTES); keep the proxy limit a little above it
+	request_body {
+		max_size 30MB
+	}
+	reverse_proxy api:9100
+}

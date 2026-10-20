@@ -1,0 +1,4 @@
+# Shell scripts and Docker/Caddy config run on Linux: keep LF even when checked out on Windows
+*.sh        text eol=lf
+Caddyfile   text eol=lf
+Dockerfile  text eol=lf

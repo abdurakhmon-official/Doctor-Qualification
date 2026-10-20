@@ -33,6 +33,8 @@ RUN apt-get update \
 
 WORKDIR /repo
 COPY --from=build --chown=apiuser:nodejs /repo /repo
+# pre-create the upload dir owned by apiuser: an empty named volume mounted here inherits this ownership
+RUN mkdir -p /repo/apps/api/storage && chown apiuser:nodejs /repo/apps/api/storage
 
 USER apiuser
 WORKDIR /repo/apps/api
